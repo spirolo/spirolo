@@ -33,7 +33,7 @@ for (const os of ['linux', 'darwin']) {
     optionalDependencies[name] = version;
     generated(`npm/${os}-${cpu}/package.json`, json({
       name, version, description: `Spirolo native binary for ${os} ${cpu}`,
-      license: 'Apache-2.0', repository: 'https://github.com/spirolo/spirolo',
+      license: 'Apache-2.0', homepage: 'https://spirolo.com', repository: 'https://github.com/spirolo/spirolo',
       os: [os], cpu: [cpu], files: ['bin/spirolo'],
     }));
   }
@@ -41,7 +41,7 @@ for (const os of ['linux', 'darwin']) {
 generated('npm/spirolo/package.json', json({
   name: 'spirolo', version,
   description: 'Whole-project analyzer for JavaScript test suites',
-  license: 'Apache-2.0', repository: 'https://github.com/spirolo/spirolo',
+  license: 'Apache-2.0', homepage: 'https://spirolo.com', repository: 'https://github.com/spirolo/spirolo',
   engines: { node: '>=20' }, bin: { spirolo: 'bin/spirolo.cjs' },
   files: ['bin/spirolo.cjs', 'resolve.cjs'], optionalDependencies,
 }));

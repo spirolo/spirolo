@@ -14,8 +14,7 @@ set -euo pipefail
 
 # --- Configuration -----------------------------------------------------------------
 DESCRIPTION='Static analyzer for JavaScript and TypeScript test suites: finds tests that can pass without testing anything. Runs locally, never runs your tests.'
-# Empty until the project owns its domain; then set it to the site's URL and re-apply.
-HOMEPAGE=''
+HOMEPAGE='https://spirolo.com'
 TOPICS=(testing javascript typescript linter rust static-analysis test-quality)
 RULESET_NAME='main'
 TAG_RULESET_NAME='release tags'
