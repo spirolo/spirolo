@@ -3,6 +3,7 @@
   "version": "0.1.0-alpha.1",
   "description": "Whole-project analyzer for JavaScript test suites",
   "license": "Apache-2.0",
+  "homepage": "https://spirolo.com",
   "repository": "https://github.com/spirolo/spirolo",
   "engines": {
     "node": ">=20"
