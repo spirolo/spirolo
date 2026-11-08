@@ -14,9 +14,11 @@ set -euo pipefail
 
 # --- Configuration -----------------------------------------------------------------
 DESCRIPTION='Static analyzer for JavaScript and TypeScript test suites: finds tests that can pass without testing anything. Runs locally, never runs your tests.'
-HOMEPAGE='https://spirolo.dev'
+# Empty until the project owns its domain; then set it to the site's URL and re-apply.
+HOMEPAGE=''
 TOPICS=(testing javascript typescript linter rust static-analysis test-quality)
 RULESET_NAME='main'
+TAG_RULESET_NAME='release tags'
 # Check names reported by the jobs of the public .github/workflows/ci.yml
 # (scripts/public/files/.github/workflows/ci.yml here; job `name:`, matrix expanded).
 REQUIRED_CHECKS=(
@@ -142,31 +144,42 @@ call -X PUT "repos/$REPO/actions/permissions/workflow" \
 call -X PUT "repos/$REPO/actions/permissions/fork-pr-contributor-approval" \
   -f approval_policy=first_time_contributors
 
-# Default branch ruleset: pull request, the ci checks, no force-push, no deletion.
+# Default branch ruleset: pull request, the ci checks, no force-push, no deletion. Administrators
+# may bypass only when merging a pull request, never with a direct push.
 checks=''
 for check in "${REQUIRED_CHECKS[@]}"; do
   checks+="${checks:+,}{\"context\":$(json_string "$check")}"
 done
 ruleset="{\"name\":$(json_string "$RULESET_NAME"),\"target\":\"branch\",\"enforcement\":\"active\",\
 \"conditions\":{\"ref_name\":{\"include\":[\"~DEFAULT_BRANCH\"],\"exclude\":[]}},\
-\"bypass_actors\":[{\"actor_id\":5,\"actor_type\":\"RepositoryRole\",\"bypass_mode\":\"always\"}],\
+\"bypass_actors\":[{\"actor_id\":5,\"actor_type\":\"RepositoryRole\",\"bypass_mode\":\"pull_request\"}],\
 \"rules\":[{\"type\":\"deletion\"},{\"type\":\"non_fast_forward\"},\
 {\"type\":\"pull_request\",\"parameters\":{\"required_approving_review_count\":0,\"dismiss_stale_reviews_on_push\":true,\
 \"require_code_owner_review\":false,\"require_last_push_approval\":false,\"required_review_thread_resolution\":true}},\
 {\"type\":\"required_status_checks\",\"parameters\":{\"strict_required_status_checks_policy\":false,\
 \"required_status_checks\":[$checks]}}]}"
-ruleset_id=''
-if [ "$APPLY" = 1 ]; then
-  ruleset_id=$(gh api "repos/$REPO/rulesets?includes_parents=false" \
-    --jq ".[] | select(.name == $(json_string "$RULESET_NAME")) | .id" | head -n 1)
-else
-  note "a ruleset named $RULESET_NAME that already exists is updated in place: PUT repos/$REPO/rulesets/<id>"
-fi
-if [ -n "$ruleset_id" ]; then
-  call --body "$ruleset" -X PUT "repos/$REPO/rulesets/$ruleset_id"
-else
-  call --body "$ruleset" -X POST "repos/$REPO/rulesets"
-fi
+upsert_ruleset() {
+  local name=$1 body=$2 id=''
+  if [ "$APPLY" = 1 ]; then
+    id=$(gh api "repos/$REPO/rulesets?includes_parents=false" \
+      --jq ".[] | select(.name == $(json_string "$name")) | .id" | head -n 1)
+  else
+    note "a ruleset named $name that already exists is updated in place: PUT repos/$REPO/rulesets/<id>"
+  fi
+  if [ -n "$id" ]; then
+    call --body "$body" -X PUT "repos/$REPO/rulesets/$id"
+  else
+    call --body "$body" -X POST "repos/$REPO/rulesets"
+  fi
+}
+upsert_ruleset "$RULESET_NAME" "$ruleset"
+
+# Release tags: a v* tag publishes, so only administrators create, move or delete one.
+tag_ruleset="{\"name\":$(json_string "$TAG_RULESET_NAME"),\"target\":\"tag\",\"enforcement\":\"active\",\
+\"conditions\":{\"ref_name\":{\"include\":[\"refs/tags/v*\"],\"exclude\":[]}},\
+\"bypass_actors\":[{\"actor_id\":5,\"actor_type\":\"RepositoryRole\",\"bypass_mode\":\"always\"}],\
+\"rules\":[{\"type\":\"creation\"},{\"type\":\"update\"},{\"type\":\"deletion\"}]}"
+upsert_ruleset "$TAG_RULESET_NAME" "$tag_ruleset"
 
 # Code scanning: the committed CodeQL workflow wins over default setup.
 if [ -f "$CODEQL_WORKFLOW" ]; then
