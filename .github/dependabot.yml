@@ -1,0 +1,40 @@
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      oxc: { patterns: ["oxc_*"] }
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: npm
+    directories:
+      - /.github
+      - /editors/vscode
+      - /website
+      - /npm/*
+    schedule: { interval: weekly }
+    # Native optional dependencies are generated in lockstep from Cargo's version.
+    # Corpus manifests are frozen experimental fixtures, not maintained applications.
+    ignore:
+      - dependency-name: "spirolo*"
+    groups:
+      minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly }
+    groups:
+      actions:
+        patterns: ["*"]
+      security:
+        applies-to: security-updates
+        patterns: ["*"]

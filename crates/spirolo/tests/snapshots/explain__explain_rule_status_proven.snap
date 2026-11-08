@@ -1,0 +1,15 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: human
+---
+weak-assertion (audit, default warn)
+A test's assertions check no produced value, only that one exists, so a wrong value still passes.
+Status
+  verdict      PASS
+  tier         proven: PASS, shown by default at its declared severity
+  precision    62/62 = 1.000, Wilson 95% [0.942, 1.000]
+  decided      62 true, 0 false
+  measured on  expo__expo, mobxjs__mobx
+  proven bar   Wilson lower bound ≥ 0.9 on the pooled dev sample: ≥35 decided with 0 false, ≥53 with 1, ≥69 with 2 (docs/rule-visits/README.md)
+  advisory     an unproven rule reports at info and never fails the build unless .spirolorc raises its severity; a DROPPED or FAIL rule never gates
+  docs         docs/rules/weak-assertion.md

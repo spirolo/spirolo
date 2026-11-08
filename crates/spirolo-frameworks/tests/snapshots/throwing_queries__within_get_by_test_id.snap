@@ -1,0 +1,47 @@
+---
+source: crates/spirolo-frameworks/tests/throwing_queries.rs
+expression: "recognise(\"import { it } from 'vitest'\\nimport { within } from '@testing-library/react'\\nit('t', () => { within(row).getByTestId('cell') })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 76,
+      "end": 126,
+      "line": 3,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [
+      {
+        "name": "getByTestId",
+        "within": true,
+        "span": {
+          "start": 92,
+          "end": 123,
+          "line": 3,
+          "column": 17
+        }
+      }
+    ],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "6ba1f58890ffc27b",
+    "context": [
+      {
+        "kind": "import",
+        "name": "within",
+        "specifier": "@testing-library/react",
+        "export": "within"
+      }
+    ]
+  }
+]

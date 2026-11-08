@@ -1,0 +1,62 @@
+---
+source: crates/spirolo-model/tests/walk.rs
+expression: model.modules
+---
+[
+  {
+    "path": "src/Button.test.tsx",
+    "language": "tsx",
+    "parse_status": "parsed",
+    "imports": [
+      {
+        "specifier": "vitest",
+        "resolved": null,
+        "reason": "unknown_package",
+        "kind": "static",
+        "span": {
+          "start": 27,
+          "end": 35,
+          "line": 1,
+          "column": 28
+        }
+      },
+      {
+        "specifier": "./Button",
+        "resolved": "src/Button.tsx",
+        "reason": null,
+        "kind": "static",
+        "span": {
+          "start": 61,
+          "end": 71,
+          "line": 3,
+          "column": 24
+        }
+      }
+    ],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "src/Button.tsx",
+    "language": "tsx",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "Button",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 16,
+          "end": 22,
+          "line": 1,
+          "column": 17
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  }
+]

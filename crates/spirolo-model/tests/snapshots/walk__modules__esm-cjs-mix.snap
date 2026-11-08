@@ -1,0 +1,112 @@
+---
+source: crates/spirolo-model/tests/walk.rs
+expression: model.modules
+---
+[
+  {
+    "path": "lib/config.cts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "lib/legacy.cjs",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "lib/modern.mjs",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "modern",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 13,
+          "end": 19,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "lib/plain.js",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "plain",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 13,
+          "end": 18,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "lib/types.mts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "Mode",
+        "kind": "type",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 12,
+          "end": 16,
+          "line": 1,
+          "column": 13
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "ui/widget.jsx",
+    "language": "jsx",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "Widget",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 13,
+          "end": 19,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  }
+]

@@ -1,0 +1,24 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: failed
+---
+[
+  {
+    "jsonrpc": "2.0",
+    "method": "window/showMessage",
+    "params": {
+      "type": 1,
+      "message": "spirolo: .spirolorc.jsonc is not valid JSONC: Expected value after colon in object property on line 1 column 12"
+    }
+  },
+  {
+    "jsonrpc": "2.0",
+    "method": "spirolo/checked",
+    "params": {
+      "generation": 2,
+      "files": 0,
+      "findings": -1,
+      "elapsed_ms": "<ms>"
+    }
+  }
+]

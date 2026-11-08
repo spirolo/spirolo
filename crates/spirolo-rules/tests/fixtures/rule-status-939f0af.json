@@ -1,0 +1,375 @@
+{
+  "schema": 1,
+  "spirolo_commit": "939f0af519fd50318e092700b74094b71cfeca23",
+  "entries": [
+    "ChatGPTNextWeb__NextChat@defdcdb5",
+    "Nozbe__WatermelonDB@5c463222",
+    "akveo__react-native-ui-kitten@3f4e3d04",
+    "algolia__instantsearch@3892320b",
+    "boardgameio__boardgame.io@5e9a2c94",
+    "callstack__react-native-paper@4ffc20ae",
+    "carbon-design-system__carbon@40f8d5cf",
+    "chakra-ui__chakra-ui@96116142",
+    "chrisvel__tududi@1781c4c1",
+    "decaporg__decap-cms@1d586834",
+    "expo__expo@500d25de",
+    "fastrepl__anarlog@3de75bfb",
+    "fuma-nama__fumadocs@bb43b610",
+    "gatsbyjs__gatsby@8999a2ed",
+    "gpbl__react-day-picker@19033b45",
+    "grommet__grommet@fbb505b6",
+    "hyperdxio__hyperdx@19182e7e",
+    "mantinedev__mantine@f38933cb",
+    "marmelab__react-admin@99e8c52b",
+    "middleapi__orpc@63b20537",
+    "midwayjs__midway@bd306bb7",
+    "mobxjs__mobx@404c6e08",
+    "mui__material-ui@67801955",
+    "necolas__react-native-web@f1b53224",
+    "notionnext-org__NotionNext@50e77e06",
+    "plouc__nivo@0dae2c32",
+    "pmndrs__jotai@6abd0ae3",
+    "pmndrs__react-spring@d9cd058a",
+    "pmndrs__valtio@6c4af4ba",
+    "puckeditor__puck@9be9a85d",
+    "radix-ui__primitives@f7ecd5ab",
+    "react-hook-form__react-hook-form@c4dc4456",
+    "react__metro@5793c170",
+    "react__react@7c6ac13e",
+    "remix-run__react-router@54fd9629",
+    "rjsf-team__react-jsonschema-form@ad0ea074",
+    "shuding__nextra@d6e80e1d",
+    "software-mansion__react-native-reanimated@b603aacf",
+    "styled-components__styled-components@2698155f",
+    "usekaneo__kaneo@afe97be2"
+  ],
+  "rules": {
+    "weak-assertion": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": 0.353,
+      "interval": [
+        0.215,
+        0.521
+      ],
+      "truths": 12,
+      "falses": 22,
+      "measured_on": [
+        "akveo__react-native-ui-kitten",
+        "algolia__instantsearch",
+        "boardgameio__boardgame.io",
+        "chrisvel__tududi",
+        "expo__expo",
+        "fastrepl__anarlog",
+        "grommet__grommet",
+        "mantinedev__mantine",
+        "marmelab__react-admin",
+        "middleapi__orpc",
+        "mobxjs__mobx",
+        "pmndrs__react-spring",
+        "react-hook-form__react-hook-form",
+        "remix-run__react-router",
+        "rjsf-team__react-jsonschema-form",
+        "software-mansion__react-native-reanimated",
+        "usekaneo__kaneo"
+      ]
+    },
+    "absence-anchor": {
+      "verdict": "UNADJUDICATED",
+      "carried": null,
+      "precision": 0.8,
+      "interval": [
+        0.584,
+        0.919
+      ],
+      "truths": 16,
+      "falses": 4,
+      "measured_on": [
+        "algolia__instantsearch",
+        "carbon-design-system__carbon",
+        "chrisvel__tududi",
+        "expo__expo",
+        "fastrepl__anarlog",
+        "gpbl__react-day-picker",
+        "hyperdxio__hyperdx",
+        "mantinedev__mantine",
+        "marmelab__react-admin",
+        "radix-ui__primitives",
+        "rjsf-team__react-jsonschema-form",
+        "usekaneo__kaneo"
+      ]
+    },
+    "data-layer-mock": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": []
+    },
+    "handler-drift": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": []
+    },
+    "generator-walk": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": []
+    },
+    "fail-closed-setup": {
+      "verdict": "UNADJUDICATED",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.832,
+        1.0
+      ],
+      "truths": 19,
+      "falses": 0,
+      "measured_on": [
+        "algolia__instantsearch",
+        "carbon-design-system__carbon",
+        "expo__expo",
+        "fuma-nama__fumadocs",
+        "gatsbyjs__gatsby",
+        "midwayjs__midway",
+        "react__react",
+        "shuding__nextra",
+        "software-mansion__react-native-reanimated",
+        "usekaneo__kaneo"
+      ]
+    },
+    "gate-truth": {
+      "verdict": "UNADJUDICATED",
+      "carried": null,
+      "precision": 0.667,
+      "interval": [
+        0.437,
+        0.837
+      ],
+      "truths": 12,
+      "falses": 6,
+      "measured_on": [
+        "algolia__instantsearch",
+        "expo__expo",
+        "fuma-nama__fumadocs",
+        "gatsbyjs__gatsby",
+        "midwayjs__midway",
+        "react__react",
+        "software-mansion__react-native-reanimated",
+        "usekaneo__kaneo"
+      ]
+    },
+    "dead-skip": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.824,
+        1.0
+      ],
+      "truths": 18,
+      "falses": 0,
+      "measured_on": [
+        "Nozbe__WatermelonDB",
+        "expo__expo",
+        "gatsbyjs__gatsby",
+        "marmelab__react-admin",
+        "midwayjs__midway",
+        "mobxjs__mobx",
+        "radix-ui__primitives"
+      ]
+    },
+    "duplicate-test": {
+      "verdict": "UNADJUDICATED",
+      "carried": null,
+      "precision": 0.833,
+      "interval": [
+        0.608,
+        0.942
+      ],
+      "truths": 15,
+      "falses": 3,
+      "measured_on": [
+        "akveo__react-native-ui-kitten",
+        "algolia__instantsearch",
+        "boardgameio__boardgame.io",
+        "carbon-design-system__carbon",
+        "chakra-ui__chakra-ui",
+        "decaporg__decap-cms",
+        "expo__expo",
+        "gatsbyjs__gatsby",
+        "hyperdxio__hyperdx",
+        "mantinedev__mantine",
+        "marmelab__react-admin",
+        "midwayjs__midway",
+        "mobxjs__mobx",
+        "mui__material-ui",
+        "react-hook-form__react-hook-form",
+        "remix-run__react-router",
+        "rjsf-team__react-jsonschema-form",
+        "software-mansion__react-native-reanimated",
+        "styled-components__styled-components"
+      ]
+    },
+    "redundant-test": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": 0.0,
+      "interval": [
+        0.0,
+        0.243
+      ],
+      "truths": 0,
+      "falses": 12,
+      "measured_on": [
+        "akveo__react-native-ui-kitten",
+        "boardgameio__boardgame.io",
+        "hyperdxio__hyperdx",
+        "middleapi__orpc",
+        "react__metro"
+      ]
+    },
+    "unused-mock": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": [
+        "fastrepl__anarlog"
+      ]
+    },
+    "orphan-test": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": 0.286,
+      "interval": [
+        0.117,
+        0.546
+      ],
+      "truths": 4,
+      "falses": 10,
+      "measured_on": [
+        "algolia__instantsearch",
+        "boardgameio__boardgame.io",
+        "carbon-design-system__carbon",
+        "decaporg__decap-cms",
+        "expo__expo",
+        "gatsbyjs__gatsby",
+        "hyperdxio__hyperdx",
+        "midwayjs__midway",
+        "plouc__nivo",
+        "react__react",
+        "remix-run__react-router",
+        "rjsf-team__react-jsonschema-form"
+      ]
+    },
+    "stale-snapshot": {
+      "verdict": "DROPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": [
+        "expo__expo",
+        "gatsbyjs__gatsby",
+        "rjsf-team__react-jsonschema-form"
+      ]
+    },
+    "flake-candidate": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": 0.5,
+      "interval": [
+        0.188,
+        0.812
+      ],
+      "truths": 3,
+      "falses": 3,
+      "measured_on": [
+        "chrisvel__tududi",
+        "expo__expo",
+        "hyperdxio__hyperdx",
+        "midwayjs__midway",
+        "react-hook-form__react-hook-form",
+        "styled-components__styled-components",
+        "usekaneo__kaneo"
+      ]
+    },
+    "flake-observed": {
+      "verdict": "SKIPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0,
+      "measured_on": []
+    },
+    "untested-hotspot": {
+      "verdict": "UNADJUDICATED",
+      "carried": null,
+      "precision": 0.313,
+      "interval": [
+        0.142,
+        0.556
+      ],
+      "truths": 5,
+      "falses": 11,
+      "measured_on": [
+        "ChatGPTNextWeb__NextChat",
+        "Nozbe__WatermelonDB",
+        "akveo__react-native-ui-kitten",
+        "algolia__instantsearch",
+        "boardgameio__boardgame.io",
+        "callstack__react-native-paper",
+        "carbon-design-system__carbon",
+        "chakra-ui__chakra-ui",
+        "chrisvel__tududi",
+        "decaporg__decap-cms",
+        "expo__expo",
+        "fastrepl__anarlog",
+        "fuma-nama__fumadocs",
+        "gatsbyjs__gatsby",
+        "gpbl__react-day-picker",
+        "grommet__grommet",
+        "hyperdxio__hyperdx",
+        "mantinedev__mantine",
+        "marmelab__react-admin",
+        "middleapi__orpc",
+        "midwayjs__midway",
+        "mobxjs__mobx",
+        "mui__material-ui",
+        "necolas__react-native-web",
+        "notionnext-org__NotionNext",
+        "plouc__nivo",
+        "pmndrs__jotai",
+        "pmndrs__react-spring",
+        "pmndrs__valtio",
+        "puckeditor__puck",
+        "radix-ui__primitives",
+        "react-hook-form__react-hook-form",
+        "react__metro",
+        "react__react",
+        "remix-run__react-router",
+        "rjsf-team__react-jsonschema-form",
+        "shuding__nextra",
+        "software-mansion__react-native-reanimated",
+        "styled-components__styled-components",
+        "usekaneo__kaneo"
+      ]
+    }
+  }
+}

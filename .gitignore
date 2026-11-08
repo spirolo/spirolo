@@ -1,0 +1,29 @@
+/target
+/corpus/*/repo/
+# The throwaway git worktree spirolo-bench checks a replay pair's commits out in, beside the
+# clone so the clone's own `check` never walks it; removed after each pair, but a killed
+# run could strand one.
+/corpus/*/.spirolo-bench-replay/
+!/corpus/README.md
+.spirolo/runs/
+
+# insta's pending snapshots: review them with `cargo insta review`, never commit them.
+*.snap.new
+*.pending-snap
+
+# Corpus adjudicator working files: the fixtures' installed deps, the coverage a fixture run
+# writes (the gate-truth fixture forces a coverage run), and any `.spirolo-adj` scratch a killed
+# adjudicator left behind (they are removed in `finally`, but a hard kill mid-run could strand
+# one). The fixture source, package.json and pnpm-lock.yaml are committed, and node_modules
+# is reinstalled from the lockfile.
+node_modules/
+/corpus/**/pnpm-lock.yaml
+!/corpus/adjudicate/fixtures/*/pnpm-lock.yaml
+!/corpus/adjudicate/tools/*/pnpm-lock.yaml
+!/corpus/*/impact/fixtures/*/pnpm-lock.yaml
+/corpus/**/coverage/
+*.spirolo-adj.*
+/corpus/*/.spirolo-bench-ledger/
+
+# Release staging: generated native payloads and packages live under target/rc.
+/npm/*/bin/spirolo

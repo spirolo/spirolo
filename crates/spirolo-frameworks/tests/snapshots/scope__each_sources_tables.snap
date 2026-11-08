@@ -1,0 +1,157 @@
+---
+source: crates/spirolo-frameworks/tests/scope.rs
+expression: "tables(&model, \"src/tables.test.ts\")"
+---
+[
+  {
+    "kind": "suite",
+    "title": "imported tables",
+    "suite_path": [],
+    "each": null,
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": "handles %s",
+    "suite_path": [
+      "imported tables"
+    ],
+    "each": {
+      "cases": 3,
+      "params": 1,
+      "source": "ROWS"
+    },
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": null,
+    "suite_path": [
+      "imported tables"
+    ],
+    "each": null,
+    "loops": [
+      {
+        "cases": 4,
+        "params": null,
+        "source": "PACK.phrases"
+      }
+    ]
+  },
+  {
+    "kind": "test",
+    "title": "%s",
+    "suite_path": [
+      "imported tables"
+    ],
+    "each": {
+      "cases": 3,
+      "params": 1,
+      "source": "LEXICAL"
+    },
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": "maps %s",
+    "suite_path": [
+      "imported tables"
+    ],
+    "each": {
+      "cases": 2,
+      "params": null,
+      "source": "ALIASES"
+    },
+    "loops": []
+  },
+  {
+    "kind": "suite",
+    "title": "local tables",
+    "suite_path": [],
+    "each": null,
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": "local %i",
+    "suite_path": [
+      "local tables"
+    ],
+    "each": {
+      "cases": 3,
+      "params": 1,
+      "source": null
+    },
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": null,
+    "suite_path": [
+      "local tables"
+    ],
+    "each": null,
+    "loops": [
+      {
+        "cases": 2,
+        "params": 2,
+        "source": null
+      }
+    ]
+  },
+  {
+    "kind": "test",
+    "title": null,
+    "suite_path": [
+      "local tables"
+    ],
+    "each": null,
+    "loops": [
+      {
+        "cases": 2,
+        "params": 1,
+        "source": null
+      }
+    ]
+  },
+  {
+    "kind": "suite",
+    "title": "suite for %s",
+    "suite_path": [],
+    "each": {
+      "cases": 3,
+      "params": 1,
+      "source": "ROWS"
+    },
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": "inherits the suite table, not a second copy of it",
+    "suite_path": [
+      "suite for %s"
+    ],
+    "each": null,
+    "loops": []
+  },
+  {
+    "kind": "suite",
+    "title": "an uncountable table",
+    "suite_path": [],
+    "each": null,
+    "loops": []
+  },
+  {
+    "kind": "test",
+    "title": "runtime %s",
+    "suite_path": [
+      "an uncountable table"
+    ],
+    "each": {
+      "cases": null,
+      "params": null,
+      "source": "rows"
+    },
+    "loops": []
+  }
+]

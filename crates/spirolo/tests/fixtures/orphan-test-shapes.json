@@ -1,0 +1,265 @@
+{
+  "orphan-real-boardgame": {
+    "entry": "boardgameio__boardgame.io",
+    "repo": "https://github.com/boardgameio/boardgame.io",
+    "commit": "5e9a2c94bde803fae8b081958c406c4d0a7be8ae",
+    "files": [
+      "examples/react-web/package.json",
+      "examples/react-web/src/app.test.js",
+      "package.json"
+    ],
+    "cut": "package.json cut to its name, its test scripts and the jest preset and testPathIgnorePatterns; the other files verbatim."
+  },
+  "orphan-shape-cypress-decap": {
+    "entry": "decaporg__decap-cms",
+    "repo": "https://github.com/decaporg/decap-cms",
+    "commit": "1d5868347d3d8648d7d5f7f59fc1b46595881b29",
+    "files": [
+      "cypress.config.ts",
+      "cypress/e2e/markdown_widget_link_spec.js",
+      "jest.config.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-cypress-subdir": {
+    "entry": "marmelab__react-admin",
+    "repo": "https://github.com/marmelab/react-admin",
+    "commit": "99e8c52b7db1712c0afa4eeed533e4a713dfc1ec",
+    "files": [
+      "cypress/cypress.config.js",
+      "cypress/e2e/auth.cy.js",
+      "jest.config.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-cypress-gatsby": {
+    "entry": "gatsbyjs__gatsby",
+    "repo": "https://github.com/gatsbyjs/gatsby",
+    "commit": "8999a2ed4dd8b40bab6571f7d23c7d196ebdb83e",
+    "files": [
+      "e2e-tests/development-runtime/cypress.config.ts",
+      "e2e-tests/development-runtime/cypress/integration/graphql-typegen/updates.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-cypress-component": {
+    "entry": "plouc__nivo",
+    "repo": "https://github.com/plouc/nivo",
+    "commit": "0dae2c32052a573f9f1d66ec1b453b572119b265",
+    "files": [
+      "cypress/cypress.config.ts",
+      "cypress/src/components/boxplot/BoxPlot.cy.tsx"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-playwright-regex": {
+    "entry": "carbon-design-system__carbon",
+    "repo": "https://github.com/carbon-design-system/carbon",
+    "commit": "40f8d5cfaed733feefa2e7c39b8e9eea1795d97d",
+    "files": [
+      "e2e/components/FluidComboBox/FluidComboBox-test.avt.e2e.js",
+      "jest.config.js",
+      "playwright.config.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-jest-script-config": {
+    "entry": "hyperdxio__hyperdx",
+    "repo": "https://github.com/hyperdxio/hyperdx",
+    "commit": "19182e7e21d0dd987bee43f5a623acf4a7785e30",
+    "files": [
+      "package.json",
+      "packages/api/jest.config.js",
+      "packages/api/jest.int.config.js",
+      "packages/api/package.json",
+      "packages/api/src/controllers/__tests__/timeseriesEngine.int.test.ts",
+      "packages/api/src/controllers/__tests__/timeseriesEngine.test.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-jest-outside-workspace": {
+    "entry": "expo__expo",
+    "repo": "https://github.com/expo/expo",
+    "commit": "500d25dea3746c8ceeb751b3c55f432b269be410",
+    "files": [
+      "docs/jest.config.js",
+      "docs/package.json",
+      "docs/ui/components/AppConfigSchemaTable/AppConfigSchemaTable.test.tsx",
+      "package.json",
+      "pnpm-workspace.yaml"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-typecheck-tsc": {
+    "entry": "middleapi__orpc",
+    "repo": "https://github.com/middleapi/orpc",
+    "commit": "63b20537dbb6ee91a4d68c6d81fa1f53ab114964",
+    "files": [
+      "package.json",
+      "packages/server/package.json",
+      "packages/server/src/procedure-decorated.test-d.ts",
+      "packages/server/tsconfig.json",
+      "pnpm-workspace.yaml",
+      "tsconfig.json",
+      "vitest.config.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-typecheck-vitest": {
+    "entry": "shuding__nextra",
+    "repo": "https://github.com/shuding/nextra",
+    "commit": "d6e80e1dd627b781429a6ee989b15ebba688c8ea",
+    "files": [
+      "package.json",
+      "packages/nextra/package.json",
+      "packages/nextra/src/server/__tests__/nextra-config.test-d.ts",
+      "packages/nextra/vitest.config.ts",
+      "pnpm-workspace.yaml"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-shared-module": {
+    "entry": "rjsf-team__react-jsonschema-form",
+    "repo": "https://github.com/rjsf-team/react-jsonschema-form",
+    "commit": "ad0ea07428f8fde1ed1a958a2383861e242f14d7",
+    "files": [
+      "package.json",
+      "packages/utils/package.json",
+      "packages/utils/test/schema.test.ts",
+      "packages/utils/test/schema/findSelectedOptionInXxxOfTest.ts",
+      "packages/utils/test/schema/index.ts",
+      "packages/utils/vitest.config.ts",
+      "testing/vitest.base.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-reporter": {
+    "entry": "mui__material-ui",
+    "repo": "https://github.com/mui/material-ui",
+    "commit": "6780195595c12252a130aa5ae5c5bd461229c6b7",
+    "files": [
+      "test/regressions/a11y/a11yReporter.ts",
+      "test/regressions/vitest.config.ts",
+      "vitest.config.mts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-testfixtures": {
+    "entry": "marmelab__react-admin",
+    "repo": "https://github.com/marmelab/react-admin",
+    "commit": "99e8c52b7db1712c0afa4eeed533e4a713dfc1ec",
+    "files": [
+      "jest.config.js",
+      "packages/ra-core/codemods/__testfixtures__/replace-Admin-history-useEditController.input.tsx",
+      "packages/ra-core/codemods/__testfixtures__/replace-Admin-history-useEditController.output.tsx",
+      "packages/ra-core/codemods/__tests__/replace-Admin-history.spec.ts",
+      "packages/ra-core/codemods/replace-Admin-history.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-build-main": {
+    "entry": "carbon-design-system__carbon",
+    "repo": "https://github.com/carbon-design-system/carbon",
+    "commit": "40f8d5cfaed733feefa2e7c39b8e9eea1795d97d",
+    "files": [
+      "jest.config.js",
+      "packages/react/__tests__/ssr-test.js",
+      "packages/react/package.json"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-build-out-dir": {
+    "entry": "gatsbyjs__gatsby",
+    "repo": "https://github.com/gatsbyjs/gatsby",
+    "commit": "8999a2ed4dd8b40bab6571f7d23c7d196ebdb83e",
+    "files": [
+      "jest.config.js",
+      "packages/gatsby-source-wordpress/__tests__/process-node.test.js",
+      "packages/gatsby-source-wordpress/package.json"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-platform-extension": {
+    "entry": "expo__expo",
+    "repo": "https://github.com/expo/expo",
+    "commit": "500d25dea3746c8ceeb751b3c55f432b269be410",
+    "files": [
+      "packages/jest-expo/package.json",
+      "packages/jest-expo/tests/__tests__/jest-test.js",
+      "packages/jest-expo/tests/default-extension.android.js",
+      "packages/jest-expo/tests/default-extension.ios.js",
+      "packages/jest-expo/tests/default-extension.web.js",
+      "packages/jest-expo/tests/fallback-extension.js",
+      "packages/jest-expo/tests/fallback-extension.native.js",
+      "packages/jest-expo/tests/fallback-extension.node.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "orphan-shape-module-name-mapper": {
+    "entry": "mantinedev__mantine",
+    "repo": "https://github.com/mantinedev/mantine",
+    "commit": "f38933cb4f1c534600f4ff59ee3ddbb4685a4bc4",
+    "files": [
+      "jest.config.ts",
+      "package.json",
+      "packages/@mantine-tests/core/package.json",
+      "packages/@mantine-tests/core/src/axe.tsx",
+      "packages/@mantine-tests/core/src/create-context-container.tsx",
+      "packages/@mantine-tests/core/src/index.ts",
+      "packages/@mantine-tests/core/src/inputs/external-input-fill.ts",
+      "packages/@mantine-tests/core/src/inputs/inputs-test-props.ts",
+      "packages/@mantine-tests/core/src/inputs/it-connects-label-and-input.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-handles-switch-checkbox-state.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-asterisk.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-container.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-props.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-sections.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-wrapper-elements.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-wrapper-order.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-input-wrapper-props.tsx",
+      "packages/@mantine-tests/core/src/inputs/it-supports-shared-input-defaults.tsx",
+      "packages/@mantine-tests/core/src/it-supports-system-props.tsx",
+      "packages/@mantine-tests/core/src/patch-console-error.ts",
+      "packages/@mantine-tests/core/src/queries/index.ts",
+      "packages/@mantine-tests/core/src/queries/input-wrapper.queries.ts",
+      "packages/@mantine-tests/core/src/render.tsx",
+      "packages/@mantine-tests/core/src/shared/it-has-classes.tsx",
+      "packages/@mantine-tests/core/src/shared/it-has-extend.tsx",
+      "packages/@mantine-tests/core/src/shared/it-has-static-vars-resolver.tsx",
+      "packages/@mantine-tests/core/src/shared/it-has-withProps.tsx",
+      "packages/@mantine-tests/core/src/shared/it-is-polymorphic.tsx",
+      "packages/@mantine-tests/core/src/shared/it-renders-children.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-classname.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-focus-events.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-hidden-visible.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-id.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-light-dark-hidden.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-mod.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-others.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-provider-default-props.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-ref.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-size.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-style-api.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-style.tsx",
+      "packages/@mantine-tests/core/src/shared/it-supports-variant.tsx",
+      "packages/@mantine-tests/core/src/shared/it-throws-context-error.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-background-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-colors-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-fonts-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-margins-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-paddings-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-position-props.tsx",
+      "packages/@mantine-tests/core/src/style-props/it-supports-size-props.tsx",
+      "packages/@mantine-tests/core/src/wait.ts",
+      "packages/@mantine-tests/core/tsconfig.json",
+      "packages/@mantine/schedule/package.json",
+      "packages/@mantine/schedule/src/components/YearView/YearView.test.tsx",
+      "packages/@mantine/schedule/src/components/YearView/YearView.tsx",
+      "packages/@mantine/schedule/src/types.ts",
+      "packages/@mantine/schedule/src/utils/index.ts",
+      "packages/@mantine/schedule/tsconfig.json",
+      "tsconfig.json"
+    ],
+    "cut": "Files copied verbatim: the root package.json, jest.config.ts and tsconfig.json, packages/@mantine-tests/core (package.json, tsconfig.json, all of src/), and from packages/@mantine/schedule its package.json, tsconfig.json, YearView.test.tsx and the three modules that test imports relatively (src/types.ts, src/utils/index.ts, YearView.tsx)."
+  }
+}

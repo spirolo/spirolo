@@ -1,0 +1,7 @@
+{
+  "name": "@fx/a",
+  "jest": {
+    "testMatch": ["**/*.unit.js"],
+    "coverageThreshold": { "global": { "lines": 90 } }
+  }
+}

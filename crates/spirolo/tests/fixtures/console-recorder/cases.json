@@ -1,0 +1,275 @@
+[
+  {
+    "name": "alias-expect",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst rec = calls;\nafterEach(() => expect(rec).toEqual([]));\n",
+    "helpers": {}
+  },
+  {
+    "name": "alias-chain-member",
+    "exit": 1,
+    "setup": "const store = { calls: [] };\nconst buffer = store.calls;\nconst rec = buffer;\nconsole.warn = (...a) => { buffer.push(a); };\nafterEach(() => { if (rec.length) throw new Error('console'); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-expect",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { nested: { check: () => expect(calls).toEqual([]) } };\nafterEach(() => h.nested.check());\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-reference",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { check() { if (calls.length) throw new Error('console'); } };\nafterEach(h.check);\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-unused",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { check() { if (calls.length) throw new Error('console'); }, clear() { calls.length = 0; } };\nafterEach(() => h.clear());\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-caught",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { check() { if (calls.length) throw new Error('console'); } };\nafterEach(() => { try { h.check(); } catch {} });\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-deferred-reference",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { check() { if (calls.length) throw new Error('console'); } };\nafterEach(() => { setTimeout(h.check, 60000).unref(); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "expect-unrelated",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { const n = calls.length; expect(true).toBe(true); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "expect-incomplete",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { expect(calls); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "expect-caught",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { try { expect(calls).toEqual([]); } catch {} });\n",
+    "helpers": {}
+  },
+  {
+    "name": "expect-shadowed",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction expect() { return { toEqual() {} }; }\nafterEach(() => expect(calls).toEqual([]));\n",
+    "helpers": {}
+  },
+  {
+    "name": "alias-shadowed",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst rec = calls;\nafterEach(() => { const rec = []; if (rec.length) throw new Error('console'); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "import-renamed-barrel",
+    "exit": 1,
+    "setup": "import { verify } from './barrel.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => verify(calls));\n",
+    "helpers": {
+      "check.js": "export function check(calls) { if (calls.length) throw new Error('console'); }\n",
+      "barrel.js": "export { check as verify } from './check.js';\n"
+    }
+  },
+  {
+    "name": "import-default",
+    "exit": 1,
+    "setup": "import check from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "export default function check(calls) { if (calls.length) throw new Error('console'); }\n"
+    }
+  },
+  {
+    "name": "import-namespace",
+    "exit": 1,
+    "setup": "import * as h from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => h.check(calls));\n",
+    "helpers": {
+      "check.js": "export function check(calls) { if (calls.length) throw new Error('console'); }\n"
+    }
+  },
+  {
+    "name": "import-silencing",
+    "exit": 0,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "export function check(calls) { calls.length = 0; }\nexport function fail() { throw new Error('unused'); }\n"
+    }
+  },
+  {
+    "name": "import-caught",
+    "exit": 0,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { try { check(calls); } catch {} });\n",
+    "helpers": {
+      "check.js": "export function check(calls) { if (calls.length) throw new Error('console'); }\n"
+    }
+  },
+  {
+    "name": "import-deferred-reference",
+    "exit": 0,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { setTimeout(check, 60000, calls).unref(); });\n",
+    "helpers": {
+      "check.js": "export function check(calls) { if (calls.length) throw new Error('console'); }\n"
+    }
+  },
+  {
+    "name": "import-expect",
+    "exit": 1,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "export function check(rec) { expect(rec).toEqual([]); }\n"
+    }
+  },
+  {
+    "name": "import-unrelated-expect",
+    "exit": 0,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "export function check(rec) { expect(true).toBe(true); }\n"
+    }
+  },
+  {
+    "name": "import-forward-expect",
+    "exit": 1,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "import { verify } from './verify.js';\nexport function check(rec) { verify(rec); }\n",
+      "verify.js": "export function verify(entries) { expect(entries).toEqual([]); }\n"
+    }
+  },
+  {
+    "name": "mock-expect",
+    "exit": 1,
+    "setup": "console.error = vi.fn();\nafterEach(() => expect(console.error).not.toHaveBeenCalled());\n",
+    "helpers": {}
+  },
+  {
+    "name": "mock-unrelated-expect",
+    "exit": 0,
+    "setup": "console.error = vi.fn();\nafterEach(() => expect(true).toBe(true));\n",
+    "helpers": {}
+  },
+  {
+    "name": "method-alias",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst h = { check() { if (calls.length) throw new Error('console'); } };\nconst verify = h.check;\nafterEach(verify);\n",
+    "helpers": {}
+  },
+  {
+    "name": "import-capture",
+    "exit": 1,
+    "setup": "import { check } from './check.js';\nexport const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(check);\n",
+    "helpers": {
+      "check.js": "import { calls } from './setup.js';\nexport function check() { expect(calls).toEqual([]); }\n"
+    }
+  },
+  {
+    "name": "import-default-object",
+    "exit": 1,
+    "setup": "import h from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => h.check(calls));\n",
+    "helpers": {
+      "check.js": "export default { check(rec) { if (rec.length) throw new Error('console'); } };\n"
+    }
+  },
+  {
+    "name": "import-recursive-silencing",
+    "exit": 0,
+    "setup": "import { check } from './check.js';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\ncalls.next = calls;\nafterEach(() => check(calls));\n",
+    "helpers": {
+      "check.js": "export function check(rec, depth = 0) { if (depth < 2) check(rec.next, depth + 1); }\n"
+    }
+  },
+  {
+    "name": "import-expect-alias",
+    "exit": 1,
+    "setup": "import { expect as ensure } from 'vitest';\nconst calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => ensure(calls).toEqual([]));\n",
+    "helpers": {}
+  },
+  {
+    "name": "helper-call-method",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction check() { if (calls.length) throw new Error('console'); }\nafterEach(() => check.call(null));\n",
+    "helpers": {}
+  },
+  {
+    "name": "helper-call-argument",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction check(c) { if (c.length) throw new Error('console'); }\nafterEach(() => check.call(null, calls));\n",
+    "helpers": {}
+  },
+  {
+    "name": "helper-array-reference",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction check() { if (calls.length) throw new Error('console'); }\nafterEach(() => { [check].forEach((f) => f()); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "caught-read-then-throw",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction format() { return calls.join(); }\nafterEach(() => { let m; try { m = format(); } catch {} if (m) throw new Error(m); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "caught-read-in-callback",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { let m = ''; try { calls.forEach((c) => { m += c; }); } catch {} if (m) throw new Error(m); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "alias-property-snapshot",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst n = calls.length;\nafterEach(() => { if (n) throw new Error('console'); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "alias-snapshot-argument",
+    "exit": 0,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nconst n = calls.length;\nfunction check(p) { if (p) throw new Error('console'); }\nafterEach(() => check(n));\n",
+    "helpers": {}
+  },
+  {
+    "name": "import-default-snapshot",
+    "exit": 0,
+    "setup": "import { calls } from './rec.js';\nimport n from './rec.js';\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { if (n) throw new Error('console'); });\n",
+    "helpers": {
+      "rec.js": "export const calls = [];\nexport default calls.length;\n"
+    }
+  },
+  {
+    "name": "argument-property-live",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nfunction check(n) { if (n) throw new Error('console'); }\nafterEach(() => check(calls.length));\n",
+    "helpers": {}
+  },
+  {
+    "name": "hook-local-property",
+    "exit": 1,
+    "setup": "const calls = [];\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { const n = calls.length; if (n) throw new Error('console'); });\n",
+    "helpers": {}
+  },
+  {
+    "name": "import-export-all",
+    "exit": 1,
+    "setup": "import { calls } from './test-utils/index.js';\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { if (calls.length) throw new Error('console'); });\n",
+    "helpers": {
+      "test-utils/index.js": "export * from './console.js';\n",
+      "test-utils/console.js": "export const calls = [];\n"
+    }
+  },
+  {
+    "name": "import-commonjs",
+    "exit": 1,
+    "setup": "import { calls } from './rec.cjs';\nconsole.error = (...a) => { calls.push(a); };\nafterEach(() => { if (calls.length) throw new Error('console'); });\n",
+    "helpers": {
+      "rec.cjs": "exports.calls = [];\n"
+    }
+  }
+]

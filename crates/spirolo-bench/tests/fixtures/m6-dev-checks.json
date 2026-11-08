@@ -1,0 +1,1468 @@
+[
+  {
+    "name": "ChatGPTNextWeb__NextChat",
+    "source": "oss",
+    "set": "dev",
+    "truth": {
+      "execute": false,
+      "never_executed": []
+    },
+    "check": {
+      "findings": [
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "446"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "446.00"
+            }
+          ],
+          "explain": "app/components/chat.tsx changes often (churn 1), branches a lot (complexity 446) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/chat.tsx",
+          "id": "untested-hotspot app/components/chat.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/chat.tsx scores 446.00: churn 1 \u00d7 complexity 446 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "265"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "265.00"
+            }
+          ],
+          "explain": "app/components/settings.tsx changes often (churn 1), branches a lot (complexity 265) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/settings.tsx",
+          "id": "untested-hotspot app/components/settings.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/settings.tsx scores 265.00: churn 1 \u00d7 complexity 265 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "139"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "139.00"
+            }
+          ],
+          "explain": "app/components/mcp-market.tsx changes often (churn 1), branches a lot (complexity 139) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/mcp-market.tsx",
+          "id": "untested-hotspot app/components/mcp-market.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/mcp-market.tsx scores 139.00: churn 1 \u00d7 complexity 139 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "134"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "134.00"
+            }
+          ],
+          "explain": "app/utils/chat.ts changes often (churn 1), branches a lot (complexity 134) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/utils/chat.ts",
+          "id": "untested-hotspot app/utils/chat.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/utils/chat.ts scores 134.00: churn 1 \u00d7 complexity 134 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "162"
+            },
+            {
+              "key": "weakness",
+              "value": "0.75"
+            },
+            {
+              "key": "score",
+              "value": "121.50"
+            }
+          ],
+          "explain": "app/store/chat.ts changes often (churn 1), branches a lot (complexity 162) and its tests touch little of it (weakness 0.75: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/store/chat.ts",
+          "id": "untested-hotspot app/store/chat.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/store/chat.ts scores 121.50: churn 1 \u00d7 complexity 162 \u00d7 weakness 0.75",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "102"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "102.00"
+            }
+          ],
+          "explain": "app/components/mask.tsx changes often (churn 1), branches a lot (complexity 102) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/mask.tsx",
+          "id": "untested-hotspot app/components/mask.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/mask.tsx scores 102.00: churn 1 \u00d7 complexity 102 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "85"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "85.00"
+            }
+          ],
+          "explain": "app/client/platforms/openai.ts changes often (churn 1), branches a lot (complexity 85) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/platforms/openai.ts",
+          "id": "untested-hotspot app/client/platforms/openai.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/platforms/openai.ts scores 85.00: churn 1 \u00d7 complexity 85 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "83"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "83.00"
+            }
+          ],
+          "explain": "app/components/exporter.tsx changes often (churn 1), branches a lot (complexity 83) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/exporter.tsx",
+          "id": "untested-hotspot app/components/exporter.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/exporter.tsx scores 83.00: churn 1 \u00d7 complexity 83 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "72"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "72.00"
+            }
+          ],
+          "explain": "app/components/ui-lib.tsx changes often (churn 1), branches a lot (complexity 72) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/ui-lib.tsx",
+          "id": "untested-hotspot app/components/ui-lib.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/ui-lib.tsx scores 72.00: churn 1 \u00d7 complexity 72 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "69"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "69.00"
+            }
+          ],
+          "explain": "app/components/markdown.tsx changes often (churn 1), branches a lot (complexity 69) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/markdown.tsx",
+          "id": "untested-hotspot app/components/markdown.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/markdown.tsx scores 69.00: churn 1 \u00d7 complexity 69 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "68"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "68.00"
+            }
+          ],
+          "explain": "app/components/realtime-chat/realtime-chat.tsx changes often (churn 1), branches a lot (complexity 68) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/realtime-chat/realtime-chat.tsx",
+          "id": "untested-hotspot app/components/realtime-chat/realtime-chat.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/realtime-chat/realtime-chat.tsx scores 68.00: churn 1 \u00d7 complexity 68 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "66"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "66.00"
+            }
+          ],
+          "explain": "app/store/plugin.ts changes often (churn 1), branches a lot (complexity 66) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/store/plugin.ts",
+          "id": "untested-hotspot app/store/plugin.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/store/plugin.ts scores 66.00: churn 1 \u00d7 complexity 66 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "64"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "64.00"
+            }
+          ],
+          "explain": "app/store/access.ts changes often (churn 1), branches a lot (complexity 64) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/store/access.ts",
+          "id": "untested-hotspot app/store/access.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/store/access.ts scores 64.00: churn 1 \u00d7 complexity 64 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "60"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "60.00"
+            }
+          ],
+          "explain": "app/components/sidebar.tsx changes often (churn 1), branches a lot (complexity 60) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/sidebar.tsx",
+          "id": "untested-hotspot app/components/sidebar.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/sidebar.tsx scores 60.00: churn 1 \u00d7 complexity 60 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "60"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "60.00"
+            }
+          ],
+          "explain": "app/mcp/actions.ts changes often (churn 1), branches a lot (complexity 60) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/mcp/actions.ts",
+          "id": "untested-hotspot app/mcp/actions.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/mcp/actions.ts scores 60.00: churn 1 \u00d7 complexity 60 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "57"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "57.00"
+            }
+          ],
+          "explain": "app/components/message-selector.tsx changes often (churn 1), branches a lot (complexity 57) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/message-selector.tsx",
+          "id": "untested-hotspot app/components/message-selector.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/message-selector.tsx scores 57.00: churn 1 \u00d7 complexity 57 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "69"
+            },
+            {
+              "key": "weakness",
+              "value": "0.78"
+            },
+            {
+              "key": "score",
+              "value": "53.67"
+            }
+          ],
+          "explain": "app/client/api.ts changes often (churn 1), branches a lot (complexity 69) and its tests touch little of it (weakness 0.78: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/api.ts",
+          "id": "untested-hotspot app/client/api.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/api.ts scores 53.67: churn 1 \u00d7 complexity 69 \u00d7 weakness 0.78",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "52"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "52.00"
+            }
+          ],
+          "explain": "app/components/home.tsx changes often (churn 1), branches a lot (complexity 52) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/home.tsx",
+          "id": "untested-hotspot app/components/home.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/home.tsx scores 52.00: churn 1 \u00d7 complexity 52 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "51"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "51.00"
+            }
+          ],
+          "explain": "app/components/artifacts.tsx changes often (churn 1), branches a lot (complexity 51) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/artifacts.tsx",
+          "id": "untested-hotspot app/components/artifacts.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/artifacts.tsx scores 51.00: churn 1 \u00d7 complexity 51 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "48"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "48.00"
+            }
+          ],
+          "explain": "app/client/platforms/tencent.ts changes often (churn 1), branches a lot (complexity 48) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/platforms/tencent.ts",
+          "id": "untested-hotspot app/client/platforms/tencent.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/platforms/tencent.ts scores 48.00: churn 1 \u00d7 complexity 48 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "47"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "47.00"
+            }
+          ],
+          "explain": "app/client/platforms/anthropic.ts changes often (churn 1), branches a lot (complexity 47) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/platforms/anthropic.ts",
+          "id": "untested-hotspot app/client/platforms/anthropic.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/platforms/anthropic.ts scores 47.00: churn 1 \u00d7 complexity 47 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "46"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "46.00"
+            }
+          ],
+          "explain": "app/components/plugin.tsx changes often (churn 1), branches a lot (complexity 46) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/components/plugin.tsx",
+          "id": "untested-hotspot app/components/plugin.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "app/components/plugin.tsx scores 46.00: churn 1 \u00d7 complexity 46 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "45"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "45.00"
+            }
+          ],
+          "explain": "app/client/platforms/baidu.ts changes often (churn 1), branches a lot (complexity 45) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/platforms/baidu.ts",
+          "id": "untested-hotspot app/client/platforms/baidu.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/platforms/baidu.ts scores 45.00: churn 1 \u00d7 complexity 45 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "45"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "45.00"
+            }
+          ],
+          "explain": "app/client/platforms/google.ts changes often (churn 1), branches a lot (complexity 45) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "app/client/platforms/google.ts",
+          "id": "untested-hotspot app/client/platforms/google.ts untested-hotspot#0",
+          "line": 1,
+          "message": "app/client/platforms/google.ts scores 45.00: churn 1 \u00d7 complexity 45 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        }
+      ]
+    }
+  },
+  {
+    "name": "chakra-ui__chakra-ui",
+    "source": "oss",
+    "set": "dev",
+    "truth": {
+      "execute": true,
+      "never_executed": []
+    },
+    "check": {
+      "findings": [
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "140"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "140.00"
+            }
+          ],
+          "explain": "apps/compositions/src/ui/rich-text-editor-control.tsx changes often (churn 1), branches a lot (complexity 140) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/compositions/src/ui/rich-text-editor-control.tsx",
+          "id": "untested-hotspot apps/compositions/src/ui/rich-text-editor-control.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "apps/compositions/src/ui/rich-text-editor-control.tsx scores 140.00: churn 1 \u00d7 complexity 140 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "120"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "120.00"
+            }
+          ],
+          "explain": "packages/react/src/preset-base.ts changes often (churn 1), branches a lot (complexity 120) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/react/src/preset-base.ts",
+          "id": "untested-hotspot packages/react/src/preset-base.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/react/src/preset-base.ts scores 120.00: churn 1 \u00d7 complexity 120 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "106"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "106.00"
+            }
+          ],
+          "explain": "apps/www/scripts/generate-types.ts changes often (churn 1), branches a lot (complexity 106) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/www/scripts/generate-types.ts",
+          "id": "untested-hotspot apps/www/scripts/generate-types.ts untested-hotspot#0",
+          "line": 1,
+          "message": "apps/www/scripts/generate-types.ts scores 106.00: churn 1 \u00d7 complexity 106 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "91"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "91.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/props/as-props.ts changes often (churn 1), branches a lot (complexity 91) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/props/as-props.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/props/as-props.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/props/as-props.ts scores 91.00: churn 1 \u00d7 complexity 91 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "81"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "81.00"
+            }
+          ],
+          "explain": "apps/compositions/src/examples/rich-text-editor/rich-text-editor-composition.tsx changes often (churn 1), branches a lot (complexity 81) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/compositions/src/examples/rich-text-editor/rich-text-editor-composition.tsx",
+          "id": "untested-hotspot apps/compositions/src/examples/rich-text-editor/rich-text-editor-composition.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "apps/compositions/src/examples/rich-text-editor/rich-text-editor-composition.tsx scores 81.00: churn 1 \u00d7 complexity 81 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "158"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "79.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/components/popover.ts changes often (churn 1), branches a lot (complexity 158) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/components/popover.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/components/popover.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/components/popover.ts scores 79.00: churn 1 \u00d7 complexity 158 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "76"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "76.00"
+            }
+          ],
+          "explain": "packages/react/src/styled-system/factory.tsx changes often (churn 1), branches a lot (complexity 76) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/react/src/styled-system/factory.tsx",
+          "id": "untested-hotspot packages/react/src/styled-system/factory.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "packages/react/src/styled-system/factory.tsx scores 76.00: churn 1 \u00d7 complexity 76 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "101"
+            },
+            {
+              "key": "weakness",
+              "value": "0.75"
+            },
+            {
+              "key": "score",
+              "value": "75.75"
+            }
+          ],
+          "explain": "packages/codemod/src/utils/chakra-tracker.ts changes often (churn 1), branches a lot (complexity 101) and its tests touch little of it (weakness 0.75: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/utils/chakra-tracker.ts",
+          "id": "untested-hotspot packages/codemod/src/utils/chakra-tracker.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/utils/chakra-tracker.ts scores 75.75: churn 1 \u00d7 complexity 101 \u00d7 weakness 0.75",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "150"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "75.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/theme/theme-tokens.ts changes often (churn 1), branches a lot (complexity 150) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/theme/theme-tokens.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/theme/theme-tokens.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/theme/theme-tokens.ts scores 75.00: churn 1 \u00d7 complexity 150 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "72"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "72.00"
+            }
+          ],
+          "explain": "apps/compositions/src/ui/rich-text-editor-menu.tsx changes often (churn 1), branches a lot (complexity 72) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/compositions/src/ui/rich-text-editor-menu.tsx",
+          "id": "untested-hotspot apps/compositions/src/ui/rich-text-editor-menu.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "apps/compositions/src/ui/rich-text-editor-menu.tsx scores 72.00: churn 1 \u00d7 complexity 72 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "67"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "67.00"
+            }
+          ],
+          "explain": "apps/www/utils/project-sdk.ts changes often (churn 1), branches a lot (complexity 67) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/www/utils/project-sdk.ts",
+          "id": "untested-hotspot apps/www/utils/project-sdk.ts untested-hotspot#0",
+          "line": 1,
+          "message": "apps/www/utils/project-sdk.ts scores 67.00: churn 1 \u00d7 complexity 67 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "130"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "65.00"
+            }
+          ],
+          "explain": "packages/react/src/styled-system/token-dictionary.ts changes often (churn 1), branches a lot (complexity 130) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/react/src/styled-system/token-dictionary.ts",
+          "id": "untested-hotspot packages/react/src/styled-system/token-dictionary.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/react/src/styled-system/token-dictionary.ts scores 65.00: churn 1 \u00d7 complexity 130 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "64"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "64.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/removed/nextjs-package.ts changes often (churn 1), branches a lot (complexity 64) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/removed/nextjs-package.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/removed/nextjs-package.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/removed/nextjs-package.ts scores 64.00: churn 1 \u00d7 complexity 64 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "63"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "63.00"
+            }
+          ],
+          "explain": "packages/charts/src/chart/chart.tsx changes often (churn 1), branches a lot (complexity 63) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/charts/src/chart/chart.tsx",
+          "id": "untested-hotspot packages/charts/src/chart/chart.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "packages/charts/src/chart/chart.tsx scores 63.00: churn 1 \u00d7 complexity 63 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "63"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "63.00"
+            }
+          ],
+          "explain": "packages/react/src/styled-system/utility.ts changes often (churn 1), branches a lot (complexity 63) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/react/src/styled-system/utility.ts",
+          "id": "untested-hotspot packages/react/src/styled-system/utility.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/react/src/styled-system/utility.ts scores 63.00: churn 1 \u00d7 complexity 63 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "112"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "56.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/components/menu.ts changes often (churn 1), branches a lot (complexity 112) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/components/menu.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/components/menu.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/components/menu.ts scores 56.00: churn 1 \u00d7 complexity 112 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "53"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "53.00"
+            }
+          ],
+          "explain": "packages/react/scripts/typedocs.ts changes often (churn 1), branches a lot (complexity 53) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/react/scripts/typedocs.ts",
+          "id": "untested-hotspot packages/react/scripts/typedocs.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/react/scripts/typedocs.ts scores 53.00: churn 1 \u00d7 complexity 53 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "51"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "51.00"
+            }
+          ],
+          "explain": "apps/www/utils/get-theming-doc.ts changes often (churn 1), branches a lot (complexity 51) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/www/utils/get-theming-doc.ts",
+          "id": "untested-hotspot apps/www/utils/get-theming-doc.ts untested-hotspot#0",
+          "line": 1,
+          "message": "apps/www/utils/get-theming-doc.ts scores 51.00: churn 1 \u00d7 complexity 51 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "50"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "50.00"
+            }
+          ],
+          "explain": "packages/charts/src/use-chart.ts changes often (churn 1), branches a lot (complexity 50) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/charts/src/use-chart.ts",
+          "id": "untested-hotspot packages/charts/src/use-chart.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/charts/src/use-chart.ts scores 50.00: churn 1 \u00d7 complexity 50 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "50"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "50.00"
+            }
+          ],
+          "explain": "packages/cli/src/commands/blocks.ts changes often (churn 1), branches a lot (complexity 50) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/cli/src/commands/blocks.ts",
+          "id": "untested-hotspot packages/cli/src/commands/blocks.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/cli/src/commands/blocks.ts scores 50.00: churn 1 \u00d7 complexity 50 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "97"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "48.50"
+            }
+          ],
+          "explain": "packages/codemod/src/upgrade.ts changes often (churn 1), branches a lot (complexity 97) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/upgrade.ts",
+          "id": "untested-hotspot packages/codemod/src/upgrade.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/upgrade.ts scores 48.50: churn 1 \u00d7 complexity 97 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "47"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "47.00"
+            }
+          ],
+          "explain": "apps/www/components/component-explorer-sidebar.tsx changes often (churn 1), branches a lot (complexity 47) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "apps/www/components/component-explorer-sidebar.tsx",
+          "id": "untested-hotspot apps/www/components/component-explorer-sidebar.tsx untested-hotspot#0",
+          "line": 1,
+          "message": "apps/www/components/component-explorer-sidebar.tsx scores 47.00: churn 1 \u00d7 complexity 47 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "47"
+            },
+            {
+              "key": "weakness",
+              "value": "1.00"
+            },
+            {
+              "key": "score",
+              "value": "47.00"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/removed/stack-divider.ts changes often (churn 1), branches a lot (complexity 47) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/removed/stack-divider.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/removed/stack-divider.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/removed/stack-divider.ts scores 47.00: churn 1 \u00d7 complexity 47 \u00d7 weakness 1.00",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        },
+        {
+          "column": 1,
+          "evidence": [
+            {
+              "key": "churn",
+              "value": "1"
+            },
+            {
+              "key": "complexity",
+              "value": "83"
+            },
+            {
+              "key": "weakness",
+              "value": "0.50"
+            },
+            {
+              "key": "score",
+              "value": "41.50"
+            }
+          ],
+          "explain": "packages/codemod/src/transforms/components/steps.ts changes often (churn 1), branches a lot (complexity 83) and its tests touch little of it (weakness 0.50: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+          "file": "packages/codemod/src/transforms/components/steps.ts",
+          "id": "untested-hotspot packages/codemod/src/transforms/components/steps.ts untested-hotspot#0",
+          "line": 1,
+          "message": "packages/codemod/src/transforms/components/steps.ts scores 41.50: churn 1 \u00d7 complexity 83 \u00d7 weakness 0.50",
+          "outcome": "finding",
+          "related": [],
+          "rule": "untested-hotspot",
+          "severity": "info"
+        }
+      ]
+    }
+  }
+]

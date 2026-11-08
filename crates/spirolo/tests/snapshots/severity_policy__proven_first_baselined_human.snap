@@ -1,0 +1,45 @@
+---
+source: crates/spirolo/tests/severity_policy.rs
+expression: baseline
+---
+3 files · 2 test files · 21 tests (21 vitest) · 30 expects · 0 handlers · 0 configs · 0ms
+Health C (59)
+
+── Weak tests (audit) ────────────────────────────────────────
+
+● weak-assertion (2 files, 3 findings)
+  project 8 of 30 assertions carry no value (26.7%, ceiling 6.0%)
+  src/__tests__/templates/engine.test.ts (2)
+    :200 test "should handle empty data object" asserts only value-less matchers (toBeDefined)
+    :208 test "should handle complex data objects" asserts only value-less matchers (toBeDefined)
+  A test's assertions check no produced value, only that one exists, so a wrong value still passes. · spirolo explain weak-assertion
+  To accept today's rows: spirolo ratchet
+
+── Merge gate (gate) ────────────────────────────────────────
+
+● dead-skip (1 file)
+  src/ledger.test.ts:14 skip "is red or skipped" is CI-scoped on SPIROLO_FLIP
+  A skipped or focused test disagrees with the suite that is believed to run, with no linked issue or visible condition watching it. · spirolo explain dead-skip
+  To accept today's rows: spirolo ratchet
+
+── Unused tests (hygiene) ────────────────────────────────────────
+
+● orphan-test (1 file, 3 findings) · experimental: 2/2 (INSUFFICIENT)
+  src/__tests__/templates/engine.test.ts (3)
+    :3 the test imports ../../templates/registry, which no longer resolves
+    :4 the test imports ../../types/template, which no longer resolves
+    :5 the test imports ../../types/email, which no longer resolves
+  A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves. · spirolo explain orphan-test
+  To accept today's rows: spirolo ratchet
+
+● duplicate-test (1 file) · rule: FAIL
+  src/ledger.test.ts:8 ledger › is always red duplicates 1 other test, at :14
+  Two tests with different names have bodies that normalise to the same code, so one of them adds nothing. · spirolo explain duplicate-test
+  To accept today's rows: spirolo ratchet
+
+✓ 12 rules found nothing: handler-drift, generator-walk, absence-anchor, data-layer-mock, fail-closed-setup, gate-truth, redundant-test, unused-mock, stale-snapshot, flake-candidate, flake-observed, untested-hotspot
+
+8 findings in 4 of 16 rules · 7 warn · 0 error · 1 info · exit 1 · 8 new
+ note   no churn input: untested-hotspot ranks by complexity × weakness alone. Save `git log --numstat --format= --since=180.days` to a file and pass it with `--churn <file>` or name it in `inputs.churn`
+ note   config severity for duplicate-test not applied: rule is FAIL
+ note   config severity for redundant-test not applied: rule is FAIL

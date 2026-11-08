@@ -1,0 +1,10 @@
+---
+source: crates/spirolo-bench/tests/harness.rs
+expression: render(&reports)
+---
+spirolo-bench · 1 corpus entry · counts vs truth.json, wall-clock vs budget
+
+fixture-repo  —                     SKIPPED
+  not cloned: run `just corpus` to fetch the pinned commit
+
+0 failed · 0 passed · 1 skipped

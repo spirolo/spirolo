@@ -1,0 +1,3 @@
+# cargo-mutants: skip the binary entry point and the bench harness.
+exclude_globs = ["crates/spirolo/src/main.rs", "crates/spirolo-bench/**"]
+timeout_multiplier = 3.0

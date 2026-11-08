@@ -1,0 +1,20 @@
+# Rehearsal registry: no upstream proxy, authenticated writes only for the Spirolo packages.
+storage: /verdaccio/storage
+auth:
+  htpasswd:
+    file: /verdaccio/storage/htpasswd
+    max_users: 1
+uplinks: {}
+packages:
+  'spirolo':
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+  'spirolo-*':
+    access: $all
+    publish: $authenticated
+    unpublish: $authenticated
+log:
+  type: stdout
+  format: pretty
+  level: warn

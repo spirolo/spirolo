@@ -1,0 +1,7 @@
+{
+  "name": "kaneo-browser-tests",
+  "scripts": {
+    "test": "playwright test",
+    "test:browserstack": "browserstack-node-sdk playwright test"
+  }
+}

@@ -1,0 +1,10 @@
+---
+source: crates/spirolo/src/display_tests.rs
+expression: "human_view(&root, Some(family))"
+---
+4 files · 3 test files · 3 tests (3 vitest) · 3 expects · 0 handlers · 0 configs · 0ms
+Flaky −0.0 / 20
+
+✓ 2 rules found nothing: flake-candidate, flake-observed
+
+0 findings in 0 of 2 rules · 0 warn · 0 error · exit 0

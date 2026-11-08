@@ -1,0 +1,26 @@
+[package]
+name = "spirolo-rules"
+description = "The rule families (audit, gate, hygiene, impact, flake) as pure queries over the model"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+spirolo-model.workspace = true
+# `data-layer-mock` scopes itself to a glob list (`dataLayerScope`); `globset` is the
+# workspace's chosen glob engine, already used by `spirolo-model` and `spirolo-frameworks`.
+globset.workspace = true
+# `redundant-test`'s identity is a hash of its group's sorted member names; `xxhash-rust`
+# is the workspace's chosen hasher, already used by `spirolo-frameworks` for `body_hash`.
+xxhash-rust.workspace = true
+# The rule-status table (`status`) is `corpus/rule-status.json`, embedded and parsed once.
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+insta.workspace = true
+
+[lints]
+workspace = true

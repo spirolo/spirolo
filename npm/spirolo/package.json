@@ -1,0 +1,23 @@
+{
+  "name": "spirolo",
+  "version": "0.1.0-alpha.1",
+  "description": "Whole-project analyzer for JavaScript test suites",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/spirolo/spirolo",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "spirolo": "bin/spirolo.cjs"
+  },
+  "files": [
+    "bin/spirolo.cjs",
+    "resolve.cjs"
+  ],
+  "optionalDependencies": {
+    "spirolo-linux-x64": "0.1.0-alpha.1",
+    "spirolo-linux-arm64": "0.1.0-alpha.1",
+    "spirolo-darwin-x64": "0.1.0-alpha.1",
+    "spirolo-darwin-arm64": "0.1.0-alpha.1"
+  }
+}

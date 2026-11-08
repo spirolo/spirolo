@@ -1,0 +1,11 @@
+{
+  "name": "spirolo-rules-probe",
+  "publisher": "spirolo",
+  "version": "0.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "vscode": "^1.91.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onStartupFinished"],
+  "extensionDependencies": ["spirolo.spirolo"]
+}

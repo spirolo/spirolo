@@ -1,0 +1,10 @@
+---
+source: crates/spirolo-bench/tests/harness.rs
+expression: render(&reports)
+---
+spirolo-bench · 1 corpus entry · counts vs truth.json, wall-clock vs budget
+
+fixture-repo  1.20s median of 1 / 5.00s budget  FAIL
+  vitest  expected 2 files / 3 tests  actual 2 files / 2 tests  MISMATCH
+
+1 failed · 0 passed · 0 skipped

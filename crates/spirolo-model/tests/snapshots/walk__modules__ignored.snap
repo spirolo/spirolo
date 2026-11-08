@@ -1,0 +1,42 @@
+---
+source: crates/spirolo-model/tests/walk.rs
+expression: model.modules
+---
+[
+  {
+    "path": "src/app.ts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "app",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 13,
+          "end": 16,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ],
+    "constants": [
+      {
+        "name": "app",
+        "value": "visible",
+        "opaque": false,
+        "reason": null,
+        "env_template": null,
+        "span": {
+          "start": 13,
+          "end": 16,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ],
+    "mocks": []
+  }
+]

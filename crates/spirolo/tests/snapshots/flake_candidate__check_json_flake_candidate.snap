@@ -1,0 +1,90 @@
+---
+source: crates/spirolo/tests/flake_candidate.rs
+expression: "status_support::redact_status(&serde_json::Value::Array(first))"
+---
+[
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "wall-clock"
+      },
+      {
+        "key": "mechanism",
+        "value": "performance.now(); performance.now()"
+      },
+      {
+        "key": "gate",
+        "value": "skipIf(!process.env.PERF)"
+      }
+    ],
+    "explain": "The test \"warms within budget\" measures the time between two clock reads and asserts a bound on it, so a slower or busier machine fails it. Install fake timers (`vi.useFakeTimers()`) or set the system time, or assert the behaviour without timing it.",
+    "file": "src/perf.test.ts",
+    "id": "flake-candidate src/perf.test.ts warms within budget [wall-clock]#0",
+    "line": 3,
+    "message": "test \"warms within budget\" asserts an elapsed-time budget (performance.now()), so a slower or busier machine can fail it, parked behind skipIf(!process.env.PERF)",
+    "outcome": "listed",
+    "related": [
+      {
+        "column": 14,
+        "file": "src/perf.test.ts",
+        "label": "wall-clock",
+        "line": 4
+      },
+      {
+        "column": 10,
+        "file": "src/perf.test.ts",
+        "label": "wall-clock",
+        "line": 6
+      }
+    ],
+    "rule": "flake-candidate",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "warms within budget"
+    }
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "wall-clock"
+      },
+      {
+        "key": "mechanism",
+        "value": "performance.now(); performance.now()"
+      }
+    ],
+    "explain": "The test \"warms within budget\" measures the time between two clock reads and asserts a bound on it, so a slower or busier machine fails it. Install fake timers (`vi.useFakeTimers()`) or set the system time, or assert the behaviour without timing it.",
+    "file": "src/warm.test.ts",
+    "id": "flake-candidate src/warm.test.ts warms within budget [wall-clock]#0",
+    "line": 4,
+    "message": "test \"warms within budget\" asserts an elapsed-time budget (performance.now()), so a slower or busier machine can fail it",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 17,
+        "file": "src/test-utils/budget.ts",
+        "label": "wall-clock",
+        "line": 3
+      },
+      {
+        "column": 10,
+        "file": "src/test-utils/budget.ts",
+        "label": "wall-clock",
+        "line": 5
+      }
+    ],
+    "rule": "flake-candidate",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "warms within budget"
+    }
+  }
+]

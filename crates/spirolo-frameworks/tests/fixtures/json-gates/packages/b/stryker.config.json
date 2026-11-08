@@ -1,0 +1,1 @@
+{ "testRunner": "jest", "mutate": ["src/**/*.js"], "thresholds": { "break": 50 } }

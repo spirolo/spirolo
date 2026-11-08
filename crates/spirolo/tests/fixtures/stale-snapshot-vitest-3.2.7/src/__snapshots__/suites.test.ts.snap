@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Area north > renders 1`] = `2`;
+
+exports[`Suite alpha > renders 1`] = `1`;

@@ -1,0 +1,11 @@
+---
+source: crates/spirolo-bench/tests/harness.rs
+expression: render(&reports)
+---
+spirolo-bench · 1 corpus entry · counts vs truth.json, wall-clock vs budget
+
+fixture-repo  1.20s median of 1 / 5.00s budget  PASS
+  vitest         expected 4 files / 6 tests  actual 4 files / 6 tests  match
+  runner vitest  listed 2 files / 4 tests  spirolo 2 / 3  delta files 0 / tests -1  tolerance 0 / 1  match
+
+0 failed · 1 passed · 0 skipped

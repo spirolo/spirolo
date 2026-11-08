@@ -1,0 +1,52 @@
+{
+  "numTotalTestSuites": 340,
+  "numPassedTestSuites": 338,
+  "numFailedTestSuites": 2,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 792,
+  "numPassedTests": 792,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 778,
+    "total": 778,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1792032195799,
+  "success": false,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "findCrossFileReExports"
+          ],
+          "fullName": "findCrossFileReExports reports the file location, name, and source of each resolved re-export",
+          "status": "passed",
+          "title": "reports the file location, name, and source of each resolved re-export",
+          "duration": 799.2545360000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1792032207413,
+      "endTime": 1792032210570.9258,
+      "status": "passed",
+      "message": "",
+      "name": "/workspace/chakra-ui/packages/codemod/__tests__/cross-file.test.ts"
+    }
+  ]
+}

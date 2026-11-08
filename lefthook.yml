@@ -1,0 +1,20 @@
+# Git hooks. Run `lefthook install` once per clone.
+pre-commit:
+  parallel: true
+  commands:
+    fmt:
+      glob: "*.rs"
+      run: cargo fmt --all --check
+    taplo:
+      glob: "*.toml"
+      run: taplo fmt --check {staged_files}
+    typos:
+      run: typos --force-exclude {staged_files}
+pre-push:
+  commands:
+    clippy:
+      run: cargo clippy --all-targets --all-features -- -D warnings
+    test:
+      # From a linked worktree git hands hooks an absolute GIT_DIR; the tests' `git -C <tmp>`
+      # would then act on this repository (commit fixtures, set core.bare).
+      run: env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE cargo nextest run --all-features --no-tests=warn

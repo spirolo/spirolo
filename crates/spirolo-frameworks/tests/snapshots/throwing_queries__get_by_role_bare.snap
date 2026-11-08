@@ -1,0 +1,39 @@
+---
+source: crates/spirolo-frameworks/tests/throwing_queries.rs
+expression: "recognise(\"import { it } from 'vitest'\\nit('t', () => { getByRole('button') })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 28,
+      "end": 66,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [
+      {
+        "name": "getByRole",
+        "within": false,
+        "span": {
+          "start": 44,
+          "end": 63,
+          "line": 2,
+          "column": 17
+        }
+      }
+    ],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "d2db5554c10f2723"
+  }
+]

@@ -1,0 +1,42 @@
+---
+source: crates/spirolo-frameworks/tests/mocks.rs
+expression: "recognise(\"import { it } from 'vitest'\\nit('t', () => { server.use(http.get('/api', resolver)) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 28,
+      "end": 85,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [],
+    "mocks": [
+      {
+        "target": null,
+        "resolved": null,
+        "reason": null,
+        "kind": "network",
+        "factory": false,
+        "span": {
+          "start": 44,
+          "end": 82,
+          "line": 2,
+          "column": 17
+        }
+      }
+    ],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "6624ffe8b2613211"
+  }
+]

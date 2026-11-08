@@ -1,0 +1,21 @@
+[package]
+name = "spirolo-inputs"
+description = "Parsers for artifacts other tools write: coverage, mutation, JUnit, runner JSON"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+spirolo-model = { workspace = true }
+roxmltree = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+xxhash-rust = { workspace = true }
+
+[dev-dependencies]
+insta = { workspace = true }
+
+[lints]
+workspace = true

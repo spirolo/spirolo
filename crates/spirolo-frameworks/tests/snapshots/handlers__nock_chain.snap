@@ -1,0 +1,32 @@
+---
+source: crates/spirolo-frameworks/tests/handlers.rs
+expression: "handlers(\"import nock from 'nock'\\n\\\n         nock('https://api.example.com')\\n\\\n         \\x20 .get('/users')\\n\\\n         \\x20 .reply(200, [])\\n\\\n         \\x20 .post('/users')\\n\\\n         \\x20 .reply(201, {})\\n\")"
+---
+[
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 24,
+      "end": 108,
+      "line": 2,
+      "column": 1
+    },
+    "library": "nock",
+    "method": "POST",
+    "pattern": "/users",
+    "pattern_kind": "string"
+  },
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 24,
+      "end": 72,
+      "line": 2,
+      "column": 1
+    },
+    "library": "nock",
+    "method": "GET",
+    "pattern": "/users",
+    "pattern_kind": "string"
+  }
+]

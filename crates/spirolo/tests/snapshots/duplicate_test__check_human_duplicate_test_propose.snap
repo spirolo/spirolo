@@ -1,0 +1,17 @@
+---
+source: crates/spirolo/tests/duplicate_test.rs
+expression: "status_support::redact_heading_status(&redact_timing(&stdout))"
+---
+5 files · 3 test files · 8 tests (8 vitest) · 8 expects · 0 handlers · 0 configs · <t>
+
+── Unused tests (hygiene) ────────────────────────────────────────
+
+● duplicate-test (2 files) · <tier>
+  src/alpha.test.ts:4 parses alpha input duplicates 1 other test, at src/beta.test.ts:4
+    → keep — duplicate-test has not passed its corpus precision check on an independent oracle, so spirolo proposes no merge or delete
+  src/format.test.ts:6 format › formats the value duplicates 1 other test, at :10
+    → keep — duplicate-test has not passed its corpus precision check on an independent oracle, so spirolo proposes no merge or delete
+  Two tests with different names have bodies that normalise to the same code, so one of them adds nothing. · spirolo explain duplicate-test
+  To gate it: .spirolorc.jsonc { "rules": { "duplicate-test": { "severity": "warn" } } } · to accept today's rows: spirolo ratchet
+
+2 findings in 1 of 1 rules · 0 warn · 0 error · 2 info · exit 0

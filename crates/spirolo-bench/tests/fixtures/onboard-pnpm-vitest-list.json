@@ -1,0 +1,259 @@
+{
+  "coverage": [],
+  "diagnostics": [
+    {
+      "code": "unpaired_test",
+      "file": "packages/api/src/db.test.js",
+      "message": "no source module paired with test file packages/api/src/db.test.js",
+      "severity": "warning",
+      "span": null
+    }
+  ],
+  "gates": [],
+  "handlers": [],
+  "modules": [
+    {
+      "constants": [],
+      "exports": [],
+      "imports": [
+        {
+          "kind": "static",
+          "reason": "builtin",
+          "resolved": null,
+          "span": {
+            "column": 25,
+            "end": 116,
+            "line": 2,
+            "start": 106
+          },
+          "specifier": "node:net"
+        },
+        {
+          "kind": "static",
+          "reason": "unknown_package",
+          "resolved": null,
+          "span": {
+            "column": 30,
+            "end": 155,
+            "line": 3,
+            "start": 147
+          },
+          "specifier": "vitest"
+        }
+      ],
+      "language": "javascript",
+      "mocks": [],
+      "parse_status": "parsed",
+      "path": "packages/api/src/db.test.js"
+    },
+    {
+      "constants": [],
+      "exports": [
+        {
+          "kind": "named",
+          "name": "label",
+          "origin": null,
+          "resolved": null,
+          "span": {
+            "column": 17,
+            "end": 21,
+            "line": 1,
+            "start": 16
+          }
+        }
+      ],
+      "imports": [],
+      "language": "javascript",
+      "mocks": [],
+      "parse_status": "parsed",
+      "path": "packages/ui/src/label.js"
+    },
+    {
+      "constants": [],
+      "exports": [],
+      "imports": [
+        {
+          "kind": "static",
+          "reason": "unknown_package",
+          "resolved": null,
+          "span": {
+            "column": 40,
+            "end": 47,
+            "line": 1,
+            "start": 39
+          },
+          "specifier": "vitest"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/ui/src/label.js",
+          "span": {
+            "column": 23,
+            "end": 83,
+            "line": 2,
+            "start": 71
+          },
+          "specifier": "./label.js"
+        }
+      ],
+      "language": "javascript",
+      "mocks": [],
+      "parse_status": "parsed",
+      "path": "packages/ui/src/label.test.js"
+    }
+  ],
+  "mutants": [],
+  "mutation_reports": [],
+  "mutation_tests": [],
+  "pairings": [
+    {
+      "ambiguous": false,
+      "reason": "import",
+      "source_module": "packages/ui/src/label.js",
+      "test_file": "packages/ui/src/label.test.js"
+    }
+  ],
+  "runs": [],
+  "saga_walks": [],
+  "schema_version": 2,
+  "test_cases": [
+    {
+      "assertions": [
+        {
+          "argument": "true",
+          "carries_value": true,
+          "matcher": "toBe",
+          "negated": false,
+          "span": {
+            "column": 3,
+            "end": 450,
+            "line": 16,
+            "start": 414
+          },
+          "subject": "await reach(5432)",
+          "subject_is_query": false
+        }
+      ],
+      "body_hash": "0d7b0677b1ad4589",
+      "each": null,
+      "file": "packages/api/src/db.test.js",
+      "framework": "vitest",
+      "kind": "test",
+      "loops": [],
+      "mocks": [],
+      "modifiers": [],
+      "skip": null,
+      "span": {
+        "column": 1,
+        "end": 454,
+        "line": 15,
+        "start": 369
+      },
+      "suite_path": [],
+      "tags": [],
+      "throwing_queries": [],
+      "title": "the database answers"
+    },
+    {
+      "assertions": [],
+      "body_hash": null,
+      "each": null,
+      "file": "packages/ui/src/label.test.js",
+      "framework": "vitest",
+      "kind": "suite",
+      "loops": [],
+      "mocks": [],
+      "modifiers": [],
+      "skip": null,
+      "span": {
+        "column": 1,
+        "end": 254,
+        "line": 4,
+        "start": 86
+      },
+      "suite_path": [],
+      "tags": [],
+      "throwing_queries": [],
+      "title": "label"
+    },
+    {
+      "assertions": [
+        {
+          "argument": "\"1 item\"",
+          "carries_value": true,
+          "matcher": "toBe",
+          "negated": false,
+          "span": {
+            "column": 5,
+            "end": 174,
+            "line": 6,
+            "start": 143
+          },
+          "subject": "label(1)",
+          "subject_is_query": false
+        }
+      ],
+      "body_hash": "143e197ef8eb311e",
+      "each": null,
+      "file": "packages/ui/src/label.test.js",
+      "framework": "vitest",
+      "kind": "test",
+      "loops": [],
+      "mocks": [],
+      "modifiers": [],
+      "skip": null,
+      "span": {
+        "column": 3,
+        "end": 180,
+        "line": 5,
+        "start": 114
+      },
+      "suite_path": [
+        "label"
+      ],
+      "tags": [],
+      "throwing_queries": [],
+      "title": "singular"
+    },
+    {
+      "assertions": [
+        {
+          "argument": "\"3 items\"",
+          "carries_value": true,
+          "matcher": "toBe",
+          "negated": false,
+          "span": {
+            "column": 5,
+            "end": 244,
+            "line": 10,
+            "start": 212
+          },
+          "subject": "label(3)",
+          "subject_is_query": false
+        }
+      ],
+      "body_hash": "31364f331cda1ad0",
+      "each": null,
+      "file": "packages/ui/src/label.test.js",
+      "framework": "vitest",
+      "kind": "test",
+      "loops": [],
+      "mocks": [],
+      "modifiers": [],
+      "skip": null,
+      "span": {
+        "column": 3,
+        "end": 250,
+        "line": 9,
+        "start": 185
+      },
+      "suite_path": [
+        "label"
+      ],
+      "tags": [],
+      "throwing_queries": [],
+      "title": "plural"
+    }
+  ]
+}

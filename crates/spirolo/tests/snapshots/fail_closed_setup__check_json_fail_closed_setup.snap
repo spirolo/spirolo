@@ -1,0 +1,25 @@
+---
+source: crates/spirolo/tests/fail_closed_setup.rs
+expression: "status_support::redact_status(&serde_json::Value::Array(findings(&root)))"
+---
+[
+  {
+    "column": 0,
+    "evidence": [
+      {
+        "key": "invariant",
+        "value": "console-guard"
+      }
+    ],
+    "explain": "No console guard fails the test on a logged error, so a React warning or a caught exception logged to `console.error` scrolls past under a green run. Add a `console.error`/`console.warn` spy whose implementation throws, or a fail-on-console package, in the setup file, so a logged error is a failing test.",
+    "file": "src/setup.ts",
+    "id": "fail-closed-setup src/setup.ts console-guard#0",
+    "line": 0,
+    "message": "setup does not guard the console (no throwing console.error/warn spy or fail-on-console package)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "fail-closed-setup",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  }
+]

@@ -1,0 +1,42 @@
+---
+source: crates/spirolo-frameworks/tests/mocks.rs
+expression: "recognise(\"import { it, vi } from 'vitest'\\nit('t', async () => { vi.doMock('./db'); await run() })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 32,
+      "end": 87,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [],
+    "mocks": [
+      {
+        "target": "./db",
+        "resolved": null,
+        "reason": null,
+        "kind": "module",
+        "factory": false,
+        "span": {
+          "start": 54,
+          "end": 71,
+          "line": 2,
+          "column": 23
+        }
+      }
+    ],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "46963a1969b5f4e5"
+  }
+]

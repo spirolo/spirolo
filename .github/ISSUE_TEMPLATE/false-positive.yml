@@ -1,0 +1,74 @@
+name: False positive
+description: A finding that is wrong about your test suite.
+title: "false positive(<rule>): "
+labels: ["bug", "false-positive"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every finding is a signal from an unproven rule, measured on an open-source corpus.
+        A false positive you can show is the most useful report there is: it is how a rule's
+        precision gets measured and fixed. Remove anything private from the paths and code first.
+  - type: dropdown
+    id: rule
+    attributes:
+      label: Rule
+      description: The rule named in the finding's heading (`spirolo explain <rule>` describes it).
+      options:
+        - absence-anchor
+        - data-layer-mock
+        - dead-skip
+        - duplicate-test
+        - fail-closed-setup
+        - flake-candidate
+        - flake-observed
+        - gate-truth
+        - generator-walk
+        - handler-drift
+        - orphan-test
+        - redundant-test
+        - stale-snapshot
+        - untested-hotspot
+        - unused-mock
+        - weak-assertion
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: File and line
+      description: Where the finding points, as `file:line`.
+      placeholder: src/cart.test.ts:42
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: The finding as JSON
+      description: |
+        Run `spirolo check --all --format json` and paste this finding's object from the
+        `findings` array (its `rule`, `id`, `message`, `related` and `evidence`),
+        or run `spirolo explain "<id>" --format json` with the finding's `id` (quoted: ids contain spaces).
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it is wrong
+      description: What the test or config actually does, and the code the rule misread (a minimal excerpt).
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The output of `spirolo --version`.
+      placeholder: spirolo 0.1.0-alpha.1
+    validations:
+      required: true
+  - type: input
+    id: runner
+    attributes:
+      label: Test runner and framework
+      placeholder: vitest 3, React Testing Library

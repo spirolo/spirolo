@@ -1,0 +1,68 @@
+{
+  "name": "@midwayjs/web",
+  "version": "4.2.3",
+  "description": "Midway Web Framework for Egg.js",
+  "main": "dist/index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node -r ts-node/register ../../node_modules/jest/bin/jest.js --runInBand --forceExit",
+    "cov": "node -r ts-node/register ../../node_modules/jest/bin/jest.js --runInBand --coverage --forceExit",
+    "link": "npm link"
+  },
+  "keywords": [
+    "midway",
+    "IoC",
+    "web",
+    "scene",
+    "eggjs"
+  ],
+  "files": [
+    "app",
+    "config",
+    "agent.js",
+    "app.js",
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "index.d.ts"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@midwayjs/logger": "^4.0.0",
+    "@midwayjs/mock": "workspace:^",
+    "@types/koa": "2.15.2",
+    "dayjs": "1.11.20",
+    "egg-logger": "3.6.1",
+    "egg-mock": "4.2.1",
+    "egg-scripts": "3.1.0",
+    "egg-socket.io": "4.1.6",
+    "egg-view-nunjucks": "2.3.0",
+    "fake-egg": "1.0.0",
+    "fs-extra": "11.3.4",
+    "is-type-of": "^2.1.0",
+    "mm": "3.4.0",
+    "mz-modules": "^2.1.0",
+    "pedding": "1.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "supertest": "6.3.4"
+  },
+  "dependencies": {
+    "@eggjs/router": "^2.0.0",
+    "@midwayjs/core": "workspace:^",
+    "egg": "^2.28.0",
+    "egg-cluster": "^1.27.1",
+    "egg-path-matching": "^2.1.0",
+    "find-up": "5.0.0",
+    "mkdirp": "1.0.4",
+    "qs": "6.16.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/midwayjs/midway.git"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "gitHead": "a603d2348d6141f8f723901498f03a162a037708"
+}

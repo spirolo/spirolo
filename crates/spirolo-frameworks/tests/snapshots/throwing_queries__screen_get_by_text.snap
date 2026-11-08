@@ -1,0 +1,47 @@
+---
+source: crates/spirolo-frameworks/tests/throwing_queries.rs
+expression: "recognise(\"import { it } from 'vitest'\\nimport { screen } from '@testing-library/react'\\nit('t', () => { screen.getByText('hi') })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 76,
+      "end": 117,
+      "line": 3,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [
+      {
+        "name": "getByText",
+        "within": false,
+        "span": {
+          "start": 92,
+          "end": 114,
+          "line": 3,
+          "column": 17
+        }
+      }
+    ],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "f8ee71fd8f1a882c",
+    "context": [
+      {
+        "kind": "import",
+        "name": "screen",
+        "specifier": "@testing-library/react",
+        "export": "screen"
+      }
+    ]
+  }
+]

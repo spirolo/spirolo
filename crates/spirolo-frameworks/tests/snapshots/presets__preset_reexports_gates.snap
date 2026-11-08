@@ -1,0 +1,488 @@
+---
+source: crates/spirolo-frameworks/tests/presets.rs
+expression: model.gates
+---
+[
+  {
+    "source": "packages/bare/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/base",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": "packages/config/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/computed/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [],
+    "inherited_setup_files": [],
+    "include": [],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [],
+    "preset_chain": [],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": null
+    },
+    "steps": [],
+    "opaque": true,
+    "unread": [
+      "`defineConfig(…)` is passed a function the reader does not evaluate"
+    ]
+  },
+  {
+    "source": "packages/factory/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [],
+    "inherited_setup_files": [],
+    "include": [],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/factory",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/factory.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": null
+    },
+    "steps": [],
+    "opaque": true,
+    "unread": [
+      "preset '@fx/config-vitest/factory' (packages/config/factory.mjs): `export default` declares a function or class the reader does not evaluate"
+    ]
+  },
+  {
+    "source": "packages/inherits-msw/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [
+      "packages/config/msw-setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/msw-setup.ts"
+    ],
+    "include": [
+      "**/*.msw.{ts,tsx}"
+    ],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/msw",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/msw.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "absent",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "present",
+      "msw_present": true,
+      "msw_inherited": true,
+      "setup_file": "packages/config/msw-setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/local/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [],
+    "inherited_setup_files": [],
+    "include": [
+      "**/*.local.ts"
+    ],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [],
+    "preset_chain": [],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": null
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/missing/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [],
+    "inherited_setup_files": [],
+    "include": [],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/nowhere/base",
+        "name": null
+      }
+    ],
+    "preset_chain": [],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": null
+    },
+    "steps": [],
+    "opaque": true,
+    "unread": [
+      "preset '@fx/nowhere/base' could not be resolved from packages/missing/vitest.config.mts"
+    ]
+  },
+  {
+    "source": "packages/named/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [],
+    "inherited_setup_files": [],
+    "include": [
+      "**/*.strict.ts"
+    ],
+    "exclude": [],
+    "retries": null,
+    "restore_mocks": true,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/named",
+        "name": "strict"
+      }
+    ],
+    "preset_chain": [
+      "packages/config/named.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": null
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/own-msw/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [
+      "packages/config/setup.ts",
+      "./setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/base",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "absent",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "present",
+      "msw_present": true,
+      "msw_inherited": false,
+      "setup_file": "packages/own-msw/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/reexport/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [
+      {
+        "metric": "lines",
+        "value": 70.0
+      }
+    ],
+    "setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/react",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/react.mjs",
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": "packages/config/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/relative/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "../config/base.mjs",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": "packages/config/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  },
+  {
+    "source": "packages/wrapped/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [
+      {
+        "metric": "lines",
+        "value": 70.0
+      }
+    ],
+    "setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "inherited_setup_files": [
+      "packages/config/setup.ts"
+    ],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/react",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/react.mjs",
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "present",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": "packages/config/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  }
+]

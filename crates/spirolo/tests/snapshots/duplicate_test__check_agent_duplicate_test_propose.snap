@@ -1,0 +1,10 @@
+---
+source: crates/spirolo/tests/duplicate_test.rs
+expression: "status_support::redact_agent_status(&stdout)"
+---
+duplicate-test	<rule_status>	info	src/alpha.test.ts:4	parses alpha input duplicates 1 other test
+	explain	These 2 tests have identical bodies once names are normalised: parses alpha input (src/alpha.test.ts:4), parses beta input (src/beta.test.ts:4). They check one behaviour 2 times under different names. Keep one — parses alpha input (src/alpha.test.ts:4), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.
+	proposal	keep — duplicate-test has not passed its corpus precision check on an independent oracle, so spirolo proposes no merge or delete
+duplicate-test	<rule_status>	info	src/format.test.ts:6	format › formats the value duplicates 1 other test
+	explain	These 2 tests have identical bodies once names are normalised: format › formats the value (src/format.test.ts:6), format › renders the value the same way (src/format.test.ts:10). They check one behaviour 2 times under different names. Keep one — format › formats the value (src/format.test.ts:6), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.
+	proposal	keep — duplicate-test has not passed its corpus precision check on an independent oracle, so spirolo proposes no merge or delete

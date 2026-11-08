@@ -1,0 +1,65 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: test
+---
+{
+  "file": "src/widget.test.ts",
+  "kind": "test",
+  "rows": [
+    {
+      "key": "covers",
+      "state": "ok",
+      "text": "src/widget.ts",
+      "detail": "no coverage report read",
+      "ids": []
+    },
+    {
+      "key": "handlers",
+      "state": "ok",
+      "text": "1 handlers in the project · no drift in this file",
+      "detail": "rule: SKIPPED",
+      "ids": []
+    },
+    {
+      "key": "weak-assertion",
+      "state": "info",
+      "text": "1 × line 4: test \"renders the widget\" asserts only value-less matchers (toBeTruthy)",
+      "detail": "rule: PASS 1.000 [0.942, 1.000]",
+      "ids": [
+        "weak-assertion src/widget.test.ts renders the widget#0"
+      ]
+    },
+    {
+      "key": "dead-skip",
+      "state": "info",
+      "text": "1 × line 5: skip \"later\" has no linked issue",
+      "detail": "rule: PASS 1.000 [0.845, 1.000]",
+      "ids": [
+        "dead-skip src/widget.test.ts later#0"
+      ]
+    },
+    {
+      "key": "flake",
+      "state": "ok",
+      "text": "no static candidates",
+      "detail": "no runs ingested",
+      "ids": []
+    },
+    {
+      "key": "mutation",
+      "state": "none",
+      "text": "no mutation report read",
+      "detail": null,
+      "ids": []
+    },
+    {
+      "key": "hygiene",
+      "state": "info",
+      "text": "unused-mock ×1",
+      "detail": null,
+      "ids": [
+        "unused-mock src/widget.test.ts ./missing#0"
+      ]
+    }
+  ]
+}

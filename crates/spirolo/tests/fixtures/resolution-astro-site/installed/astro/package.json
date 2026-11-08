@@ -1,0 +1,9 @@
+{
+  "name": "astro",
+  "version": "6.3.8",
+  "type": "module",
+  "exports": {
+    "./tsconfigs/*.json": "./tsconfigs/*",
+    "./tsconfigs/*": "./tsconfigs/*.json"
+  }
+}

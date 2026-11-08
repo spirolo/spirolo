@@ -1,0 +1,125 @@
+---
+source: crates/spirolo/tests/generator_walk.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "walk-count"
+      },
+      {
+        "key": "site_list",
+        "value": "6:gen.next:call, 7:gen.next:put, 10:testSaga:take, 10:testSaga:isDone"
+      },
+      {
+        "key": "sites",
+        "value": "4"
+      }
+    ],
+    "explain": "Listed for the count: this file steps a saga's generator at 4 sites, each reported beside this row. A count row is not a finding and never fails the build; bring the number down by rewriting the tests to `expectSaga(saga).run()`, not by removing assertions.",
+    "file": "src/api/sagas.test.ts",
+    "id": "generator-walk src/api/sagas.test.ts count#0",
+    "line": 6,
+    "message": "4 saga step-walk sites in this file",
+    "outcome": "listed",
+    "related": [],
+    "rule": "generator-walk",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "effect",
+        "value": "call"
+      },
+      {
+        "key": "idiom",
+        "value": "gen.next"
+      }
+    ],
+    "explain": "This site steps a saga's generator and asserts its yielded call effect in order (gen.next idiom): it breaks on any reorder and proves how the saga is written, not what it does. Prefer `expectSaga(saga).run()` with branch testing, which asserts the effects the saga dispatches without pinning their order — rewrite the test to run the saga, do not remove its assertions.",
+    "file": "src/api/sagas.test.ts",
+    "id": "generator-walk src/api/sagas.test.ts walks the fetch saga › gen.next:call#0",
+    "line": 6,
+    "message": "saga step-walk (gen.next): asserts the yielded call effect in order",
+    "outcome": "finding",
+    "related": [],
+    "rule": "generator-walk",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "effect",
+        "value": "put"
+      },
+      {
+        "key": "idiom",
+        "value": "gen.next"
+      }
+    ],
+    "explain": "This site steps a saga's generator and asserts its yielded put effect in order (gen.next idiom): it breaks on any reorder and proves how the saga is written, not what it does. Prefer `expectSaga(saga).run()` with branch testing, which asserts the effects the saga dispatches without pinning their order — rewrite the test to run the saga, do not remove its assertions.",
+    "file": "src/api/sagas.test.ts",
+    "id": "generator-walk src/api/sagas.test.ts walks the fetch saga › gen.next:put#0",
+    "line": 7,
+    "message": "saga step-walk (gen.next): asserts the yielded put effect in order",
+    "outcome": "finding",
+    "related": [],
+    "rule": "generator-walk",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "effect",
+        "value": "isDone"
+      },
+      {
+        "key": "idiom",
+        "value": "testSaga"
+      }
+    ],
+    "explain": "This site steps a saga's generator and asserts its yielded isDone effect in order (testSaga idiom): it breaks on any reorder and proves how the saga is written, not what it does. Prefer `expectSaga(saga).run()` with branch testing, which asserts the effects the saga dispatches without pinning their order — rewrite the test to run the saga, do not remove its assertions.",
+    "file": "src/api/sagas.test.ts",
+    "id": "generator-walk src/api/sagas.test.ts walks the watcher with testSaga › testSaga:isDone#0",
+    "line": 10,
+    "message": "saga step-walk (testSaga): asserts the yielded isDone effect in order",
+    "outcome": "finding",
+    "related": [],
+    "rule": "generator-walk",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "effect",
+        "value": "take"
+      },
+      {
+        "key": "idiom",
+        "value": "testSaga"
+      }
+    ],
+    "explain": "This site steps a saga's generator and asserts its yielded take effect in order (testSaga idiom): it breaks on any reorder and proves how the saga is written, not what it does. Prefer `expectSaga(saga).run()` with branch testing, which asserts the effects the saga dispatches without pinning their order — rewrite the test to run the saga, do not remove its assertions.",
+    "file": "src/api/sagas.test.ts",
+    "id": "generator-walk src/api/sagas.test.ts walks the watcher with testSaga › testSaga:take#0",
+    "line": 10,
+    "message": "saga step-walk (testSaga): asserts the yielded take effect in order",
+    "outcome": "finding",
+    "related": [],
+    "rule": "generator-walk",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  }
+]

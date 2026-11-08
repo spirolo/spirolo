@@ -1,0 +1,329 @@
+{
+  "_capture": "spirolo lsp at 831aa35 on a temp fixture project, driven by capture.mjs: the spirolo/checked of the first pass, then spirolo/tree and spirolo/file per path (the project rebuilt for #267: at main 96d700c it recaptures the a5cb330 answers equal, elapsed_ms aside)",
+  "checked": {
+    "generation": 1,
+    "files": 7,
+    "findings": 10,
+    "elapsed_ms": 14
+  },
+  "tree": {
+    "root": "/tmp/spirolo-vscode-fixture",
+    "tests": {
+      "jest": 0,
+      "playwright": 0,
+      "vitest": 3
+    },
+    "baseline": null,
+    "handlers": {
+      "count": 1,
+      "drift": 1
+    },
+    "project": {
+      "counts": {
+        "error": 0,
+        "warn": 1,
+        "info": 0,
+        "hint": 0
+      },
+      "state": "warn"
+    },
+    "nodes": [
+      {
+        "path": "src",
+        "kind": "dir",
+        "counts": {
+          "error": 1,
+          "warn": 2,
+          "info": 0,
+          "hint": 2
+        },
+        "state": "error"
+      },
+      {
+        "path": "src/clean",
+        "kind": "dir",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok"
+      },
+      {
+        "path": "src/clean/double.test.ts",
+        "kind": "file",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok"
+      },
+      {
+        "path": "src/lib",
+        "kind": "dir",
+        "counts": {
+          "error": 0,
+          "warn": 1,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "warn"
+      },
+      {
+        "path": "src/lib/sum.test.ts",
+        "kind": "file",
+        "counts": {
+          "error": 0,
+          "warn": 1,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "warn"
+      },
+      {
+        "path": "src/mocks",
+        "kind": "dir",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "info"
+      },
+      {
+        "path": "src/mocks/handlers.ts",
+        "kind": "file",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "info"
+      },
+      {
+        "path": "src/widget.test.ts",
+        "kind": "file",
+        "counts": {
+          "error": 1,
+          "warn": 1,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "error"
+      }
+    ]
+  },
+  "file": {
+    "src/widget.test.ts": {
+      "file": "src/widget.test.ts",
+      "kind": "test",
+      "rows": [
+        {
+          "key": "covers",
+          "state": "ok",
+          "text": "src/widget.ts",
+          "detail": "no coverage report read",
+          "ids": []
+        },
+        {
+          "key": "handlers",
+          "state": "ok",
+          "text": "1 handlers in the project · no drift in this file",
+          "detail": "rule: SKIPPED",
+          "ids": []
+        },
+        {
+          "key": "weak-assertion",
+          "state": "warn",
+          "text": "1 × line 4: test \"renders the widget\" asserts only value-less matchers (toBeTruthy)",
+          "detail": "rule: PASS 1.000 [0.942, 1.000]",
+          "ids": [
+            "weak-assertion src/widget.test.ts renders the widget#0"
+          ]
+        },
+        {
+          "key": "dead-skip",
+          "state": "error",
+          "text": "1 × line 5: skip \"later\" has no linked issue",
+          "detail": "rule: PASS 1.000 [0.845, 1.000]",
+          "ids": [
+            "dead-skip src/widget.test.ts later#0"
+          ]
+        },
+        {
+          "key": "flake",
+          "state": "ok",
+          "text": "no static candidates",
+          "detail": "no runs ingested",
+          "ids": []
+        },
+        {
+          "key": "mutation",
+          "state": "none",
+          "text": "no mutation report read",
+          "detail": null,
+          "ids": []
+        },
+        {
+          "key": "hygiene",
+          "state": "info",
+          "text": "unused-mock ×1",
+          "detail": null,
+          "ids": [
+            "unused-mock src/widget.test.ts ./missing#0"
+          ]
+        }
+      ]
+    },
+    "src/lib/sum.test.ts": {
+      "file": "src/lib/sum.test.ts",
+      "kind": "test",
+      "rows": [
+        {
+          "key": "covers",
+          "state": "ok",
+          "text": "src/lib/sum.ts",
+          "detail": "no coverage report read",
+          "ids": []
+        },
+        {
+          "key": "handlers",
+          "state": "ok",
+          "text": "1 handlers in the project · no drift in this file",
+          "detail": "rule: SKIPPED",
+          "ids": []
+        },
+        {
+          "key": "weak-assertion",
+          "state": "warn",
+          "text": "1 × line 3: test \"adds\" asserts only value-less matchers (toBeDefined)",
+          "detail": "rule: PASS 1.000 [0.942, 1.000]",
+          "ids": [
+            "weak-assertion src/lib/sum.test.ts adds#0"
+          ]
+        },
+        {
+          "key": "flake",
+          "state": "ok",
+          "text": "no static candidates",
+          "detail": "no runs ingested",
+          "ids": []
+        },
+        {
+          "key": "mutation",
+          "state": "none",
+          "text": "no mutation report read",
+          "detail": null,
+          "ids": []
+        },
+        {
+          "key": "hygiene",
+          "state": "ok",
+          "text": "no hygiene findings",
+          "detail": null,
+          "ids": []
+        }
+      ]
+    },
+    "src/clean/double.test.ts": {
+      "file": "src/clean/double.test.ts",
+      "kind": "test",
+      "rows": [
+        {
+          "key": "covers",
+          "state": "ok",
+          "text": "src/clean/double.ts",
+          "detail": "no coverage report read",
+          "ids": []
+        },
+        {
+          "key": "handlers",
+          "state": "ok",
+          "text": "1 handlers in the project · no drift in this file",
+          "detail": "rule: SKIPPED",
+          "ids": []
+        },
+        {
+          "key": "flake",
+          "state": "ok",
+          "text": "no static candidates",
+          "detail": "no runs ingested",
+          "ids": []
+        },
+        {
+          "key": "mutation",
+          "state": "none",
+          "text": "no mutation report read",
+          "detail": null,
+          "ids": []
+        },
+        {
+          "key": "hygiene",
+          "state": "ok",
+          "text": "no hygiene findings",
+          "detail": null,
+          "ids": []
+        }
+      ]
+    },
+    "src/widget.ts": {
+      "file": "src/widget.ts",
+      "kind": "source",
+      "rows": [
+        {
+          "key": "untested-hotspot",
+          "state": "info",
+          "text": "1 × line 1: src/widget.ts scores 0.20: churn 1 × complexity 2 × weakness 0.10",
+          "detail": "rule: FAIL 0.650 [0.433, 0.819], carried to M6",
+          "ids": [
+            "untested-hotspot src/widget.ts untested-hotspot#0"
+          ]
+        }
+      ]
+    },
+    "src/mocks/handlers.ts": {
+      "file": "src/mocks/handlers.ts",
+      "kind": "source",
+      "rows": [
+        {
+          "key": "handler-drift",
+          "state": "info",
+          "text": "1 × line 3: handler \"*/api/v1/materials\" matches no URL under any base (http://localhost:5000/v1)",
+          "detail": "rule: SKIPPED",
+          "ids": [
+            "handler-drift src/mocks/handlers.ts GET */api/v1/materials#0"
+          ]
+        },
+        {
+          "key": "untested-hotspot",
+          "state": "info",
+          "text": "1 × line 1: src/mocks/handlers.ts scores 2.00: churn 1 × complexity 2 × weakness 1.00",
+          "detail": "rule: FAIL 0.650 [0.433, 0.819], carried to M6",
+          "ids": [
+            "untested-hotspot src/mocks/handlers.ts untested-hotspot#0"
+          ]
+        }
+      ]
+    },
+    "src/config/api.ts": {
+      "file": "src/config/api.ts",
+      "kind": "source",
+      "rows": [
+        {
+          "key": "untested-hotspot",
+          "state": "info",
+          "text": "1 × line 1: src/config/api.ts scores 1.00: churn 1 × complexity 1 × weakness 1.00",
+          "detail": "rule: FAIL 0.650 [0.433, 0.819], carried to M6",
+          "ids": [
+            "untested-hotspot src/config/api.ts untested-hotspot#0"
+          ]
+        }
+      ]
+    }
+  }
+}

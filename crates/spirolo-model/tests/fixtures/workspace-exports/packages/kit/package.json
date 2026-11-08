@@ -1,0 +1,1 @@
+{ "name": "@x/kit", "main": "./src/index.ts", "dependencies": { "@x/http": "*" } }

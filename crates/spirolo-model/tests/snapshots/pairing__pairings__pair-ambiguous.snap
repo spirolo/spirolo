@@ -1,0 +1,12 @@
+---
+source: crates/spirolo-model/tests/pairing.rs
+expression: model.pairings
+---
+[
+  {
+    "test_file": "src/service.test.ts",
+    "source_module": "src/service.ts",
+    "reason": "import",
+    "ambiguous": true
+  }
+]

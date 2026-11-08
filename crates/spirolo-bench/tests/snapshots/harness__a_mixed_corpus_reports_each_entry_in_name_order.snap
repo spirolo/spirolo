@@ -1,0 +1,14 @@
+---
+source: crates/spirolo-bench/tests/harness.rs
+expression: render(&reports)
+---
+spirolo-bench · 2 corpus entries · counts vs truth.json, wall-clock vs budget
+
+big-local       1.04s median of 1 / 5.00s budget  FAIL
+  playwright  expected 1 files / 4 tests  actual 0 files / 0 tests  MISMATCH
+  vitest      expected 2 files / 3 tests  actual 2 files / 3 tests  match
+
+pending-client  —                     SKIPPED
+  pending: not reachable here, counts copied from a document of record
+
+1 failed · 0 passed · 1 skipped

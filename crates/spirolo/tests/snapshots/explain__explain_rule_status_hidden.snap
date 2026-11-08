@@ -1,0 +1,15 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: human
+---
+orphan-test (hygiene, default info)
+A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves.
+Status
+  verdict      DROPPED
+  tier         hidden: DROPPED or FAIL, shown only with --all, never gates
+  precision    4/14 = 0.286, Wilson 95% [0.117, 0.546]
+  decided      4 true, 10 false
+  measured on  expo__expo
+  proven bar   Wilson lower bound ≥ 0.9 on the pooled dev sample: ≥35 decided with 0 false, ≥53 with 1, ≥69 with 2 (docs/rule-visits/README.md)
+  advisory     an unproven rule reports at info and never fails the build unless .spirolorc raises its severity; a DROPPED or FAIL rule never gates
+  docs         docs/rules/orphan-test.md

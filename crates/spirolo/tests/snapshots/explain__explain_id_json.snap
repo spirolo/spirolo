@@ -1,0 +1,45 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: json
+---
+{
+  "column": 3,
+  "editor_severity": 3,
+  "evidence": [
+    {
+      "key": "matchers",
+      "value": "toBeDefined"
+    },
+    {
+      "key": "assertions",
+      "value": "1"
+    }
+  ],
+  "explain": "The test \"renders the widget\" checks no produced value: `toBeDefined` passes against any value but `undefined`. Assert the value the code should produce (`toBe`, `toEqual`, `toHaveTextContent`), or anchor a render with a throwing `getBy*` query, rather than only that something exists or is absent. Do not delete the assertions.",
+  "file": "src/a.test.ts",
+  "id": "weak-assertion src/a.test.ts widget panel › renders the widget#1",
+  "line": 4,
+  "message": "test \"renders the widget\" asserts only value-less matchers (toBeDefined)",
+  "outcome": "finding",
+  "related": [],
+  "rule": "weak-assertion",
+  "rule_status": "PASS",
+  "severity": "info",
+  "status": {
+    "carried": null,
+    "falses": 0,
+    "interval": [
+      0.942,
+      1.0
+    ],
+    "precision": 1.0,
+    "truths": 62,
+    "verdict": "PASS"
+  },
+  "test": {
+    "suite_path": [
+      "widget panel"
+    ],
+    "title": "renders the widget"
+  }
+}

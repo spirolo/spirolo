@@ -1,0 +1,43 @@
+---
+source: crates/spirolo-frameworks/tests/assertions.rs
+expression: "recognise(\"import { it, expect } from 'vitest'\\nit('t', () => { expect.soft(a).toBe(1) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 36,
+      "end": 77,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "toBe",
+        "argument": "1",
+        "subject": "a",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 52,
+          "end": 74,
+          "line": 2,
+          "column": 17
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "4eb7b0a038ba54e7"
+  }
+]

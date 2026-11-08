@@ -1,0 +1,74 @@
+---
+source: crates/spirolo/tests/data_layer_mock.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "entry",
+        "value": "src/supabaseClient"
+      },
+      {
+        "key": "specifier",
+        "value": "@/supabaseClient"
+      },
+      {
+        "key": "target",
+        "value": "src/supabaseClient.ts"
+      }
+    ],
+    "explain": "The test \"loads the cart\" replaces the data-layer module `src/supabaseClient.ts` (mocked as `@/supabaseClient`) with `vi.mock`, so it proves the mock, not the flow: the real client, its query and the data it returns never run. In an integration or container spec, let the data layer run and mock the network underneath it with MSW so the test exercises the query it claims to. Keep the test — move the seam from the module down to the network.",
+    "file": "src/checkout.integration.test.ts",
+    "id": "data-layer-mock src/checkout.integration.test.ts mock:@/supabaseClient#0",
+    "line": 2,
+    "message": "test \"loads the cart\" module-mocks the data layer (src/supabaseClient.ts)",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 1,
+        "file": "src/supabaseClient.ts",
+        "label": "data layer",
+        "line": 1
+      }
+    ],
+    "rule": "data-layer-mock",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "entry",
+        "value": "src/supabaseClient"
+      },
+      {
+        "key": "specifier",
+        "value": "../../supabaseClient"
+      },
+      {
+        "key": "target",
+        "value": "src/supabaseClient.ts"
+      }
+    ],
+    "explain": "The test \"reads the row\" replaces the data-layer module `src/supabaseClient.ts` (mocked as `../../supabaseClient`) with `vi.mock`, so it proves the mock, not the flow: the real client, its query and the data it returns never run. In an integration or container spec, let the data layer run and mock the network underneath it with MSW so the test exercises the query it claims to. Keep the test — move the seam from the module down to the network.",
+    "file": "src/features/cart/cart.integration.test.ts",
+    "id": "data-layer-mock src/features/cart/cart.integration.test.ts mock:../../supabaseClient#0",
+    "line": 2,
+    "message": "test \"reads the row\" module-mocks the data layer (src/supabaseClient.ts)",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 1,
+        "file": "src/supabaseClient.ts",
+        "label": "data layer",
+        "line": 1
+      }
+    ],
+    "rule": "data-layer-mock",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  }
+]

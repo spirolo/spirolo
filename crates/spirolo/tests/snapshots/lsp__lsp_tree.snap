@@ -1,0 +1,72 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: "rooted(&tree, &root)"
+---
+{
+  "root": "<root>",
+  "tests": {
+    "jest": 0,
+    "playwright": 0,
+    "vitest": 1
+  },
+  "baseline": null,
+  "handlers": {
+    "count": 1,
+    "drift": 1
+  },
+  "project": {
+    "counts": {
+      "error": 0,
+      "warn": 0,
+      "info": 1,
+      "hint": 0
+    },
+    "state": "info"
+  },
+  "nodes": [
+    {
+      "path": "src",
+      "kind": "dir",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 2,
+        "hint": 2
+      },
+      "state": "info"
+    },
+    {
+      "path": "src/mocks",
+      "kind": "dir",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 0,
+        "hint": 1
+      },
+      "state": "info"
+    },
+    {
+      "path": "src/mocks/handlers.ts",
+      "kind": "file",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 0,
+        "hint": 1
+      },
+      "state": "info"
+    },
+    {
+      "path": "src/widget.test.ts",
+      "kind": "file",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 2,
+        "hint": 1
+      },
+      "state": "info"
+    }
+  ]
+}

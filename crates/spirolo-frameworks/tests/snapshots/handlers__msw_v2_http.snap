@@ -1,0 +1,45 @@
+---
+source: crates/spirolo-frameworks/tests/handlers.rs
+expression: "handlers(\"import { http, HttpResponse } from 'msw'\\n\\\n         export const handlers = [\\n\\\n         \\x20 http.get('/api/user', () => HttpResponse.json({})),\\n\\\n         \\x20 http.post('/api/user', () => HttpResponse.json({})),\\n\\\n         \\x20 http.all('/api/*', () => HttpResponse.json({})),\\n\\\n         ]\\n\")"
+---
+[
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 69,
+      "end": 119,
+      "line": 3,
+      "column": 3
+    },
+    "library": "msw",
+    "method": "GET",
+    "pattern": "/api/user",
+    "pattern_kind": "string"
+  },
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 123,
+      "end": 174,
+      "line": 4,
+      "column": 3
+    },
+    "library": "msw",
+    "method": "POST",
+    "pattern": "/api/user",
+    "pattern_kind": "string"
+  },
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 178,
+      "end": 225,
+      "line": 5,
+      "column": 3
+    },
+    "library": "msw",
+    "method": null,
+    "pattern": "/api/*",
+    "pattern_kind": "string"
+  }
+]

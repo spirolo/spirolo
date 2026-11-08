@@ -1,0 +1,77 @@
+aliases:
+  install_node_modules: &install_node_modules
+    run:
+      name: Install node modules
+      command: yarn
+
+  check_lockfile: &check_lockfile
+    run:
+      name: Check for dirty lockfile
+      command: ./scripts/check-lockfile.sh || exit 1
+
+  validate_renovate: &validate_renovate
+    run:
+      name: Validate renovate-config
+      command: (node scripts/renovate-config-generator.js && (git status --porcelain renovate.json5 | grep "M renovate.json5")) && (echo "Please run \"node scripts/renovate-config-generator.js\" to update renovate.json5" && exit 1) || npx -p renovate@31.28.5 renovate-config-validator .
+
+  attach_to_bootstrap: &attach_to_bootstrap
+    attach_workspace:
+      at: ./
+
+  ignore_master: &ignore_master
+    filters:
+      branches:
+        ignore:
+          - master
+
+  ignore_docs: &ignore_docs
+    filters:
+      branches:
+        ignore:
+          - /docs.+/
+
+  test_template: &test_template
+    parallelism: 4
+    parameters:
+      npm_rebuild:
+        type: boolean
+        default: false
+    steps:
+      - checkout
+      - run: ./scripts/assert-changed-files.sh "packages/*|.circleci/*"
+      - <<: *attach_to_bootstrap
+      - when:
+          condition: << parameters.npm_rebuild >>
+          steps:
+            - run: npm rebuild
+      - run:
+          name: Run tests
+          command: yarn jest --ci --runInBand  $(yarn -s jest --listTests | sed 's/\/home\/circleci\/project\///g' | circleci tests split)
+          environment:
+            NODE_OPTIONS: --max-old-space-size=2048
+            GENERATE_JEST_REPORT: "true"
+            JEST_JUNIT_OUTPUT_DIR: ./test-results/jest-node/
+            JEST_JUNIT_OUTPUT_NAME: results.xml
+            JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: "true"
+      - store_test_results:
+          path: ./test-results/jest-node/
+
+
+version: 2.1
+
+jobs:
+  unit_tests_node18:
+    executor:
+      name: node
+      image: "18.2.0"
+    <<: *test_template
+
+
+workflows:
+  version: 2
+  build-test:
+    jobs:
+      - unit_tests_node18:
+          <<: *ignore_docs
+          requires:
+            - bootstrap-18.2.0

@@ -1,0 +1,124 @@
+{
+  "name": "spirolo",
+  "displayName": "Spirolo",
+  "description": "Spirolo's findings as diagnostics, with one view per rule family, a provisional Health score and a panel for the open file, over `spirolo lsp`",
+  "version": "0.1.0-alpha.1",
+  "private": true,
+  "license": "Apache-2.0",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "workspaceContains:.spirolorc.jsonc",
+    "workspaceContains:vitest.config.*",
+    "workspaceContains:jest.config.*",
+    "workspaceContains:playwright.config.*",
+    "workspaceContains:**/vitest.config.*",
+    "workspaceContains:**/jest.config.*",
+    "workspaceContains:**/playwright.config.*"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "Spirolo",
+      "properties": {
+        "spirolo.path": {
+          "type": "string",
+          "default": "spirolo",
+          "description": "Fallback binary path or PATH command when node_modules/.bin/spirolo is absent."
+        },
+        "spirolo.all": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show every rule's findings (spirolo lsp --all), not only those of rules whose corpus status is PASS. Takes effect when the extension restarts."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "spirolo",
+          "title": "Spirolo",
+          "icon": "media/spirolo.svg"
+        }
+      ]
+    },
+    "views": {
+      "spirolo": [
+        {
+          "id": "spirolo.audit",
+          "name": "Weak tests"
+        },
+        {
+          "id": "spirolo.gate",
+          "name": "Merge gate"
+        },
+        {
+          "id": "spirolo.hygiene",
+          "name": "Unused tests"
+        },
+        {
+          "id": "spirolo.flake",
+          "name": "Flaky"
+        },
+        {
+          "id": "spirolo.health",
+          "name": "Health"
+        },
+        {
+          "id": "spirolo.file",
+          "name": "File"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "spirolo.groupBy",
+        "title": "Spirolo: Toggle grouping"
+      },
+      {
+        "command": "spirolo.groupByRule",
+        "title": "By rule",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "spirolo.groupByFolder",
+        "title": "By folder",
+        "icon": "$(symbol-folder)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "spirolo.groupByRule",
+          "when": "view =~ /^spirolo\\.(audit|gate|hygiene|flake)$/ && spirolo.groupBy == folder",
+          "group": "navigation"
+        },
+        {
+          "command": "spirolo.groupByFolder",
+          "when": "view =~ /^spirolo\\.(audit|gate|hygiene|flake)$/ && spirolo.groupBy == rule",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "vscode-languageclient": "11.0.0"
+  },
+  "publisher": "spirolo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spirolo/spirolo"
+  },
+  "categories": [
+    "Testing"
+  ],
+  "devDependencies": {
+    "@vscode/test-electron": "3.1.0",
+    "@vscode/vsce": "4.1.0"
+  },
+  "scripts": {
+    "package": "vsce package --out ../../target/rc/spirolo.vsix",
+    "test:electron": "node test/electron.mjs"
+  }
+}

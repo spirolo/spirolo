@@ -1,0 +1,27 @@
+---
+source: crates/spirolo/src/display_tests.rs
+expression: "human_view(&root, Some(spirolo_rules::Family::Hygiene))"
+---
+2 files · 1 test files · 18 tests (18 vitest) · 47 expects · 0 handlers · 0 configs · 0ms
+Unused tests −10.0 / 10
+
+── Unused tests (hygiene) ────────────────────────────────────────
+
+● unused-mock (1 file, 2 findings) · 2 could not decide · experimental: 12/12 (INSUFFICIENT)
+  client.test.ts (2)
+    :36 module mock of "../providers/registry" is reached by nothing the model could follow, but the mock target itself did not resolve · could not decide
+    :43 module mock of "../templates/registry" is reached by nothing the model could follow, but the mock target itself did not resolve · could not decide
+  A module mock or spy in a test file disagrees with what the file imports or reads, so nothing uses it. · spirolo explain unused-mock
+  To gate it: .spirolorc.jsonc { "rules": { "unused-mock": { "severity": "warn" } } } · to accept today's rows: spirolo ratchet
+
+● orphan-test (1 file, 3 findings) · experimental: 2/2 (INSUFFICIENT)
+  client.test.ts (3)
+    :3 the test imports ../types/provider, which no longer resolves
+    :4 the test imports ../types/email, which no longer resolves
+    :50 the test imports ../client, which no longer resolves
+  A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves. · spirolo explain orphan-test
+  To gate it: .spirolorc.jsonc { "rules": { "orphan-test": { "severity": "warn" } } } · to accept today's rows: spirolo ratchet
+
+✓ 3 rules found nothing: duplicate-test, redundant-test, stale-snapshot
+
+3 findings in 1 of 5 rules · 1 rule could not decide · 0 warn · 0 error · 3 info · 2 could not decide · exit 0

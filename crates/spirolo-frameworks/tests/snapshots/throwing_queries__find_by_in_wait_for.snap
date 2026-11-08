@@ -1,0 +1,53 @@
+---
+source: crates/spirolo-frameworks/tests/throwing_queries.rs
+expression: "recognise(\"import { it } from 'vitest'\\nimport { screen, waitFor } from '@testing-library/react'\\nit('t', async () => { await waitFor(() => screen.findByText('done')) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 85,
+      "end": 156,
+      "line": 3,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [
+      {
+        "name": "findByText",
+        "within": false,
+        "span": {
+          "start": 127,
+          "end": 152,
+          "line": 3,
+          "column": 43
+        }
+      }
+    ],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "10e1c97e9e32afb1",
+    "context": [
+      {
+        "kind": "import",
+        "name": "screen",
+        "specifier": "@testing-library/react",
+        "export": "screen"
+      },
+      {
+        "kind": "import",
+        "name": "waitFor",
+        "specifier": "@testing-library/react",
+        "export": "waitFor"
+      }
+    ]
+  }
+]

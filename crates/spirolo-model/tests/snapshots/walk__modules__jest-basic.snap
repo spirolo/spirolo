@@ -1,0 +1,46 @@
+---
+source: crates/spirolo-model/tests/walk.rs
+expression: model.modules
+---
+[
+  {
+    "path": "jest.config.js",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "src/__tests__/greet.test.js",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [
+      {
+        "specifier": "../greet",
+        "resolved": "src/greet.js",
+        "reason": null,
+        "kind": "require",
+        "span": {
+          "start": 26,
+          "end": 36,
+          "line": 1,
+          "column": 27
+        }
+      }
+    ],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "src/greet.js",
+    "language": "javascript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  }
+]

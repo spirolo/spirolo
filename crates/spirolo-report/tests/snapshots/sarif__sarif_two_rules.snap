@@ -1,0 +1,128 @@
+---
+source: crates/spirolo-report/tests/sarif.rs
+expression: doc
+---
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "level": "error",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/app.test.ts"
+                },
+                "region": {
+                  "startColumn": 3,
+                  "startLine": 12
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "the test calls /v2/users but the handler mocks /v1/users"
+          },
+          "properties": {
+            "ruleStatus": "SKIPPED"
+          },
+          "relatedLocations": [
+            {
+              "message": {
+                "text": "handler"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/mocks/handlers.ts"
+                },
+                "region": {
+                  "startColumn": 1,
+                  "startLine": 4
+                }
+              }
+            },
+            {
+              "message": {
+                "text": "production url"
+              },
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/api.ts"
+                },
+                "region": {
+                  "startColumn": 9,
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "ruleId": "handler-drift"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/widget.test.ts"
+                },
+                "region": {
+                  "startColumn": 5,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "test \"exists\" asserts only value-less matchers (toBeTruthy)"
+          },
+          "properties": {
+            "ruleStatus": "PASS"
+          },
+          "relatedLocations": [],
+          "ruleId": "weak-assertion"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "informationUri": "https://github.com/spirolo/spirolo",
+          "name": "spirolo",
+          "rules": [
+            {
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "help": {
+                "text": "Point the handler at /v2/users, the URL the code calls."
+              },
+              "helpUri": "https://github.com/spirolo/spirolo",
+              "id": "handler-drift",
+              "name": "handler-drift",
+              "shortDescription": {
+                "text": "handler-drift"
+              }
+            },
+            {
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "help": {
+                "text": "Assert the produced value, not merely that something exists."
+              },
+              "helpUri": "https://github.com/spirolo/spirolo",
+              "id": "weak-assertion",
+              "name": "weak-assertion",
+              "shortDescription": {
+                "text": "weak-assertion"
+              }
+            }
+          ],
+          "version": "0.0.1"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}

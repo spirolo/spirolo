@@ -1,0 +1,9 @@
+packages:
+  - 'packages/*'
+  - 'packages-serverless/*'
+  - 'packages-resource/*'
+  - 'samples/*'
+onlyBuiltDependencies: [
+  'better-sqlite3',
+  'sqlite3'
+]

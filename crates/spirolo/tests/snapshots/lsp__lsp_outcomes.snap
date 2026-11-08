@@ -1,0 +1,9 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: compact(&pass)
+---
+file://<root>/src/a.test.ts 4 dead-skip 3 dead-skip src/a.test.ts later#0
+file://<root>/src/a.test.ts 5 dead-skip 3 dead-skip src/a.test.ts local only#0
+file://<root>/src/a.test.ts 2 unused-mock 4 unused-mock src/a.test.ts ./widget#0
+file://<root>/src/a.test.ts 1 orphan-test 4 orphan-test src/a.test.ts ./missing#0
+file://<root>/src/widget.ts 0 untested-hotspot 4 untested-hotspot src/widget.ts untested-hotspot#0

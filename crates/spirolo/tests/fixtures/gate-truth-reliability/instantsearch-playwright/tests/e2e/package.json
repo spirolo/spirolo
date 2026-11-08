@@ -1,0 +1,7 @@
+{
+  "name": "@instantsearch/e2e-tests",
+  "scripts": {
+    "type-check": "tsc",
+    "test:playwright": "playwright test -c playwright/playwright.config.ts"
+  }
+}

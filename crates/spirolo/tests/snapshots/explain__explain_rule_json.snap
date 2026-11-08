@@ -1,0 +1,31 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: json
+---
+{
+  "default_severity": "warn",
+  "family": "audit",
+  "rule": "weak-assertion",
+  "status": {
+    "advisory": "an unproven rule reports at info and never fails the build unless .spirolorc raises its severity; a DROPPED or FAIL rule never gates",
+    "carried": null,
+    "decided": 62,
+    "docs": "docs/rules/weak-assertion.md",
+    "falses": 0,
+    "floors": {
+      "decided": 15,
+      "precision": 0.8
+    },
+    "interval": [
+      0.942,
+      1.0
+    ],
+    "measured_on": [],
+    "precision": 1.0,
+    "proven_bar": "Wilson lower bound ≥ 0.9 on the pooled dev sample: ≥35 decided with 0 false, ≥53 with 1, ≥69 with 2 (docs/rule-visits/README.md)",
+    "tier": "proven",
+    "truths": 62,
+    "verdict": "PASS"
+  },
+  "summary": "A test's assertions check no produced value, only that one exists, so a wrong value still passes."
+}

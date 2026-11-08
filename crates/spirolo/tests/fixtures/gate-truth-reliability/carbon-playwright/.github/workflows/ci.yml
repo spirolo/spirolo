@@ -1,0 +1,82 @@
+name: ci
+on:
+  push:
+    branches:
+      - main
+      - next
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches:
+      - main
+      - next
+  merge_group:
+    types: [checks_requested]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  avt-runner:
+    needs: avt-build
+    strategy:
+      fail-fast: false
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Use Node.js version from .nvmrc
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: '.nvmrc'
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        if: github.event_name != 'merge_group'
+        id: cache
+        with:
+          path: |
+            node_modules
+            */**/node_modules
+          key:
+            ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock',
+            'packages/**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        env:
+          YARN_ENABLE_HARDENED_MODE: 0
+        run: yarn install --immutable
+      - name: Install browsers
+        run: yarn playwright install --with-deps
+      - name: Download storybook artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: avt-storybook-static
+          path: packages/react/storybook-static
+      - name: Run storybook
+        id: storybook
+        run: |
+          npx serve -l 3000 packages/react/storybook-static &
+          pid=$!
+          echo "pid=$pid" >> $GITHUB_OUTPUT
+      - uses: ./actions/wait-for-it
+        with:
+          URL: 'http://localhost:3000'
+        timeout-minutes: 3
+      - name: Run AVT
+        if: github.repository == 'carbon-design-system/carbon'
+        run: |
+          yarn playwright test --project chromium --grep @avt --shard="${{ matrix.shardIndex }}/${{ matrix.shardTotal }}"
+      - name: Stop storybook
+        run: kill ${{ steps.storybook.outputs.pid }}
+      - name: Upload blob report to GitHub Actions Artifacts
+        if:
+          ${{ !cancelled() && github.repository == 'carbon-design-system/carbon'
+          }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a #7.0.1
+        with:
+          name: playwright-avt-blob-report-${{ matrix.shardIndex }}
+          path: blob-report
+          retention-days: 1
+

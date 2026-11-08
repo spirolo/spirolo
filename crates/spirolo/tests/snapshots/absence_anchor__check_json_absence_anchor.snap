@@ -1,0 +1,146 @@
+---
+source: crates/spirolo/tests/absence_anchor.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "not.toBeInTheDocument"
+      }
+    ],
+    "explain": "The test \"absent\" asserts only that DOM is absent (not.toBeInTheDocument) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx absent#0",
+    "line": 3,
+    "message": "test \"absent\" asserts only that DOM is absent with no anchor (not.toBeInTheDocument)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "absent"
+    }
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "not.toBeInTheDocument"
+      }
+    ],
+    "explain": "The test \"absent_in_waitfor\" asserts only that DOM is absent (not.toBeInTheDocument) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx absent_in_waitfor#0",
+    "line": 14,
+    "message": "test \"absent_in_waitfor\" asserts only that DOM is absent with no anchor (not.toBeInTheDocument)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "absent_in_waitfor"
+    }
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "queryBy*.toBeNull"
+      }
+    ],
+    "explain": "The test \"absent_by_null\" asserts only that DOM is absent (queryBy*.toBeNull) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx absent_by_null#0",
+    "line": 17,
+    "message": "test \"absent_by_null\" asserts only that DOM is absent with no anchor (queryBy*.toBeNull)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "absent_by_null"
+    }
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "queryBy*.toHaveLength(0)"
+      }
+    ],
+    "explain": "The test \"absent_by_length\" asserts only that DOM is absent (queryBy*.toHaveLength(0)) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx absent_by_length#0",
+    "line": 20,
+    "message": "test \"absent_by_length\" asserts only that DOM is absent with no anchor (queryBy*.toHaveLength(0))",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "absent_by_length"
+    }
+  },
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "not.toBeInTheDocument"
+      }
+    ],
+    "explain": "The test \"absent_and_never_called\" asserts only that DOM is absent (not.toBeInTheDocument) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx absent_and_never_called#0",
+    "line": 31,
+    "message": "test \"absent_and_never_called\" asserts only that DOM is absent with no anchor (not.toBeInTheDocument)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "absent_and_never_called"
+    }
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "not.toBeInTheDocument"
+      }
+    ],
+    "explain": "The test \"absent_by_hook_elsewhere\" asserts only that DOM is absent (not.toBeInTheDocument) with nothing to anchor the render: no plain jest-dom assertion (`toBeInTheDocument`, `toHaveTextContent`, `not.toBeEmptyDOMElement`), no throwing query (`getBy*`, `findBy*`) and no plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`, a count other than 0), in the test's body or in a hook of an enclosing describe, and no other assertion at all besides ones that hold against an empty body regardless (a negated call assertion, a count of 0). A render error can leave an empty body if the framework reports it to `window.reportError` and the runner does not fail the test. Absence reads alone cannot distinguish that from a successful render: a negated jest-dom matcher and `toBeNull()` on a `queryBy*` result alike. If the component should render content, anchor it first: query for what the component *does* show with a throwing `getBy*`/`findBy*`, or assert a positive `toBeInTheDocument` on an element that must exist, then assert the absence. If an empty render is intentional, inspect the render setup and error handling instead; a presence assertion may not apply. Keep the absence read. This finding alone does not prove the test would pass after a render failure.",
+    "file": "src/banner.test.tsx",
+    "id": "absence-anchor src/banner.test.tsx unhooked › absent_by_hook_elsewhere#0",
+    "line": 48,
+    "message": "test \"absent_by_hook_elsewhere\" asserts only that DOM is absent with no anchor (not.toBeInTheDocument)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "absence-anchor",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "unhooked"
+      ],
+      "title": "absent_by_hook_elsewhere"
+    }
+  }
+]

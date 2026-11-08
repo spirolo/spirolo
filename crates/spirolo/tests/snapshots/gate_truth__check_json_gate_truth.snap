@@ -1,0 +1,75 @@
+---
+source: crates/spirolo/tests/gate_truth.rs
+expression: "status_support::redact_status(&serde_json::Value::Array(findings(&root)))"
+---
+[
+  {
+    "column": 0,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "ci-runs-nothing"
+      },
+      {
+        "key": "steps",
+        "value": "3"
+      },
+      {
+        "key": "workflows",
+        "value": ".github/workflows/ci.yml"
+      }
+    ],
+    "explain": "None of the project's workflows (.github/workflows/ci.yml) has a run step that invokes the test runner, coverage or Stryker, so whatever the runner config gates, nothing in CI executes it — a pull request goes green without the suite running. Add a step that runs the tests (for example `pnpm vitest run --coverage`) to a job that gates the merge, so the thresholds and skips the rest of these rules read are actually enforced.",
+    "file": ".github/workflows",
+    "id": "gate-truth .github/workflows ci-runs-nothing#0",
+    "line": 0,
+    "message": "no CI step runs the tests, coverage or mutation in 1 workflow, so the suite never runs on a pull request",
+    "outcome": "finding",
+    "related": [],
+    "rule": "gate-truth",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 0,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "mutation-break-zero"
+      },
+      {
+        "key": "break",
+        "value": "0"
+      }
+    ],
+    "explain": "Stryker's `thresholds.break` is 0, so no mutation score, however low, ever fails the build — the mutation gate is off. Raise `break` to the suite's current mutation score and ratchet it up, so a regression in test strength fails the run instead of being recorded and ignored.",
+    "file": "stryker.conf.mjs",
+    "id": "gate-truth stryker.conf.mjs mutation-break-zero#0",
+    "line": 0,
+    "message": "mutation break is 0, so the mutation score never fails the build",
+    "outcome": "finding",
+    "related": [],
+    "rule": "gate-truth",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 0,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "thresholds-absent"
+      }
+    ],
+    "explain": "The runner config sets no coverage thresholds, so coverage can fall to zero under a green build. Set `coverage.thresholds` (Vitest) or `coverageThreshold` (Jest) to the suite's current numbers and ratchet them up, so a drop below today's coverage fails the run rather than passing unnoticed.",
+    "file": "vitest.config.ts",
+    "id": "gate-truth vitest.config.ts thresholds-absent#0",
+    "line": 0,
+    "message": "runner config declares no coverage thresholds, so a coverage drop never fails the build",
+    "outcome": "finding",
+    "related": [],
+    "rule": "gate-truth",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  }
+]

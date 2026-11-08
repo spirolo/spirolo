@@ -1,0 +1,21 @@
+[package]
+name = "spirolo-report"
+description = "Output surfaces: the versioned JSON schema and the human view over it"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+spirolo-model.workspace = true
+spirolo-rules.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+spirolo-frameworks.workspace = true
+insta.workspace = true
+
+[lints]
+workspace = true

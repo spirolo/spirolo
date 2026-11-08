@@ -1,0 +1,23 @@
+{
+  "name": "kaneo",
+  "scripts": {
+    "build": "vp run -r build",
+    "dev": "vp run build:dependencies && vp run -r --parallel dev",
+    "i18n:check": "node ./scripts/i18n/check.mjs",
+    "i18n:check:fix": "node ./scripts/i18n/check.mjs --fix",
+    "openapi:check": "node ./scripts/openapi/check.mjs",
+    "openapi:check:fix": "node ./scripts/openapi/check.mjs --fix",
+    "i18n:report": "node ./scripts/i18n/report.mjs",
+    "i18n:report:fix": "node ./scripts/i18n/report.mjs --fix",
+    "i18n:schema": "node ./scripts/i18n/schema.mjs && vp fmt i18n/schema.json",
+    "lint": "vp check",
+    "test": "vp run -r test",
+    "test:integration": "vp run -r test:integration",
+    "test:e2e": "pnpm --dir tests/e2e test",
+    "test:browserstack": "pnpm --dir tests/e2e test:browserstack",
+    "typecheck": "vp run -r typecheck",
+    "prepare": "husky",
+    "format": "vp fmt",
+    "build:dependencies": "vp run --filter \"@kaneo/*^...\" build"
+  }
+}

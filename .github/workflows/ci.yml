@@ -1,0 +1,24 @@
+name: ci
+permissions:
+  contents: read
+on:
+  push: { branches: [main] }
+  pull_request:
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_BUILD_JOBS: '6'
+jobs:
+  snapshot:
+    name: build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable (2026-10-28)
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with: { node-version: '22' }
+      - uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # v2.8.2
+      - uses: taiki-e/install-action@62da238c048aa0f865cc5a322082957d34e7fc1a # v2.62.54
+        with: { tool: 'cargo-nextest, just' }
+      - run: just ci

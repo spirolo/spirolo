@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "spirolo_commit": "521ec2a7693a5fb2e807a55b7e7f04a0392ab3c0",
+  "entries": [],
+  "rules": {
+    "weak-assertion": {
+      "verdict": "PASS",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.942,
+        1.0
+      ],
+      "truths": 62,
+      "falses": 0
+    },
+    "absence-anchor": {
+      "verdict": "PASS",
+      "carried": null,
+      "precision": 0.98,
+      "interval": [
+        0.895,
+        0.996
+      ],
+      "truths": 49,
+      "falses": 1
+    },
+    "data-layer-mock": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0
+    },
+    "handler-drift": {
+      "verdict": "SKIPPED",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0
+    },
+    "generator-walk": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0
+    },
+    "fail-closed-setup": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.785,
+        1.0
+      ],
+      "truths": 14,
+      "falses": 0
+    },
+    "gate-truth": {
+      "verdict": "INSUFFICIENT",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.438,
+        1.0
+      ],
+      "truths": 3,
+      "falses": 0
+    },
+    "dead-skip": {
+      "verdict": "PASS",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.845,
+        1.0
+      ],
+      "truths": 21,
+      "falses": 0
+    },
+    "duplicate-test": {
+      "verdict": "FAIL",
+      "carried": "M6",
+      "precision": 0.75,
+      "interval": [
+        0.551,
+        0.88
+      ],
+      "truths": 18,
+      "falses": 6
+    },
+    "redundant-test": {
+      "verdict": "FAIL",
+      "carried": "M6",
+      "precision": 0.825,
+      "interval": [
+        0.727,
+        0.893
+      ],
+      "truths": 66,
+      "falses": 14
+    },
+    "unused-mock": {
+      "verdict": "INSUFFICIENT",
+      "carried": "M6",
+      "precision": 1.0,
+      "interval": [
+        0.757,
+        1.0
+      ],
+      "truths": 12,
+      "falses": 0
+    },
+    "orphan-test": {
+      "verdict": "INSUFFICIENT",
+      "carried": "M6",
+      "precision": 1.0,
+      "interval": [
+        0.342,
+        1.0
+      ],
+      "truths": 2,
+      "falses": 0
+    },
+    "stale-snapshot": {
+      "verdict": "SKIPPED",
+      "carried": "M6",
+      "precision": null,
+      "interval": null,
+      "truths": 0,
+      "falses": 0
+    },
+    "flake-candidate": {
+      "verdict": "FAIL",
+      "carried": "M6",
+      "precision": 0.0,
+      "interval": [
+        0.0,
+        0.161
+      ],
+      "truths": 0,
+      "falses": 20
+    },
+    "flake-observed": {
+      "verdict": "PASS",
+      "carried": null,
+      "precision": 1.0,
+      "interval": [
+        0.646,
+        1.0
+      ],
+      "truths": 7,
+      "falses": 0
+    },
+    "untested-hotspot": {
+      "verdict": "FAIL",
+      "carried": "M6",
+      "precision": 0.65,
+      "interval": [
+        0.433,
+        0.819
+      ],
+      "truths": 13,
+      "falses": 7
+    }
+  }
+}

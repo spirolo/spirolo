@@ -1,0 +1,42 @@
+---
+source: crates/spirolo-frameworks/tests/mocks.rs
+expression: "recognise(\"import { it, vi } from 'vitest'\\nit('t', () => { const fn = vi.fn() })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 32,
+      "end": 69,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [],
+    "mocks": [
+      {
+        "target": null,
+        "resolved": null,
+        "reason": null,
+        "kind": "function",
+        "factory": false,
+        "span": {
+          "start": 59,
+          "end": 66,
+          "line": 2,
+          "column": 28
+        }
+      }
+    ],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "ca8bc20db7a98631"
+  }
+]

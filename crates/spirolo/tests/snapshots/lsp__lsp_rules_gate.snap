@@ -1,0 +1,75 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: "rooted(&gate, &root)"
+---
+{
+  "rules": [
+    {
+      "rule": "dead-skip",
+      "family": "gate",
+      "tier": "proven",
+      "status": "rule: PASS 1.000 [0.845, 1.000]",
+      "summary": "A skipped or focused test disagrees with the suite that is believed to run, with no linked issue or visible condition watching it.",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 1,
+        "hint": 0
+      },
+      "state": "info",
+      "files": [
+        {
+          "path": "src/widget.test.ts",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 1,
+            "hint": 0
+          },
+          "state": "info",
+          "rows": [
+            {
+              "line": 5,
+              "id": "dead-skip src/widget.test.ts later#0",
+              "message": "skip \"later\" has no linked issue",
+              "severity": 3
+            }
+          ]
+        }
+      ],
+      "file_count": 1
+    },
+    {
+      "rule": "fail-closed-setup",
+      "family": "gate",
+      "tier": "unproven",
+      "status": "rule: INSUFFICIENT",
+      "summary": "The runner's setup misses an invariant (unhandled requests error, a console guard, mock reset, a global server) that makes a broken test fail.",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "state": "ok",
+      "files": [],
+      "file_count": 0
+    },
+    {
+      "rule": "gate-truth",
+      "family": "gate",
+      "tier": "unproven",
+      "status": "rule: INSUFFICIENT",
+      "summary": "What the project believes gates a merge (thresholds, mutation ratchets, CI running the tests) disagrees with what its configs and workflows actually enforce.",
+      "counts": {
+        "error": 0,
+        "warn": 0,
+        "info": 0,
+        "hint": 0
+      },
+      "state": "ok",
+      "files": [],
+      "file_count": 0
+    }
+  ]
+}

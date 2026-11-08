@@ -1,0 +1,12 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: human
+---
+duplicate-test  src/a.test.ts:3:3
+widget panel › renders the widget duplicates 1 other test
+related  b one  src/b.test.ts:2:1
+evidence  cross-file  yes
+evidence  size  2
+evidence  sources  src/a.test.ts: unpaired; src/b.test.ts: unpaired
+explain  These 2 tests have identical bodies once names are normalised: widget panel › renders the widget (src/a.test.ts:3), b one (src/b.test.ts:2). They check one behaviour 2 times under different names. Keep one — widget panel › renders the widget (src/a.test.ts:3), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.
+rule: FAIL 0.750 [0.551, 0.880], carried to M6

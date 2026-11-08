@@ -1,0 +1,16 @@
+{
+  "name": "spirolo-linux-x64",
+  "version": "0.1.0-alpha.1",
+  "description": "Spirolo native binary for linux x64",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/spirolo/spirolo",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "files": [
+    "bin/spirolo"
+  ]
+}

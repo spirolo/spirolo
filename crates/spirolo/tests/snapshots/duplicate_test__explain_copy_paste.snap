@@ -1,0 +1,5 @@
+---
+source: crates/spirolo/tests/duplicate_test.rs
+expression: explain
+---
+These 2 tests have identical bodies once names are normalised: renders checked Checkbox with color (src/components/__tests__/Checkbox/Checkbox.test.tsx:6), renders unchecked Checkbox with color (src/components/__tests__/Checkbox/Checkbox.test.tsx:14). They check one behaviour 2 times under different names. Keep one — renders checked Checkbox with color (src/components/__tests__/Checkbox/Checkbox.test.tsx:6), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.

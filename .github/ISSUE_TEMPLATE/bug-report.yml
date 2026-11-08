@@ -1,0 +1,57 @@
+name: Bug report
+description: A crash, a wrong exit code, broken output or an install problem. For a wrong finding, use "False positive".
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected and what you got instead, with the error output.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: The exact command, and a minimal project or the relevant config (`.spirolorc.jsonc`, tsconfig, runner config).
+      render: sh
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The output of `spirolo --version`.
+      placeholder: spirolo 0.1.0-alpha.1
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - linux-x64
+        - linux-arm64
+        - darwin-x64
+        - darwin-arm64
+        - other (not a release target)
+    validations:
+      required: true
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where
+      options:
+        - CLI
+        - npm install / launcher
+        - VS Code extension / spirolo lsp
+        - spirolo mcp
+        - other
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      description: Only for install or launcher problems (`node --version`).

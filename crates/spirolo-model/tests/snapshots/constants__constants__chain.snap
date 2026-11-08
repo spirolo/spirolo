@@ -1,0 +1,81 @@
+---
+source: crates/spirolo-model/tests/constants.rs
+expression: constants
+---
+[
+  [
+    "src/config.ts",
+    [
+      {
+        "name": "BASE",
+        "value": "https://api.example.com",
+        "opaque": false,
+        "reason": null,
+        "env_template": null,
+        "span": {
+          "start": 13,
+          "end": 17,
+          "line": 1,
+          "column": 14
+        }
+      }
+    ]
+  ],
+  [
+    "src/service.ts",
+    [
+      {
+        "name": "urlApi",
+        "value": "https://api.example.com/v1",
+        "opaque": false,
+        "reason": null,
+        "env_template": null,
+        "span": {
+          "start": 47,
+          "end": 53,
+          "line": 3,
+          "column": 14
+        }
+      },
+      {
+        "name": "urlV2",
+        "value": "https://api.example.com/v2",
+        "opaque": false,
+        "reason": null,
+        "env_template": null,
+        "span": {
+          "start": 83,
+          "end": 88,
+          "line": 4,
+          "column": 14
+        }
+      },
+      {
+        "name": "dynamic",
+        "value": null,
+        "opaque": true,
+        "reason": "`process.env.API_URL` is read from the environment",
+        "env_template": "${API_URL}/fallback",
+        "span": {
+          "start": 118,
+          "end": 125,
+          "line": 5,
+          "column": 14
+        }
+      },
+      {
+        "name": "twice",
+        "value": "https://api.example.com-https://api.example.com",
+        "opaque": false,
+        "reason": null,
+        "env_template": null,
+        "span": {
+          "start": 176,
+          "end": 181,
+          "line": 6,
+          "column": 14
+        }
+      }
+    ]
+  ]
+]

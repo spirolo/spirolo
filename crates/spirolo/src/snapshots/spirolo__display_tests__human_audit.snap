@@ -1,0 +1,20 @@
+---
+source: crates/spirolo/src/display_tests.rs
+expression: "human_view(&root, Some(family))"
+---
+2 files · 1 test files · 17 tests (17 vitest) · 26 expects · 0 handlers · 0 configs · 0ms
+Weak tests −25.0 / 25
+
+── Weak tests (audit) ────────────────────────────────────────
+
+● weak-assertion (2 files, 3 findings)
+  project 8 of 26 assertions carry no value (30.8%, ceiling 6.0%)
+  engine.test.ts (2)
+    :200 test "should handle empty data object" asserts only value-less matchers (toBeDefined)
+    :208 test "should handle complex data objects" asserts only value-less matchers (toBeDefined)
+  A test's assertions check no produced value, only that one exists, so a wrong value still passes. · spirolo explain weak-assertion
+  To accept today's rows: spirolo ratchet
+
+✓ 4 rules found nothing: handler-drift, generator-walk, absence-anchor, data-layer-mock
+
+3 findings in 1 of 5 rules · 3 warn · 0 error · exit 1

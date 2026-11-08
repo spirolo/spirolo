@@ -1,0 +1,4 @@
+**/*.test.mjs
+test/**
+package-lock.json
+node_modules/@vscode/vsce/**

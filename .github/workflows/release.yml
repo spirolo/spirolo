@@ -1,0 +1,116 @@
+# Maintained here; cargo-dist CI generation is disabled in dist-workspace.toml.
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+jobs:
+  build:
+    name: build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: ubuntu-22.04, target: x86_64-unknown-linux-gnu }
+          - { os: ubuntu-24.04-arm, target: aarch64-unknown-linux-gnu }
+          - { os: macos-15-intel, target: x86_64-apple-darwin }
+          - { os: macos-15, target: aarch64-apple-darwin }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable (2026-10-28)
+        with:
+          targets: ${{ matrix.target }}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - name: Validate tag and release metadata
+        run: |
+          node npm/release.mjs check
+          node npm/publish.mjs --check-tag
+      - name: Build locked native binary
+        env:
+          TARGET: ${{ matrix.target }}
+        run: cargo build --release --locked -p spirolo --target "$TARGET"
+      - name: Archive native binary
+        env:
+          TARGET: ${{ matrix.target }}
+        run: |
+          mkdir -p "target/distrib/spirolo-$TARGET"
+          cp "target/$TARGET/release/spirolo" "target/distrib/spirolo-$TARGET/"
+          cp README.md LICENSE CHANGELOG.md "target/distrib/spirolo-$TARGET/"
+          tar -cJf "target/distrib/spirolo-$TARGET.tar.xz" -C target/distrib "spirolo-$TARGET"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: native-${{ matrix.target }}
+          path: target/distrib/*.tar.xz
+          if-no-files-found: error
+  package:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: native-*
+          path: target/distrib
+          merge-multiple: true
+      - run: node npm/stage.mjs target/rc
+      - run: sha256sum --check SHA256SUMS
+        working-directory: target/rc
+      - name: Rehearse npm publication (always dry run)
+        run: node npm/publish.mjs target/rc
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: release
+          path: target/rc/*
+          if-no-files-found: error
+  publish:
+    needs: package
+    if: vars.RELEASE_PUBLISH == 'true' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    env:
+      PUBLISH_NPM: 'true'
+      REPOSITORY_PRIVATE: ${{ github.event.repository.private }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: release
+          path: target/rc
+      - name: Publish native packages before launcher with provenance
+        run: node npm/publish.mjs target/rc
+      - name: Attach checksums and packages to the tag release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          flags=()
+          if [[ "$RELEASE_TAG" == *-* ]]; then flags+=(--prerelease); fi
+          gh release create "$RELEASE_TAG" --verify-tag --generate-notes "${flags[@]}" target/rc/*

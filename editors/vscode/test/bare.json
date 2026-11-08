@@ -1,0 +1,94 @@
+{
+  "_capture": "spirolo lsp at a5cb330 on a temp fixture project, driven by capture.mjs: the spirolo/checked of the first pass, then spirolo/tree and spirolo/file per path",
+  "checked": {
+    "generation": 1,
+    "files": 0,
+    "findings": 0,
+    "elapsed_ms": 8
+  },
+  "tree": {
+    "root": "/tmp/spirolo-vscode-bare",
+    "tests": {
+      "jest": 0,
+      "playwright": 0,
+      "vitest": 1
+    },
+    "baseline": null,
+    "handlers": {
+      "count": 0,
+      "drift": 0
+    },
+    "nodes": [
+      {
+        "path": "test",
+        "kind": "dir",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok"
+      },
+      {
+        "path": "test/math.test.ts",
+        "kind": "file",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok"
+      }
+    ]
+  },
+  "file": {
+    "test/math.test.ts": {
+      "file": "test/math.test.ts",
+      "kind": "test",
+      "rows": [
+        {
+          "key": "covers",
+          "state": "none",
+          "text": "no paired source",
+          "detail": "no coverage report read",
+          "ids": []
+        },
+        {
+          "key": "handlers",
+          "state": "none",
+          "text": "no handlers in the project",
+          "detail": "rule: SKIPPED",
+          "ids": []
+        },
+        {
+          "key": "flake",
+          "state": "ok",
+          "text": "no static candidates",
+          "detail": "no runs ingested",
+          "ids": []
+        },
+        {
+          "key": "mutation",
+          "state": "none",
+          "text": "no mutation report read",
+          "detail": null,
+          "ids": []
+        },
+        {
+          "key": "hygiene",
+          "state": "ok",
+          "text": "no hygiene findings",
+          "detail": null,
+          "ids": []
+        }
+      ]
+    },
+    "README.md": {
+      "file": "README.md",
+      "kind": "other",
+      "rows": []
+    }
+  }
+}

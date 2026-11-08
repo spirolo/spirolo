@@ -1,0 +1,10 @@
+---
+source: crates/spirolo-bench/tests/harness.rs
+expression: render(&reports)
+---
+spirolo-bench · 1 corpus entry · counts vs truth.json, wall-clock vs budget
+
+example-console  —                     SKIPPED
+  pending: not reachable here, counts copied from a document of record
+
+0 failed · 0 passed · 1 skipped

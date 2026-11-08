@@ -1,0 +1,32 @@
+---
+source: crates/spirolo-frameworks/tests/handlers.rs
+expression: "handlers(\"import { rest } from 'msw'\\n\\\n         export const handlers = [\\n\\\n         \\x20 rest.get('/api/user', (req, res, ctx) => res(ctx.json({}))),\\n\\\n         \\x20 rest.delete('/api/user/:id', (req, res, ctx) => res(ctx.status(204))),\\n\\\n         ]\\n\")"
+---
+[
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 55,
+      "end": 114,
+      "line": 3,
+      "column": 3
+    },
+    "library": "msw",
+    "method": "GET",
+    "pattern": "/api/user",
+    "pattern_kind": "string"
+  },
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 118,
+      "end": 187,
+      "line": 4,
+      "column": 3
+    },
+    "library": "msw",
+    "method": "DELETE",
+    "pattern": "/api/user/:id",
+    "pattern_kind": "string"
+  }
+]

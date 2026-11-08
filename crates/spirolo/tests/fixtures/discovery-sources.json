@@ -1,0 +1,157 @@
+{
+  "discovery-config-root": {
+    "entry": "necolas__react-native-web",
+    "repo": "https://github.com/necolas/react-native-web",
+    "commit": "f1b53224b242d9d8dad4b647e0b6f0395a0533ae",
+    "files": [
+      "configs/jest.config.js",
+      "packages/react-native-web/src/exports/AppRegistry/__tests__/index-test.js",
+      "packages/react-native-web/src/exports/AppRegistry/__tests__/index-test.node.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-explicit-import": {
+    "entry": "ChatGPTNextWeb__NextChat",
+    "repo": "https://github.com/ChatGPTNextWeb/NextChat",
+    "commit": "defdcdb55d850cd12c4c657eb83729fd66e215c0",
+    "files": [
+      "test/vision-model-checker.test.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-generated": {
+    "entry": "mantinedev__mantine",
+    "repo": "https://github.com/mantinedev/mantine",
+    "commit": "f38933cb4f1c534600f4ff59ee3ddbb4685a4bc4",
+    "files": [
+      "jest.config.ts",
+      "packages/@mantine/carousel/src/CarouselSlide/CarouselSlide.test.tsx",
+      "packages/@mantine/charts/src/AreaChart/AreaChart.test.tsx"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-glob-groups": {
+    "entry": "Nozbe__WatermelonDB",
+    "repo": "https://github.com/Nozbe/WatermelonDB",
+    "commit": "5c463222ecd79928861385bac94b486fcc7623d4",
+    "files": [
+      "jest.config.js",
+      "src/Collection/test.js",
+      "src/QueryDescription/__tests__/queryWithoutDeleted.test.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-jsx": {
+    "entry": "mui__material-ui",
+    "repo": "https://github.com/mui/material-ui",
+    "commit": "6780195595c12252a130aa5ae5c5bd461229c6b7",
+    "files": [
+      "packages/mui-lab/src/TimelineContent/TimelineContent.test.js",
+      "packages/mui-lab/src/TimelineDot/TimelineDot.test.js",
+      "vitest.config.mts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-nextchat": {
+    "entry": "ChatGPTNextWeb__NextChat",
+    "repo": "https://github.com/ChatGPTNextWeb/NextChat",
+    "commit": "defdcdb55d850cd12c4c657eb83729fd66e215c0",
+    "files": [
+      "jest.config.ts",
+      "test/format.test.ts",
+      "test/get-operation-id.test.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-package-runner": {
+    "entry": "plouc__nivo",
+    "repo": "https://github.com/plouc/nivo",
+    "commit": "0dae2c32052a573f9f1d66ec1b453b572119b265",
+    "files": [
+      "package.json",
+      "packages/arcs/package.json",
+      "packages/arcs/tests/boundingBox.test.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-playwright": {
+    "entry": "radix-ui__primitives",
+    "repo": "https://github.com/radix-ui/primitives",
+    "commit": "f7ecd5ab16f5e1e820eb5786a1419a98a2d594ae",
+    "files": [
+      "e2e/toast.spec.ts",
+      "e2e/toggle-group.spec.ts",
+      "playwright.config.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-project-roots": {
+    "entry": "gpbl__react-day-picker",
+    "repo": "https://github.com/gpbl/react-day-picker",
+    "commit": "19033b454689bc761d9847301de429bbbb53eed4",
+    "files": [
+      "examples/AsiaSaigonTimezone.test.tsx",
+      "examples/timezone/TestCase2833.test.tsx",
+      "jest.config.ts"
+    ],
+    "cut": "First two inline project objects retained verbatim; parent export preserved."
+  },
+  "discovery-projects": {
+    "entry": "pmndrs__react-spring",
+    "repo": "https://github.com/pmndrs/react-spring",
+    "commit": "d9cd058a07c7ac5b576f40a5f4312f4471897661",
+    "files": [
+      "packages/core/src/components/Spring.test-d.tsx",
+      "packages/core/src/helpers.test.ts",
+      "vitest.config.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-regex": {
+    "entry": "react__metro",
+    "repo": "https://github.com/react/metro",
+    "commit": "5793c17017825d1d59191d080114365e1da569ae",
+    "files": [
+      "jest.config.js",
+      "packages/metro-babel-register/src/__tests__/parses-without-transpilation-test.js",
+      "packages/metro-resolver/src/__tests__/utils.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-rootdir": {
+    "entry": "notionnext-org__NotionNext",
+    "repo": "https://github.com/notionnext-org/NotionNext",
+    "commit": "50e77e069ec48ebd3d641888c13cd5ec6842c3d2",
+    "files": [
+      "__tests__/conf/themeSwitch.xuhome.test.js",
+      "__tests__/lib/cache/cache_key_path.test.js",
+      "jest.config.js"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-workspace-reach": {
+    "entry": "usekaneo__kaneo",
+    "repo": "https://github.com/usekaneo/kaneo",
+    "commit": "afe97be2473e0cd97fe4a63e526fef9ac4df85b0",
+    "files": [
+      "apps/api/package.json",
+      "apps/api/vitest.config.ts",
+      "pnpm-workspace.yaml",
+      "tests/api/column/to-slug.test.ts",
+      "tests/api/mcp-internal-api-url.test.ts"
+    ],
+    "cut": "Files copied verbatim."
+  },
+  "discovery-jest-extensions": {
+    "entry": "software-mansion__react-native-reanimated",
+    "repo": "https://github.com/software-mansion/react-native-reanimated",
+    "commit": "b603aacf3ebd0fe368125faaab5c467334687ddb",
+    "files": [
+      "package.json",
+      "packages/react-native-worklets/package.json",
+      "packages/react-native-worklets/plugin-oxc/test/babel-shim.test.mts",
+      "packages/react-native-worklets/plugin-oxc/test/napi.test.mts"
+    ],
+    "cut": "Root defaults scenario: package manifests and two test files copied verbatim; child config omitted, as in the root runner listing."
+  }
+}

@@ -1,0 +1,32 @@
+---
+source: crates/spirolo-frameworks/tests/handlers.rs
+expression: "handlers(\"import { graphql, HttpResponse } from 'msw'\\n\\\n         export const handlers = [\\n\\\n         \\x20 graphql.query('GetUser', () => HttpResponse.json({ data: {} })),\\n\\\n         \\x20 graphql.mutation('AddTodo', () => HttpResponse.json({ data: {} })),\\n\\\n         ]\\n\")"
+---
+[
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 72,
+      "end": 135,
+      "line": 3,
+      "column": 3
+    },
+    "library": "msw",
+    "method": null,
+    "pattern": "GetUser",
+    "pattern_kind": "string"
+  },
+  {
+    "file": "src/mocks/handlers.ts",
+    "span": {
+      "start": 139,
+      "end": 205,
+      "line": 4,
+      "column": 3
+    },
+    "library": "msw",
+    "method": null,
+    "pattern": "AddTodo",
+    "pattern_kind": "string"
+  }
+]

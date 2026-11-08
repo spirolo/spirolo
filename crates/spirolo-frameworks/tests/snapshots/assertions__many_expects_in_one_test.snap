@@ -1,0 +1,71 @@
+---
+source: crates/spirolo-frameworks/tests/assertions.rs
+expression: "recognise(\"import { it } from 'vitest'\\n\\\n         it('t', () => {\\n  expect(a).toBe(1)\\n  expect(b).not.toEqual(2)\\n  expect(c).toBeNull()\\n})\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 28,
+      "end": 116,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "toBe",
+        "argument": "1",
+        "subject": "a",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 46,
+          "end": 63,
+          "line": 3,
+          "column": 3
+        }
+      },
+      {
+        "matcher": "toEqual",
+        "argument": "2",
+        "subject": "b",
+        "subject_is_query": false,
+        "negated": true,
+        "carries_value": true,
+        "span": {
+          "start": 66,
+          "end": 90,
+          "line": 4,
+          "column": 3
+        }
+      },
+      {
+        "matcher": "toBeNull",
+        "argument": null,
+        "subject": "c",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 93,
+          "end": 113,
+          "line": 5,
+          "column": 3
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "a1ebfb7ca7c8ea6d"
+  }
+]

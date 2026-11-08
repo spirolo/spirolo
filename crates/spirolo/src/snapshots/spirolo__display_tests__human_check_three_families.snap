@@ -1,0 +1,39 @@
+---
+source: crates/spirolo/src/display_tests.rs
+expression: "human_view(&root, None)"
+---
+3 files · 1 test files · 17 tests (17 vitest) · 26 expects · 0 handlers · 0 configs · 0ms
+Health C (58)
+
+── Weak tests (audit) ────────────────────────────────────────
+
+● weak-assertion (2 files, 3 findings)
+  project 8 of 26 assertions carry no value (30.8%, ceiling 6.0%)
+  engine.test.ts (2)
+    :200 test "should handle empty data object" asserts only value-less matchers (toBeDefined)
+    :208 test "should handle complex data objects" asserts only value-less matchers (toBeDefined)
+  A test's assertions check no produced value, only that one exists, so a wrong value still passes. · spirolo explain weak-assertion
+  To accept today's rows: spirolo ratchet
+
+── Unused tests (hygiene) ────────────────────────────────────────
+
+● orphan-test (1 file, 4 findings) · experimental: 2/2 (INSUFFICIENT)
+  engine.test.ts (4)
+    :2 the test imports ../../templates/engine, which no longer resolves
+    :3 the test imports ../../templates/registry, which no longer resolves
+    :4 the test imports ../../types/template, which no longer resolves
+    :5 the test imports ../../types/email, which no longer resolves
+  A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves. · spirolo explain orphan-test
+  To gate it: .spirolorc.jsonc { "rules": { "orphan-test": { "severity": "warn" } } } · to accept today's rows: spirolo ratchet
+
+── Health (impact) ────────────────────────────────────────
+
+● untested-hotspot (1 file) · rule: FAIL
+  client.ts:1 scores 12.00: complexity 12 × weakness 1.00 (no churn input)
+  A source module's churn and complexity disagree with how weakly its tests pin it, ranking it where test effort pays. · spirolo explain untested-hotspot
+  To accept today's rows: spirolo ratchet
+
+✓ 13 rules found nothing: handler-drift, generator-walk, absence-anchor, data-layer-mock, fail-closed-setup, gate-truth, dead-skip, duplicate-test, redundant-test, unused-mock, stale-snapshot, flake-candidate, flake-observed
+
+8 findings in 3 of 16 rules · 3 warn · 0 error · 5 info · exit 1
+ note   no churn input: untested-hotspot ranks by complexity × weakness alone. Save `git log --numstat --format= --since=180.days` to a file and pass it with `--churn <file>` or name it in `inputs.churn`

@@ -1,0 +1,30 @@
+{
+  "name": "primitives",
+  "scripts": {
+    "lint": "pnpm -r --no-bail run lint",
+    "types:check": "pnpm -r --no-bail --parallel run typecheck",
+    "test": "vitest",
+    "test:ci": "vitest run && pnpm e2e:install && pnpm e2e",
+    "storybook": "pnpm --filter=@repo/storybook run dev -p 9009 --no-open",
+    "storybook:build": "BROWSER=none pnpm --filter=@repo/storybook run build",
+    "storybook:serve": "pnpm --filter=@repo/storybook run serve",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "e2e:install": "playwright install --with-deps chromium",
+    "dev": "pnpm run storybook",
+    "dev:ssr": "pnpm --filter=@repo/ssr-testing dev",
+    "build-storybook": "pnpm --filter=@repo/storybook run build",
+    "build": "pnpm -r --parallel --filter \"./packages/**/*\" run build",
+    "build:ci": "pnpm -r --workspace-concurrency=4 --filter \"./packages/**/*\" run build",
+    "clean": "pnpm -r run clean",
+    "reset": "rm -rf node_modules && pnpm -r run reset",
+    "bump:stable": "changeset version",
+    "bump:next": "changeset version --snapshot",
+    "bump:check": "changeset status --since=main",
+    "release:stable": "pnpm publish -r --access public",
+    "release:stable:ci": "changeset publish",
+    "release:next": "pnpm publish -r --access public --tag next",
+    "format": "oxfmt --write",
+    "format:check": "oxfmt --check"
+  }
+}

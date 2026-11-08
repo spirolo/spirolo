@@ -1,0 +1,84 @@
+---
+source: crates/spirolo/tests/duplicate_test.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "cross-file",
+        "value": "yes"
+      },
+      {
+        "key": "size",
+        "value": "2"
+      },
+      {
+        "key": "sources",
+        "value": "src/alpha.test.ts: src/parse.ts; src/beta.test.ts: src/parse.ts"
+      }
+    ],
+    "explain": "These 2 tests have identical bodies once names are normalised: parses alpha input (src/alpha.test.ts:4), parses beta input (src/beta.test.ts:4). They check one behaviour 2 times under different names. Keep one — parses alpha input (src/alpha.test.ts:4), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.",
+    "file": "src/alpha.test.ts",
+    "id": "duplicate-test src/alpha.test.ts 0606db3d51670d73#0",
+    "line": 4,
+    "message": "parses alpha input duplicates 1 other test",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 1,
+        "file": "src/beta.test.ts",
+        "label": "parses beta input",
+        "line": 4
+      }
+    ],
+    "rule": "duplicate-test",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "parses alpha input"
+    }
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "cross-file",
+        "value": "no"
+      },
+      {
+        "key": "size",
+        "value": "2"
+      },
+      {
+        "key": "sources",
+        "value": "src/format.test.ts: src/format.ts; src/format.test.ts: src/format.ts"
+      }
+    ],
+    "explain": "These 2 tests have identical bodies once names are normalised: format › formats the value (src/format.test.ts:6), format › renders the value the same way (src/format.test.ts:10). They check one behaviour 2 times under different names. Keep one — format › formats the value (src/format.test.ts:6), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.",
+    "file": "src/format.test.ts",
+    "id": "duplicate-test src/format.test.ts 8757871e4c997177#0",
+    "line": 6,
+    "message": "format › formats the value duplicates 1 other test",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 3,
+        "file": "src/format.test.ts",
+        "label": "format › renders the value the same way",
+        "line": 10
+      }
+    ],
+    "rule": "duplicate-test",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "format"
+      ],
+      "title": "formats the value"
+    }
+  }
+]

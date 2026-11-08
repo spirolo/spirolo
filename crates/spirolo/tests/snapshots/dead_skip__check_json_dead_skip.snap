@@ -1,0 +1,228 @@
+---
+source: crates/spirolo/tests/dead_skip.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 6,
+    "evidence": [
+      {
+        "key": "condition",
+        "value": "none"
+      },
+      {
+        "key": "kind",
+        "value": "skip-listed"
+      },
+      {
+        "key": "modifier",
+        "value": "skip"
+      },
+      {
+        "key": "reason",
+        "value": "none"
+      },
+      {
+        "key": "scope",
+        "value": "unconditional"
+      },
+      {
+        "key": "tracked",
+        "value": "no"
+      }
+    ],
+    "explain": "Listed for the count: every skip, todo, fixme, skipIf and runIf is inventoried with its condition, so a suite silently halved in CI is a number and not a memory. This skip on \"is dead with no ticket\" is unconditional; it is tracked: no. A listing row is not a finding and never fails the build — the flagged rows beside it say what needs a ticket.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts listed:widget › is dead with no ticket#0",
+    "line": 3,
+    "message": "skip \"is dead with no ticket\": unconditional",
+    "outcome": "listed",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "is dead with no ticket"
+    }
+  },
+  {
+    "column": 6,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "skip"
+      },
+      {
+        "key": "reference",
+        "value": "none"
+      }
+    ],
+    "explain": "The skip on \"is dead with no ticket\" is unconditional and names no issue (no `#123`, issue or pull-request URL or `KEY-123` ticket in its title, its reason, a trailing comment or the comment lines just above it), so nothing tracks when it should come back. Link the ticket that justifies the skip there, or fix the test and remove the skip (delete it if it is dead) — do not leave it unexplained.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts widget › is dead with no ticket#0",
+    "line": 3,
+    "message": "skip \"is dead with no ticket\" has no linked issue",
+    "outcome": "finding",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "is dead with no ticket"
+    }
+  },
+  {
+    "column": 6,
+    "evidence": [
+      {
+        "key": "condition",
+        "value": "none"
+      },
+      {
+        "key": "kind",
+        "value": "skip-listed"
+      },
+      {
+        "key": "modifier",
+        "value": "skip"
+      },
+      {
+        "key": "reason",
+        "value": "none"
+      },
+      {
+        "key": "scope",
+        "value": "unconditional"
+      },
+      {
+        "key": "tracked",
+        "value": "yes"
+      }
+    ],
+    "explain": "Listed for the count: every skip, todo, fixme, skipIf and runIf is inventoried with its condition, so a suite silently halved in CI is a number and not a memory. This skip on \"is tracked in #42\" is unconditional; it is tracked: yes. A listing row is not a finding and never fails the build — the flagged rows beside it say what needs a ticket.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts listed:widget › is tracked in #42#0",
+    "line": 6,
+    "message": "skip \"is tracked in #42\": unconditional",
+    "outcome": "listed",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "is tracked in #42"
+    }
+  },
+  {
+    "column": 8,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "only"
+      }
+    ],
+    "explain": "`.only` on \"runs alone\" makes the runner skip every case without `.only`, so the build passes on one test while the rest never run. Remove the `.only` before merging; it is almost always a debugging leftover, never a gate.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts widget › runs alone#0",
+    "line": 9,
+    "message": "only on \"runs alone\" skips every other case",
+    "outcome": "finding",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "runs alone"
+    }
+  },
+  {
+    "column": 10,
+    "evidence": [
+      {
+        "key": "condition",
+        "value": "!!process.env.CI"
+      },
+      {
+        "key": "kind",
+        "value": "skip"
+      },
+      {
+        "key": "scope",
+        "value": "ci"
+      },
+      {
+        "key": "variable",
+        "value": "CI"
+      }
+    ],
+    "explain": "The skip on \"integration\" reads the environment variable `CI` (`!!process.env.CI`), so this test runs in one environment and not another — a CI-scoped skip can silently halve the suite the moment CI is green. Confirm the environment split is deliberate and documented; if the test needs a service CI lacks, make CI provide it rather than skip the coverage.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts integration#0",
+    "line": 13,
+    "message": "skip \"integration\" is CI-scoped on CI",
+    "outcome": "finding",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "integration"
+    }
+  },
+  {
+    "column": 10,
+    "evidence": [
+      {
+        "key": "condition",
+        "value": "!!process.env.CI"
+      },
+      {
+        "key": "kind",
+        "value": "skip-listed"
+      },
+      {
+        "key": "modifier",
+        "value": "skipIf"
+      },
+      {
+        "key": "reason",
+        "value": "none"
+      },
+      {
+        "key": "scope",
+        "value": "ci"
+      },
+      {
+        "key": "tracked",
+        "value": "no"
+      }
+    ],
+    "explain": "Listed for the count: every skip, todo, fixme, skipIf and runIf is inventoried with its condition, so a suite silently halved in CI is a number and not a memory. This skipIf on \"integration\" is CI-scoped on CI; it is tracked: no. A listing row is not a finding and never fails the build — the flagged rows beside it say what needs a ticket.",
+    "file": "src/widget.test.ts",
+    "id": "dead-skip src/widget.test.ts listed:integration#0",
+    "line": 13,
+    "message": "skipIf \"integration\": CI-scoped on CI",
+    "outcome": "listed",
+    "related": [],
+    "rule": "dead-skip",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [],
+      "title": "integration"
+    }
+  }
+]

@@ -1,0 +1,43 @@
+---
+source: crates/spirolo-frameworks/tests/assertions.rs
+expression: "recognise(\"import { it } from 'vitest'\\nit('t', async () => { await expect(promise).resolves.toBe(1) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 28,
+      "end": 91,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "toBe",
+        "argument": "1",
+        "subject": "promise",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 56,
+          "end": 88,
+          "line": 2,
+          "column": 29
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "1e23f3eb15f38e7a"
+  }
+]

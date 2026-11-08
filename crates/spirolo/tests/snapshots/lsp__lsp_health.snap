@@ -1,0 +1,166 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: before
+---
+{
+  "score": 65.0,
+  "grade": "C",
+  "formula_version": 1,
+  "provisional": true,
+  "lean_true": 6,
+  "proven": 4,
+  "parts": [
+    {
+      "family": "audit",
+      "title": "Weak tests",
+      "penalty": 25.0,
+      "cap": 25.0,
+      "ratio": 0.6666666666666666,
+      "rules": [
+        {
+          "rule": "handler-drift",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 3
+        },
+        {
+          "rule": "generator-walk",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 3
+        },
+        {
+          "rule": "absence-anchor",
+          "weight": 1.0,
+          "flagged": 0,
+          "subjects": 3
+        },
+        {
+          "rule": "weak-assertion",
+          "weight": 1.0,
+          "flagged": 2,
+          "subjects": 3
+        },
+        {
+          "rule": "data-layer-mock",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 3
+        }
+      ]
+    },
+    {
+      "family": "gate",
+      "title": "Merge gate",
+      "penalty": 0.0,
+      "cap": 30.0,
+      "ratio": 0.0,
+      "rules": [
+        {
+          "rule": "fail-closed-setup",
+          "weight": 1.0,
+          "flagged": 0,
+          "subjects": 0
+        },
+        {
+          "rule": "gate-truth",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 0
+        },
+        {
+          "rule": "dead-skip",
+          "weight": 1.0,
+          "flagged": 0,
+          "subjects": 3
+        }
+      ]
+    },
+    {
+      "family": "hygiene",
+      "title": "Unused tests",
+      "penalty": 10.0,
+      "cap": 10.0,
+      "ratio": 0.16666666666666666,
+      "rules": [
+        {
+          "rule": "duplicate-test",
+          "weight": 0.5,
+          "flagged": 1,
+          "subjects": 3
+        },
+        {
+          "rule": "redundant-test",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 3
+        },
+        {
+          "rule": "unused-mock",
+          "weight": 1.0,
+          "flagged": 0,
+          "subjects": 2
+        },
+        {
+          "rule": "orphan-test",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 2
+        },
+        {
+          "rule": "stale-snapshot",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 2
+        }
+      ]
+    },
+    {
+      "family": "flake",
+      "title": "Flaky",
+      "penalty": 0.0,
+      "cap": 20.0,
+      "ratio": 0.0,
+      "rules": [
+        {
+          "rule": "flake-candidate",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 3
+        },
+        {
+          "rule": "flake-observed",
+          "weight": 1.0,
+          "flagged": 0,
+          "subjects": 0
+        }
+      ]
+    },
+    {
+      "family": "impact",
+      "title": "Health",
+      "penalty": 0.0,
+      "cap": 15.0,
+      "ratio": 0.0,
+      "rules": [
+        {
+          "rule": "untested-hotspot",
+          "weight": 0.5,
+          "flagged": 0,
+          "subjects": 0
+        }
+      ]
+    }
+  ],
+  "facts": {
+    "tests": 3,
+    "test_files": 2,
+    "gates": 0,
+    "expects": 3,
+    "expects_per_test": 1.0
+  },
+  "hotspots": {
+    "total": 0,
+    "shown": []
+  }
+}

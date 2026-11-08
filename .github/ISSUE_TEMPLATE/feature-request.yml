@@ -1,0 +1,24 @@
+name: Feature request
+description: A new rule, a new input, an output format or another change in behaviour.
+title: "feature: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What in your test suite goes unnoticed today, or what you cannot do with spirolo. A real example helps most.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like
+      description: For a rule, the one sentence it would claim about a test and what the user should do about it.
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples
+      description: A minimal test or config where it should fire, and one where it should stay silent.

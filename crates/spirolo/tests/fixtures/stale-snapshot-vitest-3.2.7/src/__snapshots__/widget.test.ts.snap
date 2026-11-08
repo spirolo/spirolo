@@ -1,0 +1,19 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Widget > a > b 1`] = `"gt"`;
+
+exports[`Widget > case one 1`] = `"one"`;
+
+exports[`Widget > case two 1`] = `"two"`;
+
+exports[`Widget > renders > with hint 1`] = `
+{
+  "a": 1,
+}
+`;
+
+exports[`Widget > sum 1 + 2 1`] = `3`;
+
+exports[`Widget > title dyn 1`] = `2`;
+
+exports[`Widget > was removed long ago 1`] = `"old"`;

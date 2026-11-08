@@ -1,0 +1,39 @@
+[profile.default]
+# These tests read, or only check, private fixtures and captures that this snapshot does not include.
+default-filter = '''
+not (
+    (binary_id(spirolo::bin/spirolo) & test(/^display_tests::/))
+  | (binary_id(spirolo::pass_only) & test(=the_default_view_hides_rules_below_the_floor_and_counts_what_all_would_show))
+  | (binary_id(spirolo::pass_only) & test(=under_rule_the_hidden_line_names_the_rule_command_that_shows_it))
+  | (binary_id(spirolo::severity_policy) & test(=human_reports_group_real_findings_by_family_tier_severity_and_registry_order))
+  | (binary_id(spirolo::flake_candidate) & test(=a_single_clock_read_passed_through_and_compared_to_itself_is_not_a_candidate))
+  | (binary_id(spirolo::list) & test(=list_attributes_injected_globals_to_the_configured_runner))
+  | (binary_id(spirolo::list) & test(=list_inventories_collected_files_independently_of_recognised_cases))
+  | (binary_id(spirolo::list) & test(=list_uses_jest_testregex_instead_of_default_testmatch))
+  | (binary_id(spirolo::orphan_test_shapes) & test(=an_example_test_the_root_jest_config_ignores_stays_a_never_collected_finding))
+  | (binary_id(spirolo::orphan_test_shapes) & test(=a_shared_test_module_a_collected_test_reaches_through_an_index_is_not_never_collected))
+  | (binary_id(spirolo::orphan_test_shapes) & test(=a_shared_test_module_a_collected_test_reaches_through_a_jest_module_name_mapper_is_not_never_collected))
+  | (binary_id(spirolo::orphan_test_shapes) & test(=an_import_of_a_build_scripts_out_dir_is_undecided_not_source_gone))
+  | (binary_id(spirolo::orphan_test_shapes) & test(=a_test_a_second_jest_config_a_package_script_selects_collects_is_not_never_collected))
+  | (binary_id(spirolo-bench::harness) & test(=every_local_corpus_entry_records_an_installed_substrate_and_stamps_its_adjudications))
+  | (binary_id(spirolo-bench::harness) & test(=every_recorded_m2_timing_says_it_is_a_median_of_timed_runs))
+  | (binary_id(spirolo-bench::harness) & test(=every_redundant_test_adjudication_comes_from_the_held_out_deletion_oracle))
+  | (binary_id(spirolo-frameworks::scope) & test(=playwright_specs_answer_to_test_dir_and_vitest_includes_never_drop_them))
+  | (binary_id(spirolo-frameworks::scope) & test(=a_spec_playwright_collects_is_not_a_pairing_candidate))
+)
+'''
+fail-fast = false
+slow-timeout = { period = "30s", terminate-after = 2 }
+
+[profile.ci]
+retries = 0
+failure-output = "immediate-final"
+
+# Several crates/spirolo suites build their SARIF project in the same
+# CARGO_TARGET_TMPDIR/sarif-snapshot directory, so concurrent runs race.
+[test-groups]
+sarif-snapshot = { max-threads = 1 }
+
+[[profile.default.overrides]]
+filter = 'package(spirolo) & test(/sarif/)'
+test-group = 'sarif-snapshot'

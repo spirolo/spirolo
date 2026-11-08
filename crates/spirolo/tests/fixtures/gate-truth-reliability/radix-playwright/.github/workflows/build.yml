@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - main
+      - stable
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: CI setup
+        uses: ./.github/actions/ci-setup
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Check composed refs
+        run: node scripts/check-composed-refs.mjs
+
+      - name: Run build
+        run: pnpm build:ci
+
+      - name: Run tests
+        run: pnpm test:ci

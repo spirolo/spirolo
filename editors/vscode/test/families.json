@@ -1,0 +1,1314 @@
+{
+  "_capture": "Real spirolo lsp exchange on test/workspace; capture-families.mjs, #314",
+  "checked": {
+    "generation": 1,
+    "files": 3,
+    "findings": 7,
+    "elapsed_ms": 17
+  },
+  "summary": {
+    "rules": [
+      {
+        "rule": "weak-assertion",
+        "family": "audit",
+        "tier": "advisory",
+        "status": "rule: UNADJUDICATED",
+        "summary": "A test's assertions check no produced value, only that one exists, so a wrong value still passes.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 2,
+          "hint": 0
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 2
+      },
+      {
+        "rule": "absence-anchor",
+        "family": "audit",
+        "tier": "advisory",
+        "status": "rule: UNADJUDICATED",
+        "summary": "A render test asserts only that things are absent from the DOM, with no positive assertion proving the render happened at all.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "handler-drift",
+        "family": "audit",
+        "tier": "unproven",
+        "status": "rule: SKIPPED",
+        "summary": "A mock handler's URL pattern disagrees with every URL the production code emits, so the handler can never match.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "generator-walk",
+        "family": "audit",
+        "tier": "unproven",
+        "status": "rule: SKIPPED",
+        "summary": "A saga test steps the generator effect by effect instead of running the saga against its outcome, so the test pins the implementation rather than the behaviour.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "data-layer-mock",
+        "family": "audit",
+        "tier": "unproven",
+        "status": "rule: SKIPPED",
+        "summary": "A test module-mocks the data layer instead of the network, so it proves the mock and not the flow it names.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "fail-closed-setup",
+        "family": "gate",
+        "tier": "advisory",
+        "status": "rule: UNADJUDICATED",
+        "summary": "The runner's setup misses an invariant (unhandled requests error, a console guard, mock reset, a global server) that makes a broken test fail.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 2,
+          "hint": 0
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 1
+      },
+      {
+        "rule": "dead-skip",
+        "family": "gate",
+        "tier": "advisory",
+        "status": "rule: UNADJUDICATED",
+        "summary": "A skipped or focused test disagrees with the suite that is believed to run, with no linked issue or visible condition watching it.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 1,
+          "hint": 0
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 1
+      },
+      {
+        "rule": "gate-truth",
+        "family": "gate",
+        "tier": "unproven",
+        "status": "rule: UNADJUDICATED",
+        "summary": "What the project believes gates a merge (thresholds, mutation ratchets, CI running the tests) disagrees with what its configs and workflows actually enforce.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 1
+      },
+      {
+        "rule": "orphan-test",
+        "family": "hygiene",
+        "tier": "advisory",
+        "status": "rule: UNADJUDICATED, carried to M6",
+        "summary": "A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "unused-mock",
+        "family": "hygiene",
+        "tier": "unproven",
+        "status": "rule: INSUFFICIENT, carried to M6",
+        "summary": "A module mock or spy in a test file disagrees with what the file imports or reads, so nothing uses it.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 1
+      },
+      {
+        "rule": "duplicate-test",
+        "family": "hygiene",
+        "tier": "unproven",
+        "status": "rule: UNADJUDICATED, carried to M6",
+        "summary": "Two tests with different names have bodies that normalise to the same code, so one of them adds nothing.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "redundant-test",
+        "family": "hygiene",
+        "tier": "unproven",
+        "status": "rule: SKIPPED, carried to M6",
+        "summary": "Two tests in one mutation report kill exactly the same mutants, so the second adds no discrimination.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "stale-snapshot",
+        "family": "hygiene",
+        "tier": "unproven",
+        "status": "rule: UNADJUDICATED, carried to M6",
+        "summary": "A stored snapshot entry has no test left to produce it, so the runner would report it obsolete.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "flake-candidate",
+        "family": "flake",
+        "tier": "unproven",
+        "status": "rule: UNADJUDICATED, carried to M6",
+        "summary": "A test's code reads the clock, randomness, real I/O or shared state without a guard, so two runs of the same tree can disagree.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "flake-observed",
+        "family": "flake",
+        "tier": "unproven",
+        "status": "rule: SKIPPED",
+        "summary": "A test both passed and failed on the same tree in the run ledger.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 0
+        },
+        "state": "ok",
+        "files": null,
+        "file_count": 0
+      },
+      {
+        "rule": "untested-hotspot",
+        "family": "impact",
+        "tier": "unproven",
+        "status": "rule: UNADJUDICATED, carried to M6",
+        "summary": "A source module's churn and complexity disagree with how weakly its tests pin it, ranking it where test effort pays.",
+        "counts": {
+          "error": 0,
+          "warn": 0,
+          "info": 0,
+          "hint": 1
+        },
+        "state": "info",
+        "files": null,
+        "file_count": 1
+      }
+    ]
+  },
+  "family": {
+    "audit": {
+      "rules": [
+        {
+          "rule": "weak-assertion",
+          "family": "audit",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A test's assertions check no produced value, only that one exists, so a wrong value still passes.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 2,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "weak-assertion  ratio#0",
+                  "message": "1 of 2 assertions carry no value (50.0%, ceiling 6.0%)",
+                  "severity": 3
+                }
+              ]
+            },
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 4,
+                  "id": "weak-assertion src/widget.test.ts renders the widget#0",
+                  "message": "test \"renders the widget\" asserts only value-less matchers (toBeTruthy)",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 2
+        },
+        {
+          "rule": "absence-anchor",
+          "family": "audit",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A render test asserts only that things are absent from the DOM, with no positive assertion proving the render happened at all.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "handler-drift",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A mock handler's URL pattern disagrees with every URL the production code emits, so the handler can never match.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "generator-walk",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A saga test steps the generator effect by effect instead of running the saga against its outcome, so the test pins the implementation rather than the behaviour.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "data-layer-mock",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A test module-mocks the data layer instead of the network, so it proves the mock and not the flow it names.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "gate": {
+      "rules": [
+        {
+          "rule": "fail-closed-setup",
+          "family": "gate",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "The runner's setup misses an invariant (unhandled requests error, a console guard, mock reset, a global server) that makes a broken test fail.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 2,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "vitest.config.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 2,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "fail-closed-setup vitest.config.ts console-guard#0",
+                  "message": "setup does not guard the console (no throwing console.error/warn spy or fail-on-console package)",
+                  "severity": 3
+                },
+                {
+                  "line": 0,
+                  "id": "fail-closed-setup vitest.config.ts restore-mocks#0",
+                  "message": "setup does not restore mocks between tests (no restoreMocks or afterEach restoreAllMocks)",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        },
+        {
+          "rule": "dead-skip",
+          "family": "gate",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A skipped or focused test disagrees with the suite that is believed to run, with no linked issue or visible condition watching it.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 1,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 5,
+                  "id": "dead-skip src/widget.test.ts later#0",
+                  "message": "skip \"later\" has no linked issue",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        },
+        {
+          "rule": "gate-truth",
+          "family": "gate",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED",
+          "summary": "What the project believes gates a merge (thresholds, mutation ratchets, CI running the tests) disagrees with what its configs and workflows actually enforce.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "vitest.config.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "gate-truth vitest.config.ts thresholds-absent#0",
+                  "message": "runner config declares no coverage thresholds, so a coverage drop never fails the build",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    },
+    "hygiene": {
+      "rules": [
+        {
+          "rule": "orphan-test",
+          "family": "hygiene",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "unused-mock",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: INSUFFICIENT, carried to M6",
+          "summary": "A module mock or spy in a test file disagrees with what the file imports or reads, so nothing uses it.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 3,
+                  "id": "unused-mock src/widget.test.ts ./missing#0",
+                  "message": "module mock of \"./missing\" is reached by nothing the model could follow, but the mock target itself did not resolve",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        },
+        {
+          "rule": "duplicate-test",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "Two tests with different names have bodies that normalise to the same code, so one of them adds nothing.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "redundant-test",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: SKIPPED, carried to M6",
+          "summary": "Two tests in one mutation report kill exactly the same mutants, so the second adds no discrimination.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "stale-snapshot",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A stored snapshot entry has no test left to produce it, so the runner would report it obsolete.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "flake": {
+      "rules": [
+        {
+          "rule": "flake-candidate",
+          "family": "flake",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A test's code reads the clock, randomness, real I/O or shared state without a guard, so two runs of the same tree can disagree.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        },
+        {
+          "rule": "flake-observed",
+          "family": "flake",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A test both passed and failed on the same tree in the run ledger.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "impact": {
+      "rules": [
+        {
+          "rule": "untested-hotspot",
+          "family": "impact",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A source module's churn and complexity disagree with how weakly its tests pin it, ranking it where test effort pays.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 1,
+                  "id": "untested-hotspot src/widget.ts untested-hotspot#0",
+                  "message": "src/widget.ts scores 0.20: complexity 2 × weakness 0.10 (no churn input)",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    }
+  },
+  "rule": {
+    "weak-assertion": {
+      "rules": [
+        {
+          "rule": "weak-assertion",
+          "family": "audit",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A test's assertions check no produced value, only that one exists, so a wrong value still passes.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 2,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "weak-assertion  ratio#0",
+                  "message": "1 of 2 assertions carry no value (50.0%, ceiling 6.0%)",
+                  "severity": 3
+                }
+              ]
+            },
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 4,
+                  "id": "weak-assertion src/widget.test.ts renders the widget#0",
+                  "message": "test \"renders the widget\" asserts only value-less matchers (toBeTruthy)",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 2
+        }
+      ]
+    },
+    "absence-anchor": {
+      "rules": [
+        {
+          "rule": "absence-anchor",
+          "family": "audit",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A render test asserts only that things are absent from the DOM, with no positive assertion proving the render happened at all.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "handler-drift": {
+      "rules": [
+        {
+          "rule": "handler-drift",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A mock handler's URL pattern disagrees with every URL the production code emits, so the handler can never match.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "generator-walk": {
+      "rules": [
+        {
+          "rule": "generator-walk",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A saga test steps the generator effect by effect instead of running the saga against its outcome, so the test pins the implementation rather than the behaviour.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "data-layer-mock": {
+      "rules": [
+        {
+          "rule": "data-layer-mock",
+          "family": "audit",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A test module-mocks the data layer instead of the network, so it proves the mock and not the flow it names.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "fail-closed-setup": {
+      "rules": [
+        {
+          "rule": "fail-closed-setup",
+          "family": "gate",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "The runner's setup misses an invariant (unhandled requests error, a console guard, mock reset, a global server) that makes a broken test fail.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 2,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "vitest.config.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 2,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "fail-closed-setup vitest.config.ts console-guard#0",
+                  "message": "setup does not guard the console (no throwing console.error/warn spy or fail-on-console package)",
+                  "severity": 3
+                },
+                {
+                  "line": 0,
+                  "id": "fail-closed-setup vitest.config.ts restore-mocks#0",
+                  "message": "setup does not restore mocks between tests (no restoreMocks or afterEach restoreAllMocks)",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    },
+    "dead-skip": {
+      "rules": [
+        {
+          "rule": "dead-skip",
+          "family": "gate",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED",
+          "summary": "A skipped or focused test disagrees with the suite that is believed to run, with no linked issue or visible condition watching it.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 1,
+            "hint": 0
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 1,
+                "hint": 0
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 5,
+                  "id": "dead-skip src/widget.test.ts later#0",
+                  "message": "skip \"later\" has no linked issue",
+                  "severity": 3
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    },
+    "gate-truth": {
+      "rules": [
+        {
+          "rule": "gate-truth",
+          "family": "gate",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED",
+          "summary": "What the project believes gates a merge (thresholds, mutation ratchets, CI running the tests) disagrees with what its configs and workflows actually enforce.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "vitest.config.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 0,
+                  "id": "gate-truth vitest.config.ts thresholds-absent#0",
+                  "message": "runner config declares no coverage thresholds, so a coverage drop never fails the build",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    },
+    "orphan-test": {
+      "rules": [
+        {
+          "rule": "orphan-test",
+          "family": "hygiene",
+          "tier": "advisory",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A test file disagrees with the suite that runs it: no runner gate collects it, or a project import it reads no longer resolves.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "unused-mock": {
+      "rules": [
+        {
+          "rule": "unused-mock",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: INSUFFICIENT, carried to M6",
+          "summary": "A module mock or spy in a test file disagrees with what the file imports or reads, so nothing uses it.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.test.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 3,
+                  "id": "unused-mock src/widget.test.ts ./missing#0",
+                  "message": "module mock of \"./missing\" is reached by nothing the model could follow, but the mock target itself did not resolve",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    },
+    "duplicate-test": {
+      "rules": [
+        {
+          "rule": "duplicate-test",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "Two tests with different names have bodies that normalise to the same code, so one of them adds nothing.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "redundant-test": {
+      "rules": [
+        {
+          "rule": "redundant-test",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: SKIPPED, carried to M6",
+          "summary": "Two tests in one mutation report kill exactly the same mutants, so the second adds no discrimination.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "stale-snapshot": {
+      "rules": [
+        {
+          "rule": "stale-snapshot",
+          "family": "hygiene",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A stored snapshot entry has no test left to produce it, so the runner would report it obsolete.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "flake-candidate": {
+      "rules": [
+        {
+          "rule": "flake-candidate",
+          "family": "flake",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A test's code reads the clock, randomness, real I/O or shared state without a guard, so two runs of the same tree can disagree.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "flake-observed": {
+      "rules": [
+        {
+          "rule": "flake-observed",
+          "family": "flake",
+          "tier": "unproven",
+          "status": "rule: SKIPPED",
+          "summary": "A test both passed and failed on the same tree in the run ledger.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 0
+          },
+          "state": "ok",
+          "files": [],
+          "file_count": 0
+        }
+      ]
+    },
+    "untested-hotspot": {
+      "rules": [
+        {
+          "rule": "untested-hotspot",
+          "family": "impact",
+          "tier": "unproven",
+          "status": "rule: UNADJUDICATED, carried to M6",
+          "summary": "A source module's churn and complexity disagree with how weakly its tests pin it, ranking it where test effort pays.",
+          "counts": {
+            "error": 0,
+            "warn": 0,
+            "info": 0,
+            "hint": 1
+          },
+          "state": "info",
+          "files": [
+            {
+              "path": "src/widget.ts",
+              "counts": {
+                "error": 0,
+                "warn": 0,
+                "info": 0,
+                "hint": 1
+              },
+              "state": "info",
+              "rows": [
+                {
+                  "line": 1,
+                  "id": "untested-hotspot src/widget.ts untested-hotspot#0",
+                  "message": "src/widget.ts scores 0.20: complexity 2 × weakness 0.10 (no churn input)",
+                  "severity": 4
+                }
+              ]
+            }
+          ],
+          "file_count": 1
+        }
+      ]
+    }
+  },
+  "health": {
+    "score": 45,
+    "grade": "D",
+    "formula_version": 1,
+    "provisional": true,
+    "lean_true": 5,
+    "proven": 0,
+    "parts": [
+      {
+        "family": "audit",
+        "title": "Weak tests",
+        "penalty": 25,
+        "cap": 25,
+        "ratio": 0.5,
+        "rules": [
+          {
+            "rule": "handler-drift",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "generator-walk",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "absence-anchor",
+            "weight": 1,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "weak-assertion",
+            "weight": 1,
+            "flagged": 1,
+            "subjects": 2
+          },
+          {
+            "rule": "data-layer-mock",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          }
+        ]
+      },
+      {
+        "family": "gate",
+        "title": "Merge gate",
+        "penalty": 30,
+        "cap": 30,
+        "ratio": 2,
+        "rules": [
+          {
+            "rule": "fail-closed-setup",
+            "weight": 1,
+            "flagged": 1,
+            "subjects": 1
+          },
+          {
+            "rule": "gate-truth",
+            "weight": 0.5,
+            "flagged": 1,
+            "subjects": 1
+          },
+          {
+            "rule": "dead-skip",
+            "weight": 1,
+            "flagged": 1,
+            "subjects": 2
+          }
+        ]
+      },
+      {
+        "family": "hygiene",
+        "title": "Unused tests",
+        "penalty": 0,
+        "cap": 10,
+        "ratio": 0,
+        "rules": [
+          {
+            "rule": "duplicate-test",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "redundant-test",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "unused-mock",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 1
+          },
+          {
+            "rule": "orphan-test",
+            "weight": 1,
+            "flagged": 0,
+            "subjects": 1
+          },
+          {
+            "rule": "stale-snapshot",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 1
+          }
+        ]
+      },
+      {
+        "family": "flake",
+        "title": "Flaky",
+        "penalty": 0,
+        "cap": 20,
+        "ratio": 0,
+        "rules": [
+          {
+            "rule": "flake-candidate",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 2
+          },
+          {
+            "rule": "flake-observed",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 0
+          }
+        ]
+      },
+      {
+        "family": "impact",
+        "title": "Health",
+        "penalty": 0,
+        "cap": 15,
+        "ratio": 0,
+        "rules": [
+          {
+            "rule": "untested-hotspot",
+            "weight": 0.5,
+            "flagged": 0,
+            "subjects": 1
+          }
+        ]
+      }
+    ],
+    "facts": {
+      "tests": 2,
+      "test_files": 1,
+      "gates": 1,
+      "expects": 2,
+      "expects_per_test": 1
+    },
+    "hotspots": {
+      "total": 1,
+      "shown": [
+        {
+          "path": "src/widget.ts",
+          "score": 0.2,
+          "complexity": 2,
+          "weakness": 0.1
+        }
+      ]
+    }
+  }
+}

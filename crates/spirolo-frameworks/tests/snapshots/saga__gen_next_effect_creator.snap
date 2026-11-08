@@ -1,0 +1,17 @@
+---
+source: crates/spirolo-frameworks/tests/saga.rs
+expression: walks
+---
+[
+  {
+    "file": "src/sagas.test.ts",
+    "span": {
+      "start": 86,
+      "end": 132,
+      "line": 4,
+      "column": 3
+    },
+    "kind": "gen_next",
+    "effect": "call"
+  }
+]

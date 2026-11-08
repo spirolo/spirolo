@@ -1,0 +1,4 @@
+{
+  "name": "@fx/config-vitest",
+  "exports": { "./base": "./base.mjs", "./react": "./react.mjs" }
+}

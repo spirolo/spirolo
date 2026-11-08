@@ -1,0 +1,57 @@
+---
+source: crates/spirolo-frameworks/tests/assertions.rs
+expression: "recognise(\"import { assert } from 'vitest'\\nit('t', () => { assert.equal(a, b); assert(ok) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 32,
+      "end": 81,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "equal",
+        "argument": "b",
+        "subject": "a",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 48,
+          "end": 66,
+          "line": 2,
+          "column": 17
+        }
+      },
+      {
+        "matcher": null,
+        "argument": null,
+        "subject": "ok",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": false,
+        "span": {
+          "start": 68,
+          "end": 78,
+          "line": 2,
+          "column": 37
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "65fd37da96f9d465"
+  }
+]

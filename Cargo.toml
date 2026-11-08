@@ -1,0 +1,68 @@
+[workspace]
+resolver = "2"
+members = ["crates/*"]
+
+[workspace.package]
+version = "0.1.0-alpha.1"
+edition = "2021"
+rust-version = "1.97"
+license = "Apache-2.0"
+repository = "https://github.com/spirolo/spirolo"
+
+[workspace.dependencies]
+spirolo-frameworks = { path = "crates/spirolo-frameworks" }
+spirolo-inputs = { path = "crates/spirolo-inputs" }
+spirolo-model = { path = "crates/spirolo-model" }
+spirolo-report = { path = "crates/spirolo-report" }
+spirolo-rules = { path = "crates/spirolo-rules" }
+assert_cmd = "2"
+clap = { version = "4", features = ["derive"] }
+criterion = "0.8"
+flate2 = { version = "1", default-features = false, features = ["zlib-rs"] }
+globset = "0.4"
+ignore = "0.4"
+regex = "1"
+roxmltree = "0.21"
+insta = { version = "1", features = ["json"] }
+jsonc-parser = "0.34"
+lsp-server = "0.10"
+oxc_allocator = "0.156"
+oxc_ast = "0.156"
+oxc_ast_visit = "0.156"
+oxc_parser = "0.156"
+oxc_resolver = { version = "11", features = ["yarn_pnp"] }
+oxc_span = "0.156"
+oxc_syntax = "0.156"
+predicates = "3"
+rayon = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+xxhash-rust = { version = "0.8", features = ["xxh3"] }
+yaml-rust2 = "0.13"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+unused_must_use = "deny"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+nursery = { level = "warn", priority = -1 }
+# pedantic rules that fight idiomatic code in this project
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+# clippy 1.99: `assert!(x.is_empty())` is the idiom; the suggested `assert_eq!(x, [] as [T; 0])` needs a
+# full type path per call site and reads worse
+assert_is_empty = "allow"
+
+[profile.release]
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[profile.dist]
+inherits = "release"

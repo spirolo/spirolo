@@ -1,0 +1,97 @@
+---
+source: crates/spirolo-model/tests/walk.rs
+expression: model.modules
+---
+[
+  {
+    "path": "src/sum.test.ts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [
+      {
+        "specifier": "vitest",
+        "resolved": null,
+        "reason": "unknown_package",
+        "kind": "static",
+        "span": {
+          "start": 37,
+          "end": 45,
+          "line": 1,
+          "column": 38
+        }
+      },
+      {
+        "specifier": "./sum",
+        "resolved": "src/sum.ts",
+        "reason": null,
+        "kind": "static",
+        "span": {
+          "start": 68,
+          "end": 75,
+          "line": 3,
+          "column": 21
+        }
+      }
+    ],
+    "exports": [],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "src/sum.ts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [],
+    "exports": [
+      {
+        "name": "sum",
+        "kind": "named",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 16,
+          "end": 19,
+          "line": 1,
+          "column": 17
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  },
+  {
+    "path": "vitest.config.ts",
+    "language": "typescript",
+    "parse_status": "parsed",
+    "imports": [
+      {
+        "specifier": "vitest/config",
+        "resolved": null,
+        "reason": "unknown_package",
+        "kind": "static",
+        "span": {
+          "start": 29,
+          "end": 44,
+          "line": 1,
+          "column": 30
+        }
+      }
+    ],
+    "exports": [
+      {
+        "name": "default",
+        "kind": "default",
+        "origin": null,
+        "resolved": null,
+        "span": {
+          "start": 47,
+          "end": 113,
+          "line": 3,
+          "column": 1
+        }
+      }
+    ],
+    "constants": [],
+    "mocks": []
+  }
+]

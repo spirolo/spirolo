@@ -1,0 +1,40 @@
+name: Support question
+description: Help with commands, configuration, or interpreting a report.
+title: "support: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Spirolo is an advisory alpha. A maintainer gives every new issue a first
+        answer within 7 days; fixes have no deadline. Read SUPPORT.md for other report types.
+        Remove secrets, private paths, and code you cannot share before posting.
+        Use the private channel in SECURITY.md for vulnerabilities or conduct reports.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+      description: Include what you expected, what happened, and any documentation you tried.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Spirolo version
+      description: Paste the output of spirolo --version, or say if installation failed.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system and installation method
+  - type: textarea
+    id: command
+    attributes:
+      label: Command and relevant output
+      description: Include the rule name if you are asking about a finding.
+      render: text
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Relevant configuration or small reproduction
+      description: Share only material you have permission to make public.

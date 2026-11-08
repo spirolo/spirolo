@@ -1,0 +1,50 @@
+{
+  "tree_hash": "961161428b8c59157ad921dd23303b73c294d73f",
+  "condition": "load",
+  "root": "/workspace/chakra-ui",
+  "started_at": "2026-10-15T02:43:32.312Z",
+  "wall_s": 114,
+  "load_start": [
+    15.78,
+    10.22,
+    9.69
+  ],
+  "load_end": [
+    31.77,
+    18.85,
+    12.96
+  ],
+  "idle_wait": null,
+  "stress": "stress-ng --cpu 16",
+  "node": "v20.20.2",
+  "retry": 0,
+  "env": {
+    "VITEST_MAX_FORKS": "4",
+    "VITEST_MAX_THREADS": "4",
+    "VITEST_MIN_FORKS": "1",
+    "VITEST_MIN_THREADS": "1"
+  },
+  "homes": [
+    {
+      "home": ".",
+      "runner": "vitest",
+      "exit": 1,
+      "timed_out": false,
+      "report": true
+    },
+    {
+      "home": "packages/cli",
+      "runner": "vitest",
+      "exit": 0,
+      "timed_out": false,
+      "report": true
+    },
+    {
+      "home": "packages/codemod",
+      "runner": "vitest",
+      "exit": 1,
+      "timed_out": false,
+      "report": true
+    }
+  ]
+}

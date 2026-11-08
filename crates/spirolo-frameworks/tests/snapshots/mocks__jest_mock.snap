@@ -1,0 +1,42 @@
+---
+source: crates/spirolo-frameworks/tests/mocks.rs
+expression: "recognise(\"import { it, jest } from '@jest/globals'\\njest.mock('axios')\\nit('t', () => { run() })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 60,
+      "end": 84,
+      "line": 3,
+      "column": 1
+    },
+    "framework": "jest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [],
+    "throwing_queries": [],
+    "mocks": [
+      {
+        "target": "axios",
+        "resolved": null,
+        "reason": null,
+        "kind": "module",
+        "factory": false,
+        "span": {
+          "start": 41,
+          "end": 59,
+          "line": 2,
+          "column": 1
+        }
+      }
+    ],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "f60c689d15a4ddd8"
+  }
+]

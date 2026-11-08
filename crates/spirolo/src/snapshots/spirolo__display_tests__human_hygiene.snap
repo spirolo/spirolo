@@ -1,0 +1,31 @@
+---
+source: crates/spirolo/src/display_tests.rs
+expression: "human_view(&root, Some(family))"
+---
+4 files · 3 test files · 8 tests (8 vitest) · 8 expects · 0 handlers · 1 configs · 0ms
+Unused tests −10.0 / 10
+
+── Unused tests (hygiene) ────────────────────────────────────────
+
+● stale-snapshot (3 files, 8 findings) · 1 info · 7 could not decide · experimental: not yet measured
+  src/__snapshots__/plain.test.ts.snap:5 the snapshot src/__snapshots__/plain.test.ts.snap names Plain > was removed long ago 1, a test src/plain.test.ts no longer has
+  src/__snapshots__/suites.test.ts.snap (2)
+    :3 the snapshot src/__snapshots__/suites.test.ts.snap names Area north > renders 1, which only a test with a computed title in src/suites.test.ts could write · could not decide
+    :5 the snapshot src/__snapshots__/suites.test.ts.snap names Suite alpha > renders 1, which only a test with a computed title in src/suites.test.ts could write · could not decide
+  src/__snapshots__/widget.test.ts.snap (5)
+    :5 the snapshot src/__snapshots__/widget.test.ts.snap names Widget > case one 1, which only a test with a computed title in src/widget.test.ts could write · could not decide
+    :7 the snapshot src/__snapshots__/widget.test.ts.snap names Widget > case two 1, which only a test with a computed title in src/widget.test.ts could write · could not decide
+    :15 the snapshot src/__snapshots__/widget.test.ts.snap names Widget > sum 1 + 2 1, which only a test with a computed title in src/widget.test.ts could write · could not decide
+    :17 the snapshot src/__snapshots__/widget.test.ts.snap names Widget > title dyn 1, which only a test with a computed title in src/widget.test.ts could write · could not decide
+    :19 the snapshot src/__snapshots__/widget.test.ts.snap names Widget > was removed long ago 1, which only a test with a computed title in src/widget.test.ts could write · could not decide
+  A stored snapshot entry has no test left to produce it, so the runner would report it obsolete. · spirolo explain stale-snapshot
+  To gate it: .spirolorc.jsonc { "rules": { "stale-snapshot": { "severity": "warn" } } } · to accept today's rows: spirolo ratchet
+
+● duplicate-test (1 file) · rule: FAIL
+  src/suites.test.ts:7 <dynamic> › renders duplicates 1 other test, at src/widget.test.ts:6
+  Two tests with different names have bodies that normalise to the same code, so one of them adds nothing. · spirolo explain duplicate-test
+  To accept today's rows: spirolo ratchet
+
+✓ 3 rules found nothing: redundant-test, unused-mock, orphan-test
+
+2 findings in 2 of 5 rules · 0 warn · 0 error · 2 info · 7 could not decide · exit 0

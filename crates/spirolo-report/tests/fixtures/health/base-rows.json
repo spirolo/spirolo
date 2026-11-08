@@ -1,0 +1,490 @@
+{
+  "test_cases": [
+    {
+      "assertions": [
+        {
+          "argument": null,
+          "carries_value": false,
+          "matcher": "toBeDefined",
+          "negated": false,
+          "span": {
+            "column": 7,
+            "end": 1054,
+            "line": 29,
+            "start": 1018
+          },
+          "subject": "result.current",
+          "subject_is_query": false
+        }
+      ],
+      "body_hash": "905b394e8c8e3f94",
+      "each": null,
+      "file": "apps/web/src/hooks/__tests__/useClient.test.ts",
+      "framework": "vitest",
+      "kind": "test",
+      "loops": [],
+      "mocks": [
+        {
+          "factory": true,
+          "kind": "module",
+          "reason": null,
+          "resolved": "packages/images/src/index.ts",
+          "span": {
+            "column": 1,
+            "end": 259,
+            "line": 5,
+            "start": 145
+          },
+          "target": "@example/images"
+        }
+      ],
+      "modifiers": [],
+      "skip": null,
+      "span": {
+        "column": 3,
+        "end": 1066,
+        "line": 21,
+        "start": 659
+      },
+      "suite_path": [
+        "useClient"
+      ],
+      "tags": [],
+      "throwing_queries": [],
+      "title": "returns a client when the key is set"
+    }
+  ],
+  "test_files": [
+    {
+      "file": "apps/web/src/hooks/__tests__/useClient.test.ts",
+      "framework": "vitest"
+    }
+  ],
+  "gates": [
+    {
+      "clear_mocks": null,
+      "exclude": [],
+      "forbid_only": null,
+      "include": [],
+      "inherited_setup_files": [],
+      "mutate": [],
+      "mutation_break": null,
+      "opaque": false,
+      "preset_chain": [],
+      "preset_imports": [],
+      "projects": [],
+      "restore_mocks": null,
+      "retries": null,
+      "setup": {
+        "console_guard": "absent",
+        "global_server": "absent",
+        "msw_inherited": false,
+        "msw_present": false,
+        "restore_mocks": "absent",
+        "setup_file": null,
+        "unhandled_request_error": "absent"
+      },
+      "setup_files": [],
+      "source": ".github/workflows/ci.yml",
+      "steps": [
+        "pnpm install --frozen-lockfile",
+        "node scripts/check-types.mjs",
+        "npx tsc --noEmit"
+      ],
+      "test_dir": null,
+      "test_runner": null,
+      "thresholds": [],
+      "tool": "ci",
+      "unread": []
+    }
+  ],
+  "modules": [
+    {
+      "constants": [
+        {
+          "env_template": null,
+          "name": "MODEL_NAME",
+          "opaque": false,
+          "reason": null,
+          "span": {
+            "column": 7,
+            "end": 140936,
+            "line": 3499,
+            "start": 140917
+          },
+          "value": "example-model"
+        }
+      ],
+      "exports": [],
+      "imports": [
+        {
+          "kind": "static",
+          "reason": "builtin",
+          "resolved": null,
+          "span": {
+            "column": 23,
+            "end": 4028,
+            "line": 78,
+            "start": 4008
+          },
+          "specifier": "node:child_process"
+        },
+        {
+          "kind": "static",
+          "reason": "builtin",
+          "resolved": null,
+          "span": {
+            "column": 84,
+            "end": 4121,
+            "line": 79,
+            "start": 4112
+          },
+          "specifier": "node:fs"
+        },
+        {
+          "kind": "static",
+          "reason": "builtin",
+          "resolved": null,
+          "span": {
+            "column": 50,
+            "end": 4182,
+            "line": 80,
+            "start": 4171
+          },
+          "specifier": "node:path"
+        },
+        {
+          "kind": "static",
+          "reason": "builtin",
+          "resolved": null,
+          "span": {
+            "column": 25,
+            "end": 4216,
+            "line": 81,
+            "start": 4207
+          },
+          "specifier": "node:os"
+        },
+        {
+          "kind": "static",
+          "reason": "unknown_package",
+          "resolved": null,
+          "span": {
+            "column": 51,
+            "end": 4290,
+            "line": 82,
+            "start": 4267
+          },
+          "specifier": "@supabase/supabase-js"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/theme/src/strategy.ts",
+          "span": {
+            "column": 34,
+            "end": 4352,
+            "line": 83,
+            "start": 4324
+          },
+          "specifier": "@example/theme/strategy"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/core/src/index.ts",
+          "span": {
+            "column": 43,
+            "end": 4416,
+            "line": 84,
+            "start": 4395
+          },
+          "specifier": "@example/core"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/themes/src/index.ts",
+          "span": {
+            "column": 31,
+            "end": 4470,
+            "line": 85,
+            "start": 4447
+          },
+          "specifier": "@example/themes"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/data/src/index.ts",
+          "span": {
+            "column": 8,
+            "end": 5018,
+            "line": 110,
+            "start": 4997
+          },
+          "specifier": "@example/data"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/report/src/index.ts",
+          "span": {
+            "column": 8,
+            "end": 5264,
+            "line": 121,
+            "start": 5231
+          },
+          "specifier": "@example/report"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "scripts/build/image-writer.ts",
+          "span": {
+            "column": 61,
+            "end": 5347,
+            "line": 122,
+            "start": 5325
+          },
+          "specifier": "./image-writer"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "scripts/build/draft.ts",
+          "span": {
+            "column": 59,
+            "end": 5427,
+            "line": 123,
+            "start": 5406
+          },
+          "specifier": "./draft"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/checks/src/row-claims.ts",
+          "span": {
+            "column": 55,
+            "end": 5522,
+            "line": 124,
+            "start": 5482
+          },
+          "specifier": "@example/checks/row-claims"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/ranking/src/row-demand.ts",
+          "span": {
+            "column": 8,
+            "end": 5757,
+            "line": 133,
+            "start": 5713
+          },
+          "specifier": "@example/ranking/row-demand"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/ranking/src/index.ts",
+          "span": {
+            "column": 39,
+            "end": 5829,
+            "line": 134,
+            "start": 5796
+          },
+          "specifier": "@example/ranking"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/ranking/src/enforcement.ts",
+          "span": {
+            "column": 34,
+            "end": 5908,
+            "line": 135,
+            "start": 5863
+          },
+          "specifier": "@example/ranking/enforcement"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/search/src/index.ts",
+          "span": {
+            "column": 38,
+            "end": 5971,
+            "line": 136,
+            "start": 5946
+          },
+          "specifier": "@example/search"
+        },
+        {
+          "kind": "static",
+          "reason": null,
+          "resolved": "packages/versions/src/index.ts",
+          "span": {
+            "column": 43,
+            "end": 6046,
+            "line": 137,
+            "start": 6014
+          },
+          "specifier": "@example/versions"
+        }
+      ],
+      "language": "typescript",
+      "mocks": [],
+      "parse_status": "parsed",
+      "path": "scripts/build/generate.ts"
+    }
+  ],
+  "findings": [
+    {
+      "column": 3,
+      "evidence": [
+        {
+          "key": "matchers",
+          "value": "toBeDefined"
+        },
+        {
+          "key": "assertions",
+          "value": "1"
+        }
+      ],
+      "explain": "The test \"returns a client when the key is set\" checks no produced value: `toBeDefined` passes against any value but `undefined`. Assert the value the code should produce (`toBe`, `toEqual`, `toHaveTextContent`), or anchor a render with a throwing `getBy*` query, rather than only that something exists or is absent. Do not delete the assertions.",
+      "file": "apps/web/src/hooks/__tests__/useClient.test.ts",
+      "id": "weak-assertion apps/web/src/hooks/__tests__/useClient.test.ts useClient \u203a returns a client when the key is set#0",
+      "line": 21,
+      "message": "test \"returns a client when the key is set\" asserts only value-less matchers (toBeDefined)",
+      "outcome": "finding",
+      "related": [],
+      "rule": "weak-assertion",
+      "severity": "info",
+      "test": {
+        "suite_path": [
+          "useClient"
+        ],
+        "title": "returns a client when the key is set"
+      }
+    },
+    {
+      "column": 0,
+      "evidence": [
+        {
+          "key": "invariant",
+          "value": "console-guard"
+        }
+      ],
+      "explain": "No console guard fails the test on a logged error, so a React warning or a caught exception logged to `console.error` scrolls past under a green run. Add a `console.error`/`console.warn` spy whose implementation throws, or a fail-on-console package, in the setup file, so a logged error is a failing test.",
+      "file": "apps/web/test-setup.ts",
+      "id": "fail-closed-setup apps/web/test-setup.ts console-guard#0",
+      "line": 0,
+      "message": "setup does not guard the console (no throwing console.error/warn spy or fail-on-console package)",
+      "outcome": "finding",
+      "related": [],
+      "rule": "fail-closed-setup",
+      "severity": "info"
+    },
+    {
+      "column": 1,
+      "evidence": [
+        {
+          "key": "kind",
+          "value": "never-collected"
+        },
+        {
+          "key": "reason",
+          "value": "globs"
+        },
+        {
+          "key": "config",
+          "value": "apps/web/vitest.config.ts"
+        },
+        {
+          "key": "include",
+          "value": "**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"
+        },
+        {
+          "key": "exclude",
+          "value": "**/node_modules/**, **/dist/**, **/.{idea,git,cache,output,temp}/**"
+        }
+      ],
+      "explain": "apps/web/src/app/admin/__tests__/test-runner.ts matches none of the include globs **/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx} (or is removed by **/node_modules/**, **/dist/**, **/.{idea,git,cache,output,temp}/**) of apps/web/vitest.config.ts, so the runner never collects it and its tests never run. The suite is smaller than it looks. Add an include glob that covers it, move it under one that does, or delete it if it is dead.",
+      "file": "apps/web/src/app/admin/__tests__/test-runner.ts",
+      "id": "orphan-test apps/web/src/app/admin/__tests__/test-runner.ts never-collected#0",
+      "line": 1,
+      "message": "apps/web/src/app/admin/__tests__/test-runner.ts is a test file no runner collects, so it never runs",
+      "outcome": "finding",
+      "related": [],
+      "rule": "orphan-test",
+      "severity": "info"
+    },
+    {
+      "column": 3,
+      "evidence": [
+        {
+          "key": "kind",
+          "value": "missing-restore"
+        },
+        {
+          "key": "mechanism",
+          "value": "vi.stubGlobal('fetch', fetchMock)"
+        }
+      ],
+      "explain": "The test \"submits the form and shows the saved link\" installs a spy, a stub or fake timers and never puts the original back, so the next test in the worker inherits it and passes or fails by order. Restore it in an `afterEach` (`vi.restoreAllMocks()`, `vi.unstubAllGlobals()`, `vi.useRealTimers()`), or set `restoreMocks` / `unstubGlobals` / `unstubEnvs` in the runner config.",
+      "file": "apps/web/src/app/signup/page.test.tsx",
+      "id": "flake-candidate apps/web/src/app/signup/page.test.tsx SignupPage \u203a submits the form and shows the saved link [missing-restore]#0",
+      "line": 29,
+      "message": "test \"submits the form and shows the saved link\" depends on a mock it never restores (vi.stubGlobal('fetch', fetchMock))",
+      "outcome": "finding",
+      "related": [
+        {
+          "column": 5,
+          "file": "apps/web/src/app/signup/page.test.tsx",
+          "label": "missing-restore",
+          "line": 34
+        }
+      ],
+      "rule": "flake-candidate",
+      "severity": "info",
+      "test": {
+        "suite_path": [
+          "SignupPage"
+        ],
+        "title": "submits the form and shows the saved link"
+      }
+    },
+    {
+      "column": 1,
+      "evidence": [
+        {
+          "key": "churn",
+          "value": "1"
+        },
+        {
+          "key": "complexity",
+          "value": "704"
+        },
+        {
+          "key": "weakness",
+          "value": "1.00"
+        },
+        {
+          "key": "score",
+          "value": "704.00"
+        }
+      ],
+      "explain": "scripts/build/generate.ts has no churn input, so it ranks on complexity and weakness alone; it branches a lot (complexity 704) and its tests touch little of it (weakness 1.00: 1.00 when no test reaches it, otherwise the share of its named exports no test references). It ranks high among the places where a test, or a mutation run, pays. Advisory: it never fails the build.",
+      "file": "scripts/build/generate.ts",
+      "id": "untested-hotspot scripts/build/generate.ts untested-hotspot#0",
+      "line": 1,
+      "message": "scripts/build/generate.ts scores 704.00: complexity 704 \u00d7 weakness 1.00 (no churn input)",
+      "outcome": "finding",
+      "related": [],
+      "rule": "untested-hotspot",
+      "severity": "info"
+    }
+  ]
+}

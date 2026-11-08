@@ -1,0 +1,15 @@
+---
+source: crates/spirolo/tests/explain.rs
+expression: human
+---
+duplicate-test (hygiene, default info)
+Two tests with different names have bodies that normalise to the same code, so one of them adds nothing.
+Status
+  verdict      UNADJUDICATED
+  tier         advisory: shown by default (≥15 decided and shown precision ≥0.80)
+  precision    15/18 = 0.833, Wilson 95% [0.608, 0.942]
+  decided      15 true, 3 false
+  measured on  expo__expo
+  proven bar   Wilson lower bound ≥ 0.9 on the pooled dev sample: ≥35 decided with 0 false, ≥53 with 1, ≥69 with 2 (docs/rule-visits/README.md)
+  advisory     an unproven rule reports at info and never fails the build unless .spirolorc raises its severity; a DROPPED or FAIL rule never gates
+  docs         docs/rules/duplicate-test.md

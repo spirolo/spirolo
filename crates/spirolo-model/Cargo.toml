@@ -1,0 +1,31 @@
+[package]
+name = "spirolo-model"
+description = "Whole-project model of a JavaScript test suite: the tables every family queries"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+globset.workspace = true
+ignore.workspace = true
+oxc_allocator.workspace = true
+oxc_ast.workspace = true
+oxc_ast_visit.workspace = true
+oxc_parser.workspace = true
+oxc_resolver.workspace = true
+oxc_span.workspace = true
+oxc_syntax.workspace = true
+rayon.workspace = true
+regex.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+yaml-rust2.workspace = true
+
+[dev-dependencies]
+insta.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

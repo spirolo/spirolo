@@ -1,0 +1,5 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Plain > renders 1`] = `"<h1/>"`;
+
+exports[`Plain > was removed long ago 1`] = `"old"`;

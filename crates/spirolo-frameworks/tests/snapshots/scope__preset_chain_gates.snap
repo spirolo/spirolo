@@ -1,0 +1,54 @@
+---
+source: crates/spirolo-frameworks/tests/scope.rs
+expression: model.gates
+---
+[
+  {
+    "source": "packages/kit/vitest.config.mts",
+    "tool": "vitest",
+    "thresholds": [],
+    "setup_files": [
+      "./src/setup.ts"
+    ],
+    "inherited_setup_files": [],
+    "include": [
+      "**/*.unit.{ts,tsx}"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/skip/**",
+      "**/*.unit.tsx"
+    ],
+    "retries": null,
+    "restore_mocks": null,
+    "clear_mocks": null,
+    "forbid_only": null,
+    "test_dir": null,
+    "projects": [],
+    "mutate": [],
+    "test_runner": null,
+    "mutation_break": null,
+    "preset_imports": [
+      {
+        "specifier": "@fx/config-vitest/react",
+        "name": null
+      }
+    ],
+    "preset_chain": [
+      "packages/config/react.mjs",
+      "packages/config/base.mjs"
+    ],
+    "setup": {
+      "unhandled_request_error": "not_applicable",
+      "console_guard": "absent",
+      "restore_mocks": "absent",
+      "global_server": "not_applicable",
+      "msw_present": false,
+      "msw_inherited": false,
+      "setup_file": "packages/kit/src/setup.ts"
+    },
+    "steps": [],
+    "opaque": false,
+    "unread": []
+  }
+]

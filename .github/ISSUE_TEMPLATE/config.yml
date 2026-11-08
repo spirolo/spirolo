@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/spirolo/spirolo/security/advisories/new
+    about: Report vulnerabilities privately, as described in SECURITY.md.
+  - name: Rule tiers and overrides
+    url: https://github.com/spirolo/spirolo/blob/main/docs/tiers.md
+    about: Why a rule's findings are shown, hidden under --all, or never gate.

@@ -1,0 +1,26 @@
+[package]
+name = "spirolo-frameworks"
+description = "Framework recognisers (Vitest, Jest, Playwright, MSW) turning a parsed file into model rows"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+spirolo-model.workspace = true
+globset.workspace = true
+oxc_allocator.workspace = true
+oxc_ast.workspace = true
+oxc_ast_visit.workspace = true
+oxc_parser.workspace = true
+oxc_span.workspace = true
+oxc_syntax.workspace = true
+xxhash-rust.workspace = true
+
+[dev-dependencies]
+insta.workspace = true
+serde_json.workspace = true
+
+[lints]
+workspace = true

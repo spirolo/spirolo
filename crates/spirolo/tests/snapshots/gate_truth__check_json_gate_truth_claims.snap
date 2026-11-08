@@ -1,0 +1,40 @@
+---
+source: crates/spirolo/tests/gate_truth.rs
+expression: "status_support::redact_status(&serde_json::Value::Array(claim_findings(&findings(&root)).into_iter().cloned().collect()))"
+---
+[
+  {
+    "column": 1,
+    "evidence": [
+      {
+        "key": "kind",
+        "value": "claim-unbacked"
+      },
+      {
+        "key": "claim",
+        "value": "Coverage thresholds are enforced in CI, and mutation score below 0.7 blocks the merge."
+      },
+      {
+        "key": "config",
+        "value": "vitest.config.ts"
+      }
+    ],
+    "explain": "This document line claims coverage thresholds are enforced, but `coverage.thresholds` (Vitest) or `coverageThreshold` (Jest) does not set an enforcing value, so the claim is a belief the build does not hold anyone to. Either set the config to enforce what the document promises, or edit the document to say what is actually true — do not delete the claim without deciding which of the two is right. Reported for information only; it never fails the build.",
+    "file": "docs/PLAYBOOK.md",
+    "id": "gate-truth docs/PLAYBOOK.md claim-unbacked:coverage thresholds are enforced in ci, and mutation score below 0.7 blocks the merge.#0",
+    "line": 3,
+    "message": "document claims coverage thresholds are enforced, but the config does not back it",
+    "outcome": "finding",
+    "related": [
+      {
+        "column": 0,
+        "file": "vitest.config.ts",
+        "label": "coverage thresholds",
+        "line": 0
+      }
+    ],
+    "rule": "gate-truth",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  }
+]

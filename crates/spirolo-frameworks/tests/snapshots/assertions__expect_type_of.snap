@@ -1,0 +1,43 @@
+---
+source: crates/spirolo-frameworks/tests/assertions.rs
+expression: "recognise(\"import { it, expectTypeOf } from 'vitest'\\nit('t', () => { expectTypeOf(x).toEqualTypeOf<number>() })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 42,
+      "end": 100,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "t",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "toEqualTypeOf",
+        "argument": null,
+        "subject": "x",
+        "subject_is_query": false,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 58,
+          "end": 97,
+          "line": 2,
+          "column": 17
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "db50c76ad8e2a626"
+  }
+]

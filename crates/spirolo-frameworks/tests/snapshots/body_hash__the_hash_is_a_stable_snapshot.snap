@@ -1,0 +1,44 @@
+---
+source: crates/spirolo-frameworks/tests/body_hash.rs
+expression: "recognise(\"import { it } from 'vitest'\\nit('adds', () => { expect(add(1, 2)).toBe(3) })\\n\")"
+---
+[
+  {
+    "file": "src/example.test.ts",
+    "span": {
+      "start": 28,
+      "end": 75,
+      "line": 2,
+      "column": 1
+    },
+    "framework": "vitest",
+    "title": "adds",
+    "kind": "test",
+    "suite_path": [],
+    "assertions": [
+      {
+        "matcher": "toBe",
+        "argument": "3",
+        "subject": "add(1, 2)",
+        "subject_is_query": false,
+        "subject_is_call": true,
+        "negated": false,
+        "carries_value": true,
+        "span": {
+          "start": 47,
+          "end": 72,
+          "line": 2,
+          "column": 20
+        }
+      }
+    ],
+    "throwing_queries": [],
+    "mocks": [],
+    "skip": null,
+    "each": null,
+    "loops": [],
+    "modifiers": [],
+    "tags": [],
+    "body_hash": "f5dcb427f4e39208"
+  }
+]

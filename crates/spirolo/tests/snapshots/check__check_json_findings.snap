@@ -1,0 +1,95 @@
+---
+source: crates/spirolo/tests/check.rs
+expression: "status_support::redact_status(&json[\"findings\"])"
+---
+[
+  {
+    "column": 0,
+    "evidence": [
+      {
+        "key": "ceiling",
+        "value": "0.0600"
+      },
+      {
+        "key": "ratio",
+        "value": "0.7500"
+      },
+      {
+        "key": "total",
+        "value": "4"
+      },
+      {
+        "key": "value_less",
+        "value": "3"
+      }
+    ],
+    "explain": "3 of the project's 4 assertions carry no expected value (75.0%), above the 6.0% ceiling. Lower the ceiling in `.spirolorc.jsonc` only after replacing value-less matchers with ones that assert the produced value; ratchet it down, do not delete assertions to hit it.",
+    "file": "",
+    "id": "weak-assertion  ratio#0",
+    "line": 0,
+    "message": "3 of 4 assertions carry no value (75.0%, ceiling 6.0%)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "weak-assertion",
+    "rule_status": "<rule_status>",
+    "severity": "info"
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "toBeDefined, toBeTruthy"
+      },
+      {
+        "key": "assertions",
+        "value": "2"
+      }
+    ],
+    "explain": "The test \"exists\" checks no produced value: `toBeDefined` passes against any value but `undefined`; `toBeTruthy` passes against any truthy value. Assert the value the code should produce (`toBe`, `toEqual`, `toHaveTextContent`), or anchor a render with a throwing `getBy*` query, rather than only that something exists or is absent. Do not delete the assertions.",
+    "file": "src/widget.test.ts",
+    "id": "weak-assertion src/widget.test.ts widget › exists#0",
+    "line": 3,
+    "message": "test \"exists\" asserts only value-less matchers (toBeDefined, toBeTruthy)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "weak-assertion",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "exists"
+    }
+  },
+  {
+    "column": 3,
+    "evidence": [
+      {
+        "key": "matchers",
+        "value": "not.toBeNull"
+      },
+      {
+        "key": "assertions",
+        "value": "1"
+      }
+    ],
+    "explain": "The test \"is not null\" checks no produced value: `not.toBeNull` passes against any value but `null`. Assert the value the code should produce (`toBe`, `toEqual`, `toHaveTextContent`), or anchor a render with a throwing `getBy*` query, rather than only that something exists or is absent. Do not delete the assertions.",
+    "file": "src/widget.test.ts",
+    "id": "weak-assertion src/widget.test.ts widget › is not null#0",
+    "line": 7,
+    "message": "test \"is not null\" asserts only value-less matchers (not.toBeNull)",
+    "outcome": "finding",
+    "related": [],
+    "rule": "weak-assertion",
+    "rule_status": "<rule_status>",
+    "severity": "info",
+    "test": {
+      "suite_path": [
+        "widget"
+      ],
+      "title": "is not null"
+    }
+  }
+]

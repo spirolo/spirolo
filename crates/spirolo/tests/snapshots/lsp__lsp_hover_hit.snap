@@ -1,0 +1,10 @@
+---
+source: crates/spirolo/tests/lsp.rs
+expression: "client.hover(\"src/a.test.ts\", 2)"
+---
+{
+  "contents": {
+    "kind": "markdown",
+    "value": "**duplicate-test** · rule: FAIL 0.750 [0.551, 0.880], carried to M6\n\nwidget panel › renders the widget duplicates 1 other test\n\nThese 2 tests have identical bodies once names are normalised: widget panel › renders the widget (src/a.test.ts:3), b one (src/b.test.ts:2). They check one behaviour 2 times under different names. Keep one — widget panel › renders the widget (src/a.test.ts:3), which carries the most assertions — and delete the others; or, if a title promises a case its body does not test (a copy-paste slip), change that body to test what its title says.\n\n---\n\n**weak-assertion** · rule: PASS 1.000 [0.942, 1.000]\n\ntest \"renders the widget\" asserts only value-less matchers (toBeTruthy)\n\nThe test \"renders the widget\" checks no produced value: `toBeTruthy` passes against any truthy value. Assert the value the code should produce (`toBe`, `toEqual`, `toHaveTextContent`), or anchor a render with a throwing `getBy*` query, rather than only that something exists or is absent. Do not delete the assertions."
+  }
+}

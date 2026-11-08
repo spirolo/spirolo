@@ -1,0 +1,11 @@
+{
+  "name": "spirolo-workflow-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test workflows.test.mjs"
+  },
+  "devDependencies": {
+    "yaml": "2.9.1"
+  }
+}
