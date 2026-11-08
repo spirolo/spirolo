@@ -1,15 +1,15 @@
 # Changelog
 
-## 0.1.0-alpha.1 (advisory alpha, unpublished)
+## 0.1.0-alpha.1 (2026-11-08, advisory alpha)
 
-Spirolo analyzes JavaScript and TypeScript test suites without running tests. This
-alpha replaces the unpublished `0.1.0-rc.1` candidate. No rule is proven yet, and
-findings do not fail a command unless you opt a supported rule into gating.
+The first public release. Spirolo analyzes JavaScript and TypeScript test suites
+without running them. No rule is proven yet, and findings do not fail a command
+unless you opt a supported rule into gating.
 
-Spirolo is the product's name everywhere since 2026-11-01: the command `spirolo`, the npm
-packages `spirolo` and `spirolo-<platform>`, the config file `.spirolorc.jsonc`, the state
-folder `.spirolo/` and the `SPIROLO_*` environment variables. The working names they replace
-are not read.
+```sh
+npm install -D spirolo@alpha
+npx spirolo check
+```
 
 ### What ships
 
@@ -18,16 +18,15 @@ are not read.
   annotations. Findings carry the rule's measured status.
 - `spirolo explain <rule>` describes the rule and its evidence. `spirolo rule-status`
   prints the measurement table embedded in the binary.
-- An LSP server, a VS Code extension packaged as a VSIX, and `spirolo mcp` for tools
-  that use the Model Context Protocol.
-- Staged npm packages for Linux with glibc and macOS, on x64 and arm64. The npm
-  launcher selects a native package without a postinstall download.
+- An LSP server and `spirolo mcp` for tools that use the Model Context Protocol.
+- The npm launcher `spirolo` and native packages `spirolo-<platform>` for Linux
+  with glibc and macOS, on x64 and arm64. The launcher selects the native package
+  without a postinstall download. The packages are published with npm provenance,
+  under the `alpha` tag: plain `npm install spirolo` does not install the alpha.
+- The same binaries as archives on the GitHub release, with `SHA256SUMS`.
 
-These artifacts have been staged and checked locally, not published to npm,
-GitHub Releases or the VS Code Marketplace. The macOS binaries were
-cross-compiled but have not been run on a Mac. Windows and Alpine/musl are not
-release targets. Planned npm publication uses the `alpha` tag; on a package's
-first publication, npm also assigns `latest`.
+Windows and Alpine/musl are not release targets. The VS Code extension is built
+from this repository but not yet published to the Marketplace.
 
 ### Default rules
 
