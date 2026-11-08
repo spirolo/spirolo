@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="branding/stickers/bug-in-a-jar.webp" alt="Spirolo, a purple millipede, holding a bug in a jar" width="520">
+</p>
+
 # Spirolo
 
 [![CI](https://github.com/spirolo/spirolo/actions/workflows/ci.yml/badge.svg)](https://github.com/spirolo/spirolo/actions/workflows/ci.yml)
