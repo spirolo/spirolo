@@ -20,7 +20,7 @@ node-tests:
 # Release metadata, launcher and workflow contracts (no release build or registry needed).
 release-check:
     npm ci --prefix .github --ignore-scripts --no-audit --no-fund
-    node --test .github/workflows.test.mjs npm/launcher.test.mjs npm/release.test.mjs npm/publish.test.mjs
+    node --test .github/workflows.test.mjs npm/launcher.test.mjs npm/release.test.mjs npm/publish.test.mjs npm/release-notes.test.mjs
 
 # Install the real staged tarballs and verify each native package, after `node npm/stage.mjs target/rc`.
 rc-test:
