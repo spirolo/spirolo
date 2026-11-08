@@ -35,9 +35,12 @@ jobs:
           node-version: '24'
           package-manager-cache: false
       - name: Validate tag and release metadata
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
         run: |
           node npm/release.mjs check
           node npm/publish.mjs --check-tag
+          node npm/release-notes.mjs "${RELEASE_TAG#v}" > /dev/null
       - name: Build locked native binary
         env:
           TARGET: ${{ matrix.target }}
@@ -111,6 +114,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
+          node npm/release-notes.mjs "${RELEASE_TAG#v}" > "$RUNNER_TEMP/release-notes.md"
           flags=()
           if [[ "$RELEASE_TAG" == *-* ]]; then flags+=(--prerelease); fi
-          gh release create "$RELEASE_TAG" --verify-tag --generate-notes "${flags[@]}" target/rc/*
+          gh release create "$RELEASE_TAG" --verify-tag --title "Spirolo ${RELEASE_TAG#v}" \
+            --notes-file "$RUNNER_TEMP/release-notes.md" "${flags[@]}" target/rc/*

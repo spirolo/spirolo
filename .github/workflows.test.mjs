@@ -53,6 +53,9 @@ test('a v tag builds all npm platforms and rehearses before explicitly enabled p
   assert.equal(publish.env.REPOSITORY_PRIVATE, '${{ github.event.repository.private }}');
   assert.ok(publish.steps.some(step => step.run === 'node npm/publish.mjs target/rc'));
   assert.ok(publish.steps.some(step => step.run?.includes('gh release create')));
+  // Release text comes from the version's CHANGELOG section, never from generated PR titles.
+  assert.ok(publish.steps.some(step => step.run?.includes('--notes-file') && step.run.includes('npm/release-notes.mjs')));
+  assert.ok(!publish.steps.some(step => step.run?.includes('--generate-notes')));
   assert.ok(release.jobs.package.steps.some(step =>
     step.uses?.startsWith('actions/upload-artifact@') && step.with.path === 'target/rc/*'));
 });
