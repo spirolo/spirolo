@@ -1,0 +1,43 @@
+---
+title: Agents (MCP)
+description: The same analysis as MCP tools, over stdio.
+---
+
+`spirolo mcp` is an MCP server over stdio. Point your client at the installed binary:
+
+```json
+{
+  "mcpServers": {
+    "spirolo": {
+      "command": "spirolo",
+      "args": ["mcp"]
+    }
+  }
+}
+```
+
+## Tools
+
+Each tool returns one text block holding the JSON document the CLI prints for the same call.
+
+| Tool | Arguments | Same as |
+| --- | --- | --- |
+| `check` | optional `root`, `config`, `rule`, `all` | `spirolo check <root> --format json` |
+| `explain` | `query` (a finding id or a rule name); optional `root`, `config` | `spirolo explain <query> <root> --format json` |
+| `impact` | `files` (changed paths); optional `root` | `spirolo impact <files...> --root <root> --format json` |
+| `list` | optional `root` | `spirolo list <root> --format json` |
+| `rule_status` | none | `spirolo rule-status --format json` |
+
+`root` defaults to the server's working directory. Changed paths are relative to it. `check`
+applies the baseline and the default view, like the CLI, and each finding carries `rule_status`.
+Findings that would fail a CLI gate still return a successful result.
+
+## Behaviour
+
+- Each call builds a fresh graph, so later calls see your edits.
+- The server reads files and existing reports. It does not run tests or spawn commands.
+- Analysis errors, such as a missing project or an unknown finding id, come back as a result with
+  `isError: true`, and the server stays up. Protocol errors use the standard JSON-RPC codes.
+- Supported protocol versions: `2024-11-05`, `2025-03-26` and `2025-06-18`.
+
+Agents that prefer a shell can use `--agent` on any command: tab-separated rows with no decoration.

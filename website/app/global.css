@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+/* Spirolo colours, sampled from the mascot master. The site is dark only: the
+   pictures are drawn on Night. Amber marks a finding and nothing else, one per view. */
+@theme {
+  --color-night: #140f1c;
+  --color-ink: #1e0d2d;
+  --color-plum: #704292;
+  --color-lilac: #bba2cd;
+  --color-glow: #d7b2f5;
+  --color-amber: #f5a524;
+
+  --font-sans: var(--font-plex-sans), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+:root,
+.dark {
+  --color-fd-background: #140f1c;
+  --color-fd-foreground: #efe8f6;
+  --color-fd-muted: #1b1426;
+  --color-fd-muted-foreground: #ab9cbd;
+  --color-fd-popover: #1b1426;
+  --color-fd-popover-foreground: #efe8f6;
+  --color-fd-card: #1b1426;
+  --color-fd-card-foreground: #efe8f6;
+  --color-fd-border: rgb(187 162 205 / 0.16);
+  --color-fd-primary: #d7b2f5;
+  --color-fd-primary-foreground: #140f1c;
+  --color-fd-secondary: #241b31;
+  --color-fd-secondary-foreground: #efe8f6;
+  --color-fd-accent: #2a2038;
+  --color-fd-accent-foreground: #efe8f6;
+  --color-fd-ring: #d7b2f5;
+  --color-fd-overlay: rgb(10 7 15 / 0.6);
+  --color-fd-info: #bba2cd;
+  --color-fd-idea: #bba2cd;
+  --color-fd-warning: #bba2cd;
+  color-scheme: dark;
+}
+
+.dark #nd-sidebar {
+  --color-fd-muted: #1b1426;
+  --color-fd-secondary: #241b31;
+  --color-fd-muted-foreground: #ab9cbd;
+}
+
+html {
+  scrollbar-gutter: stable;
+  background: #140f1c;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}
+
+/* Bead bullets: the antennae element, for plain lists on the landing page. */
+.beads > li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.beads > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  width: 1rem;
+  height: 1rem;
+  background: var(--color-glow);
+  mask: url('/brand/elements/bead-bullet.svg') center / contain no-repeat;
+}
+
+/* Scroll reveal for the landing page, driven by the scroll position alone: no script, and where
+   the browser has no scroll timelines (or the reader asks for less motion) everything is simply
+   shown. Elements rise a little and fade in as they enter the viewport. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@keyframes draw-underline {
+  from {
+    background-size: 0% 2px;
+  }
+}
+.draw-underline {
+  background-image: linear-gradient(var(--color-amber), var(--color-amber));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  padding-bottom: 1px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 25%;
+    }
+    .draw-underline {
+      animation: draw-underline linear both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 45%;
+    }
+  }
+}
+
+/* The file map's motion, adapted from transitions.dev (Number pop-in, Notification badge, Texts
+   reveal; free to use in a product under its licence). `.play` is set only once the read has
+   played, so the server render and reduced motion show the finished state with nothing hidden.
+   `.wait` hides the findings only while the read is still running. */
+@keyframes t-digit-pop-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+@keyframes t-badge-pop {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+@keyframes t-stagger-in {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+.t-digit {
+  display: inline-block;
+}
+.wait .t-stagger {
+  opacity: 0;
+}
+.play .t-digit {
+  animation: t-digit-pop-in 500ms cubic-bezier(0.34, 1.45, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+.play .t-pop {
+  animation: t-badge-pop 360ms cubic-bezier(0.34, 1.36, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 60ms);
+}
+.play .t-stagger {
+  animation: t-stagger-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(200ms + var(--i, 0) * 70ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .t-digit,
+  .t-pop,
+  .t-stagger {
+    animation: none !important;
+  }
+}
+
+/* Chinese pages (/zh). Plex has no CJK glyphs, so name the system Chinese faces after it; Latin
+   words keep Plex. Tight tracking and the hero's 1.08 leading are drawn for Latin and crowd Hanzi. */
+:lang(zh) {
+  --font-sans: var(--font-plex-sans), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Noto Sans SC', 'Source Han Sans SC', system-ui, sans-serif;
+  font-family: var(--font-sans);
+}
+:lang(zh) :is(h1, h2, h3, p, dt, dd, li) {
+  letter-spacing: normal;
+}
+:lang(zh) h1 {
+  line-height: 1.25;
+}
+/* Hanzi break anywhere, so a heading could split a word. Headings break only where the copy puts a
+   zero-width space (\u200b, at phrase boundaries) or a space, and balance across those. */
+:lang(zh) :is(h1, h2) {
+  word-break: keep-all;
+  text-wrap: balance;
+}

@@ -1,0 +1,31 @@
+---
+title: unused-mock
+description: A mock that nothing reaches.
+---
+
+<RuleStatusCard rule="unused-mock" />
+
+## What it reports
+
+Nothing the test file loads, at import time or at run time (its imports, `require` and `requireActual` calls, and everything they load in turn), ever reaches the module a `vi.mock` or `jest.mock` replaces. The mock is dead configuration a refactor left behind.
+
+## Example
+
+```ts
+vi.mock('../api/client'); // no module this file loads imports ../api/client any more
+```
+
+## What to do
+
+Delete the mock.
+
+## Make it gate
+
+It reports at `info` until you raise it. Rules in the Unused tests family accept `warn` at most.
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "unused-mock": "warn" } }
+```
+
+`spirolo explain unused-mock` prints the same claim and status from your installed binary.

@@ -1,0 +1,51 @@
+---
+title: CI
+description: Job summaries, GitHub annotations and SARIF.
+---
+
+`check` and the family commands print two formats made for CI:
+
+```sh
+npx spirolo check --format markdown >> "$GITHUB_STEP_SUMMARY"
+npx spirolo check --format github-annotations
+```
+
+Both carry the same findings as the default view: proven and advisory rules. Add `--all` for the
+rest. Choosing a format never changes which rules run or what the exit code is.
+
+## A GitHub Actions job
+
+```yaml
+- run: npm ci
+- run: npx spirolo check --format markdown >> "$GITHUB_STEP_SUMMARY"
+- run: npx spirolo check --format github-annotations
+```
+
+Install dependencies before the check, or module resolution fails and the orphan-test,
+untested-hotspot, unused-mock and absence-anchor rows are marked unreliable. Those rows keep their severity, so a job that skips the install still fails
+on a rule you opted into gating, rather than passing on a partial graph.
+
+## Markdown
+
+The summary prints the rule status table with measured precision, then the findings. Findings of
+unproven rules sit in a collapsed info section. Each row keeps its severity and its rule's status.
+Paths and messages are escaped so they cannot break the table.
+
+## GitHub annotations
+
+One workflow command per decided finding, at its severity: `::notice` for `info`, so an advisory finding
+is never a yellow warning on a run that passes, `::warning` for `warn` and `::error` for `error`.
+Listed and undecided rows do not become annotations. The title is the rule and its status, such as
+`dead-skip (UNADJUDICATED)`. At most ten annotations
+of each level are printed, matching GitHub's per-step limits; a closing log line counts the rest.
+
+## SARIF and JSON
+
+`--format sarif` writes SARIF 2.1 for code scanning, with each result's rule status in
+`properties.ruleStatus`. `--format json` is the versioned schema, with `rule_status` on each
+finding. Neither carries the health score.
+
+## Only new findings
+
+Run [`spirolo ratchet`](/docs/configuration#accept-todays-findings) once and commit the baseline.
+CI then fails only on findings that are new since.

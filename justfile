@@ -26,4 +26,8 @@ release-check:
 rc-test:
     node --test npm/staged.test.mjs
 
+# The website: public check, type check, static build (`website/out/`). Needs pnpm.
+website:
+    cd website && pnpm install --frozen-lockfile && pnpm check:public && pnpm types:check && pnpm build
+
 ci: build test node-tests

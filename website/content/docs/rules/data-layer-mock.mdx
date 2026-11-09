@@ -1,0 +1,24 @@
+---
+title: data-layer-mock
+description: An integration test that mocks your own data layer.
+---
+
+<RuleStatusCard rule="data-layer-mock" />
+
+<HiddenReason rule="data-layer-mock">
+  Its review dropped it: it did not fire on the open-source corpus.
+</HiddenReason>
+
+## What it reports
+
+An integration or MSW test module-mocks a module you declared as your data layer, so it passes on the mock's canned answers. It proves the mock, not the flow it names.
+
+## What to do
+
+Remove the module mock and let the data layer run, mocking the network beneath it instead (with MSW, for example).
+
+## What it reads
+
+The rule needs `dataLayer` and, optionally, `dataLayerScope` in [the config](/docs/configuration#keys-for-the-weak-tests-and-merge-gate-rules).
+
+`spirolo explain data-layer-mock` prints the same claim and status from your installed binary.

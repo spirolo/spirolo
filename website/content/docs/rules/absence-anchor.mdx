@@ -1,0 +1,39 @@
+---
+title: absence-anchor
+description: A render test that only checks that things are absent.
+---
+
+<RuleStatusCard rule="absence-anchor" />
+
+## What it reports
+
+Every assertion in the test checks that something is absent (`queryBy*` returns `null`, `not.toBeInTheDocument()`), and none checks that the render produced anything. The test would still pass if the component rendered nothing, or crashed after mounting.
+
+## Example
+
+```tsx
+it('shows no error for a valid email', () => {
+  render(<EmailField value="ada@example.com" />);
+  expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+});
+```
+
+## What to do
+
+Add an assertion that something the render must show is there, next to the absence check: a `getBy*` or `findBy*` query, or a plain jest-dom matcher.
+
+```tsx
+expect(screen.getByRole('textbox')).toHaveValue('ada@example.com');
+expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+```
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "absence-anchor": "warn" } }
+```
+
+`spirolo explain absence-anchor` prints the same claim and status from your installed binary.

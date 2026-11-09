@@ -1,0 +1,29 @@
+---
+title: gate-truth
+description: A merge gate that does not gate.
+---
+
+<RuleStatusCard rule="gate-truth" />
+
+## What it reports
+
+A build that runs this config or workflow will not fail on the weakness named: no coverage threshold, a Stryker `break` of 0 or null, Playwright's `forbidOnly` unset, retries on in CI, or no CI step running the suite at all. A coverage drop, a mutation-score drop, a stray `.only` or a flaky failure then goes green.
+
+## What to do
+
+If the project relies on that gate, set it in the config or add the CI step. A config no CI step loads gates nothing, so the finding says nothing about it.
+
+## What it reads
+
+With `claims` in [the config](/docs/configuration#keys-for-the-weak-tests-and-merge-gate-rules), the rule also checks what your docs say about the gates ("thresholds enforced") against the real config.
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "gate-truth": "warn" } }
+```
+
+`spirolo explain gate-truth` prints the same claim and status from your installed binary.

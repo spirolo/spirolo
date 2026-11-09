@@ -1,0 +1,41 @@
+---
+title: What Spirolo does
+description: A static reader for JavaScript and TypeScript test suites.
+---
+
+Spirolo reads a JavaScript or TypeScript test suite as one graph: every test file, the modules
+they import, the runner configs that collect them and the CI workflows that run them. From that
+graph it reports tests that would pass even if the code under test were wrong.
+
+The report groups its rules into four families:
+
+- **Weak tests.** A test whose assertions could not notice a wrong result, such as a render test
+  that only checks that something is absent.
+- **Merge gate.** Something that lets a broken test go green: a runner setup that does not fail on
+  console errors or leaked mocks, or a skip nobody tracks.
+- **Unused tests.** Tests that add nothing, such as two tests with the same body.
+- **Flaky.** Tests that can pass on one run and fail on the next.
+
+A fifth part, **Health**, ranks the source modules where a new test pays first.
+
+Not every rule is shown by default. Each one carries its measured status, and only the rules that
+have been right often enough show without `--all`. [The rules page](/docs/rules) lists each rule with its tier.
+
+## What it does not do
+
+- It does not run your tests, a mutation engine or a coverage tool. It reads files and, when you
+  point it at them, the reports those tools already wrote.
+- It does not use the network during analysis.
+- It does not prove your suite is correct. Every finding is a signal for you to judge, labelled
+  with how often its rule has been right so far. See [How far to trust a finding](/docs/trust).
+
+## Scope
+
+Jest, Vitest and Playwright suites, Testing Library, MSW and nock, on Linux and macOS (x64 and
+arm64). The rules are measured on React and plain Node or TypeScript projects. Cypress, Vue, other UI
+frameworks and Windows are outside the alpha.
+
+## Status
+
+Version `0.1.0-alpha.1` is an advisory alpha: no rule is proven yet, and nothing fails your build
+unless you opt a rule in.

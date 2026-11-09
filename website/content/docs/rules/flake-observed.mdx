@@ -1,0 +1,24 @@
+---
+title: flake-observed
+description: A test that both passed and failed on the same code.
+---
+
+<RuleStatusCard rule="flake-observed" />
+
+<HiddenReason rule="flake-observed">
+  Its measurement failed: it was right on most of its decided findings, but below the bar a shown rule needs.
+</HiddenReason>
+
+## What it reports
+
+Across the runs recorded in your run ledger, the test both passed and failed on the same tree, and the failure was the test's own, not a run that crashed as a whole. Its result depends on something other than the code: the clock, a random draw, a fixed wait, shared state, run order or load.
+
+## What to do
+
+Compare the failing runs' conditions with the passing ones, and make the test control what varies. Until then, `spirolo flake quarantine` adds it to `.spirolo/quarantine.json`; nothing is applied to your runner.
+
+## What it reads
+
+The rule reads the ledger that `spirolo flake ingest` builds under `.spirolo/runs/` from Vitest JSON or JUnit XML reports. It never runs your tests.
+
+`spirolo explain flake-observed` prints the same claim and status from your installed binary.

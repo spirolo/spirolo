@@ -1,0 +1,38 @@
+---
+title: Install and first run
+description: One npm package, one native binary, no config.
+---
+
+Spirolo needs Node 20 or newer to install (Node 22 recommended). Add it to the project:
+
+```sh
+npm install -D spirolo@alpha
+npx spirolo --version
+```
+
+The launcher picks a native package for Linux or macOS, x64 or arm64. There is no postinstall
+download. Once installed, analysis needs neither Node nor the network if you call the binary
+directly. Linux builds use glibc; Alpine (musl) is not supported in the alpha.
+
+## First run
+
+Install the project's own dependencies first, then run from the project root:
+
+```sh
+npm ci
+npx spirolo check
+```
+
+`check` needs no config. It builds the graph once and runs every rule.
+
+<Callout title="Install the dependencies first">
+  When a `tsconfig.json` cannot load, often because `node_modules` is missing, imports stay
+  unresolved. The report then opens with a `! module resolution failed` warning and marks the
+  orphan-test, untested-hotspot, unused-mock and absence-anchor rows as unreliable.
+</Callout>
+
+## Next
+
+- [Reading a report](/docs/reading-a-report) walks through the output line by line.
+- `npx spirolo explain <rule>` prints what a rule claims and how it measured.
+- [Configuration](/docs/configuration) covers making a rule fail the build.

@@ -1,0 +1,35 @@
+---
+title: flake-candidate
+description: A test that times itself or reads the date twice.
+---
+
+<RuleStatusCard rule="flake-candidate" />
+
+## What it reports
+
+The test asserts on elapsed wall-clock time (a budget measured between two clock reads), or on a calendar value that both the code and the assertion read from the clock. The same code can fail on a slower or busier machine, or when a run crosses midnight.
+
+## Example
+
+```ts
+it('parses a large file quickly', () => {
+  const start = Date.now();
+  parse(largeFile);
+  expect(Date.now() - start).toBeLessThan(50);
+});
+```
+
+## What to do
+
+Freeze or set the clock (fake timers, a set system time), or assert the behaviour without timing it. A candidate is not an observed flake: [flake-observed](/docs/rules/flake-observed) reports those.
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "flake-candidate": "warn" } }
+```
+
+`spirolo explain flake-candidate` prints the same claim and status from your installed binary.

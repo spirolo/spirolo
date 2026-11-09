@@ -1,0 +1,27 @@
+{
+  "title": "Rules",
+  "pages": [
+    "---Weak tests---",
+    "absence-anchor",
+    "weak-assertion",
+    "handler-drift",
+    "data-layer-mock",
+    "generator-walk",
+    "---Merge gate---",
+    "fail-closed-setup",
+    "dead-skip",
+    "gate-truth",
+    "---Unused tests---",
+    "duplicate-test",
+    "redundant-test",
+    "unused-mock",
+    "orphan-test",
+    "stale-snapshot",
+    "---Flaky---",
+    "flake-candidate",
+    "flake-observed",
+    "---Health---",
+    "untested-hotspot"
+  ],
+  "defaultOpen": true
+}

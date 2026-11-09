@@ -1,0 +1,20 @@
+---
+title: orphan-test
+description: A test file that never runs.
+---
+
+<RuleStatusCard rule="orphan-test" />
+
+<HiddenReason rule="orphan-test">
+  Its review dropped it: too often it was wrong about which tests a runner collects.
+</HiddenReason>
+
+## What it reports
+
+None of the file's tests ever run: no configured runner (Jest, Vitest, Playwright, Cypress, TestCafe, `node --test`) collects the file and no collected test imports it, or it imports a project module that no longer resolves, so it fails before any test runs.
+
+## What to do
+
+Wire it into a runner (add an include glob, move it, or fix the import), or delete it if it is dead.
+
+`spirolo explain orphan-test` prints the same claim and status from your installed binary.

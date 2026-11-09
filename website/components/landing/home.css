@@ -1,0 +1,129 @@
+/* The home page's own motion, nothing else. Everything rests on its finished state, and the classes
+   are prefixed home- so nothing leaks into the docs. */
+/* The health orbit. Each arc is revealed through a solid mask stroke, so its own dashes stay; then the
+   dashes travel along the arcs, one dash period per loop. */
+@keyframes home-orbit-draw {
+  from {
+    stroke-dashoffset: 1.05;
+  }
+}
+.home-orbit-draw {
+  stroke-dasharray: 1 2;
+  animation: home-orbit-draw 900ms cubic-bezier(0.45, 0, 0.2, 1) both;
+  animation-delay: calc(var(--i, 0) * 140ms);
+}
+@keyframes home-orbit-flow {
+  to {
+    stroke-dashoffset: var(--loop);
+  }
+}
+.home-orbit-flow {
+  animation: home-orbit-flow var(--turn) linear 1.5s infinite;
+}
+
+/* The four layers: the plates settle, a dot reads down the stack, and each layer nobody else covers
+   lights as the dot reaches it. --at is that moment, set per layer in layers.tsx. */
+@keyframes home-plate {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+}
+@keyframes home-lit {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes home-ring {
+  from {
+    opacity: 0.9;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+@keyframes home-dot {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.7);
+  }
+  6% {
+    opacity: 1;
+  }
+  33%,
+  50% {
+    transform: translateY(var(--second));
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.7);
+  }
+  83% {
+    opacity: 1;
+    transform: translateY(var(--last));
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(var(--last));
+  }
+}
+.home-dot,
+.home-ring {
+  opacity: 0;
+}
+.home-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+[data-phase='idle'] :is(.home-plate, .home-lit) {
+  opacity: 0;
+}
+[data-phase='play'] .home-plate {
+  animation: home-plate 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 120ms);
+}
+[data-phase='play'] .home-lit {
+  animation: home-lit 300ms ease-out var(--at) both;
+}
+[data-phase='play'] .home-ring {
+  animation: home-ring 700ms ease-out var(--at);
+}
+[data-phase='play'] .home-dot {
+  animation: home-dot 1500ms linear 800ms both;
+}
+
+/* Blocks rise as they scroll in, where the browser can tie that to the scroll itself. */
+@keyframes home-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .home-reveal {
+      animation: home-reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 25%;
+    }
+  }
+}
+
+/* The lit edge of a family tile: a one-pixel ring of light at the pointer, cut out of its own fill. */
+.home-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  padding: 1px;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  background: radial-gradient(280px circle at var(--x) var(--y), rgb(215 178 245 / 0.6), transparent 72%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.group\/grid:hover .home-edge {
+  opacity: 1;
+}
