@@ -12,6 +12,7 @@ import { LayersBand } from './layers';
 import { Questions } from './questions';
 import { RunReplay } from './replay';
 import { Value } from './value';
+import './home.css';
 
 export function Landing({ copy }: { copy: LandingCopy }) {
   return (

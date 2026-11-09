@@ -158,3 +158,23 @@ html > body[data-scroll-locked] {
     animation: none !important;
   }
 }
+
+/* Chinese pages (/zh). Plex has no CJK glyphs, so name the system Chinese faces after it; Latin
+   words keep Plex. Tight tracking and the hero's 1.08 leading are drawn for Latin and crowd Hanzi. */
+:lang(zh) {
+  --font-sans: var(--font-plex-sans), 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans CJK SC',
+    'Noto Sans SC', 'Source Han Sans SC', system-ui, sans-serif;
+  font-family: var(--font-sans);
+}
+:lang(zh) :is(h1, h2, h3, p, dt, dd, li) {
+  letter-spacing: normal;
+}
+:lang(zh) h1 {
+  line-height: 1.25;
+}
+/* Hanzi break anywhere, so a heading could split a word. Headings break only where the copy puts a
+   zero-width space (\u200b, at phrase boundaries) or a space, and balance across those. */
+:lang(zh) :is(h1, h2) {
+  word-break: keep-all;
+  text-wrap: balance;
+}
