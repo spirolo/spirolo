@@ -27,6 +27,11 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: none
+          # Test fixtures are inputs the tests read, not shipped code: several are invalid on purpose
+          # (a file Spirolo must survive) and many are copies of other projects' tests.
+          config: |
+            paths-ignore:
+              - '**/tests/fixtures/**'
       - uses: github/codeql-action/analyze@33d7b85da1a04171e211befe2c739303b9a4c066 # v4.39.3
         with:
           category: /language:${{ matrix.language }}
