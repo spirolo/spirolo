@@ -4,6 +4,8 @@
 
 # Spirolo
 
+English | [简体中文](README.zh-CN.md)
+
 [![CI](https://github.com/spirolo/spirolo/actions/workflows/ci.yml/badge.svg)](https://github.com/spirolo/spirolo/actions/workflows/ci.yml)
 [![Licence](https://img.shields.io/github/license/spirolo/spirolo)](LICENSE)
 [![npm](https://img.shields.io/npm/v/spirolo)](https://www.npmjs.com/package/spirolo)
