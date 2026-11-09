@@ -25,22 +25,26 @@ tests or sending your code anywhere.
 
 ## Install
 
-Spirolo is an unpublished alpha. For now, build from a source checkout with the
-current stable Rust toolchain, from the repository root:
+Node 20 or newer, from your project's root:
 
 ```sh
-cargo build --release --locked -p spirolo
-./target/release/spirolo --version
-./target/release/spirolo check /path/to/your/project
+npm install -D spirolo@alpha
+npx spirolo check
 ```
 
 No Spirolo config is needed. Install your project's dependencies first so its
 TypeScript configuration and imports can resolve.
 
-The npm launcher is `spirolo`. It requires Node 20 or newer and selects a
-native platform package without a postinstall download. It is not on the registry
-yet; [release staging](docs/release.md) describes how to build and install local
-package tarballs.
+The npm launcher selects a native platform package for Linux or macOS (x64 and arm64),
+without a postinstall download.
+
+To build from source instead, with the current stable Rust toolchain, from this
+repository's root:
+
+```sh
+cargo build --release --locked -p spirolo
+./target/release/spirolo check /path/to/your/project
+```
 
 ## One real run
 
@@ -190,9 +194,9 @@ measured scope.
 
 ## Status and limits
 
-**Version `0.1.0-alpha.1`: advisory alpha, not yet published.** The npm packages and
-VS Code extension have not been published either. See the [changelog](CHANGELOG.md)
-for changes.
+**Version `0.1.0-alpha.1`: advisory alpha.** It is on npm as `spirolo@alpha`; the
+VS Code extension is not published yet. Before 1.0, any alpha may change commands, output
+and rule behaviour; the [changelog](CHANGELOG.md) lists every change.
 
 Static analysis can miss dynamic configuration and patterns it does not model.
 If a TypeScript configuration cannot load, Spirolo reports module-resolution problems
