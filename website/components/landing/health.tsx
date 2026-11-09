@@ -7,6 +7,7 @@ import { animate, motion, useInView, useMotionValue, useTransform } from 'motion
 import Link from 'next/link';
 import { useEffect, useRef, type CSSProperties } from 'react';
 import { report } from './report';
+import { fill, type LandingCopy } from './copy/types';
 import { Band, usePlayOnce } from './shared';
 
 const health = report.health.match(/^Health (\S+) \((\d+)\)/);
@@ -25,7 +26,7 @@ const arcs = [
 ];
 const UNITS_PER_SECOND = 4.6;
 
-export function HealthScore() {
+export function HealthScore({ copy }: { copy: LandingCopy['health'] }) {
   const root = useRef<HTMLElement>(null);
   const phase = usePlayOnce(root, 0.6);
   const inView = useInView(root);
@@ -89,25 +90,23 @@ export function HealthScore() {
             <div className="absolute inset-0 flex flex-col items-center justify-center" style={hidden}>
               <p className="font-mono text-6xl font-medium tracking-tight sm:text-7xl">
                 <motion.span aria-hidden>{shownGrade}</motion.span>
-                <span className="sr-only">{grade} grade</span>
+                <span className="sr-only">{fill(copy.gradeLabel, { grade })}</span>
               </p>
               <p className="font-mono text-sm tabular-nums text-fd-muted-foreground">
                 <motion.span aria-hidden>{shownScore}</motion.span>
-                <span className="sr-only">{score}</span> of 100
+                <span className="sr-only">{score}</span> {copy.outOf}
               </p>
             </div>
           </div>
           <figcaption className="mt-2 text-center font-mono text-xs text-fd-muted-foreground">{report.health}</figcaption>
         </figure>
         <div className="flex min-w-0 flex-col gap-5">
-          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">One number to watch, not to gate on</h2>
+          <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">{copy.title}</h2>
           <p className="leading-relaxed text-fd-muted-foreground">
-            Every report opens with a provisional health score out of 100. Each family takes off points for the share
-            of its subjects that have findings, up to a cap per family, and rules outside the default view count half.
-            It is a summary to watch over time: nothing gates on it, and the machine formats do not carry it.
+            {copy.text}
           </p>
           <Link href="/docs/reading-a-report" className="text-sm font-medium text-glow hover:underline">
-            Reading a report
+            {copy.link}
           </Link>
         </div>
       </div>

@@ -1,7 +1,9 @@
 'use client';
 import { useState } from 'react';
 
-export function InstallCommand({ command }: { command: string }) {
+const english = { copy: 'Copy', copied: 'Copied', copyCommand: 'Copy {command}' };
+
+export function InstallCommand({ command, labels = english }: { command: string; labels?: typeof english }) {
   const [copied, setCopied] = useState(false);
 
   return (
@@ -13,7 +15,7 @@ export function InstallCommand({ command }: { command: string }) {
       {/* Icon only on phones, so the whole command stays readable at 390 px. */}
       <button
         type="button"
-        aria-label={copied ? 'Copied' : `Copy ${command}`}
+        aria-label={copied ? labels.copied : labels.copyCommand.replace('{command}', command)}
         className="shrink-0 rounded-lg p-1.5 font-sans text-xs text-fd-muted-foreground transition-colors hover:bg-fd-accent hover:text-fd-foreground sm:px-3 sm:py-1"
         onClick={() => {
           void navigator.clipboard.writeText(command).then(() => {
@@ -32,7 +34,7 @@ export function InstallCommand({ command }: { command: string }) {
             </>
           )}
         </svg>
-        <span className="hidden sm:inline">{copied ? 'Copied' : 'Copy'}</span>
+        <span className="hidden sm:inline">{copied ? labels.copied : labels.copy}</span>
       </button>
     </div>
   );

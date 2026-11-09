@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { IBM_Plex_Mono, IBM_Plex_Sans } from 'next/font/google';
 import { Provider } from '@/components/provider';
+import { en } from '@/components/landing/copy/en';
+import { fill } from '@/components/landing/copy/types';
 import { product } from '@/lib/product';
 import './global.css';
 
@@ -8,8 +10,7 @@ import './global.css';
 const plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '600'], variable: '--font-plex-sans' });
 const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono' });
 
-const description =
-  `A passing suite tells you the tests ran. ${product.name} reads the whole suite, with its setup files and CI, and shows where a pass proves nothing. It never runs your tests.`;
+const description = fill(en.meta.description, { product: product.name });
 
 // Vercel names the production host; anything else (a local build) falls back to localhost.
 const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
@@ -18,7 +19,7 @@ const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: `${product.name}: the missing layer of your test suite`, template: `%s · ${product.name}` },
+  title: { default: fill(en.meta.title, { product: product.name }), template: `%s · ${product.name}` },
   description,
   openGraph: { title: product.name, description, images: '/brand/scenes/bug-in-a-jar.webp' },
 };

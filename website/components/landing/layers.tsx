@@ -5,36 +5,11 @@
 'use client';
 import { useRef, type CSSProperties, type RefObject } from 'react';
 import { product } from '@/lib/product';
+import { fill, type LandingCopy } from './copy/types';
 import { Band, Heading, usePlayOnce } from './shared';
 
-const layers = [
-  {
-    name: 'Mistakes inside a test file',
-    job: 'A test with no assertion, a focused test, an unawaited query.',
-    who: 'Checked by ESLint test plugins',
-    ours: false,
-  },
-  {
-    name: 'The setup every test runs on',
-    job: 'Whether a console error, a leaked mock or an unmatched request fails the test, or quietly lets it pass.',
-    who: 'no other tool checks it',
-    ours: true,
-    at: '1300ms',
-  },
-  {
-    name: 'Whether the assertions catch a bug',
-    job: 'Mutation testing plants small bugs and reruns the suite to see whether a test notices. Thorough, and slow on a big suite: one run per planted bug.',
-    who: 'Checked by Stryker',
-    ours: false,
-  },
-  {
-    name: 'How the tests connect to the code',
-    job: 'Mocks that match no real export, absence checks with nothing proving the render happened, skips nobody tracks, gates that never gate.',
-    who: 'no other tool checks it',
-    ours: true,
-    at: '2050ms',
-  },
-];
+// Which layers are Spirolo's, and when each lights; the words are in copy.layers, in the same order.
+const layers = [{ ours: false }, { ours: true, at: '1300ms' }, { ours: false }, { ours: true, at: '2050ms' }];
 
 const GLOW = '#D7B2F5';
 const EDGE = 'rgb(187 162 205 / 0.42)';
@@ -72,7 +47,7 @@ function Stack({ root }: { root: RefObject<HTMLElement | null> }) {
         {layers.map((layer, index) => {
           const y = centre(index);
           return (
-            <g key={layer.name}>
+            <g key={index}>
               <g className="home-plate" style={{ '--i': index } as CSSProperties}>
                 <path d={face(y)} fill="#1F1829" stroke={EDGE} strokeLinejoin="round" />
                 <path d={edge(y)} stroke={EDGE} strokeLinejoin="round" />
@@ -114,19 +89,17 @@ function Stack({ root }: { root: RefObject<HTMLElement | null> }) {
   );
 }
 
-export function LayersBand() {
+export function LayersBand({ copy }: { copy: LandingCopy['layers'] }) {
   const root = useRef<HTMLElement>(null);
   const phase = usePlayOnce(root, 0.5);
 
   return (
     <Band ground="muted">
-      <Heading title="Green is not the same as tested">
-        A passing suite rests on four layers. Most teams check the first and believe they have the rest. Two of them have no tool. Together they are the missing layer, and that is where {product.name} looks.
-      </Heading>
+      <Heading title={copy.title}>{fill(copy.intro, { product: product.name })}</Heading>
       <div data-phase={phase} className="mt-10 grid items-center gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] md:gap-14">
         <Stack root={root} />
         <ol className="flex flex-col">
-          {layers.map((layer) => (
+          {layers.map((layer, index) => ({ ...layer, ...copy.layers[index] })).map((layer) => (
             <li key={layer.name} className="flex min-w-0 flex-col gap-1 border-t border-fd-border py-4 first:border-t-0 md:first:pt-0">
               <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                 <h3 className={`font-semibold ${layer.ours ? 'text-fd-foreground' : 'text-fd-muted-foreground'}`}>{layer.name}</h3>
@@ -134,7 +107,7 @@ export function LayersBand() {
                   {layer.ours ? (
                     <>
                       <span className="home-lit font-medium text-glow" style={{ '--at': layer.at } as CSSProperties}>
-                        Checked by {product.name}
+                        {fill(copy.checkedBy, { product: product.name })}
                       </span>
                       <span className="text-fd-muted-foreground">· {layer.who}</span>
                     </>

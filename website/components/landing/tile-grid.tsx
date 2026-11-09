@@ -7,19 +7,23 @@ import { useInView } from 'motion/react';
 import { createContext, useContext, useEffect, useRef, useState, type CSSProperties, type PointerEvent, type ReactNode } from 'react';
 import { Icon } from '@/components/icon';
 import { families, type Family, type FamilyId } from '@/lib/rules';
+import { fill, type LandingCopy } from './copy/types';
 import { ofRule } from './runs';
 
 const Active = createContext(false);
 /** True while this tile is the one being looked at. */
 export const useActive = () => useContext(Active);
 
-const layout: Record<FamilyId, { span: string; stat: string; strong: string; wide?: boolean }> = {
-  audit: { wide: true, span: 'lg:col-span-3', stat: `${ofRule('absence-anchor')} weak tests`, strong: 'notice if the code were wrong' },
-  gate: { wide: true, span: 'lg:col-span-3', stat: `${ofRule('fail-closed-setup')} missing guards`, strong: 'actually block the merge' },
-  hygiene: { span: 'lg:col-span-2', stat: `${ofRule('duplicate-test')} duplicate tests`, strong: 'add nothing' },
-  flake: { span: 'lg:col-span-2', stat: 'Experimental', strong: 'pass on one run and fail on the next' },
-  impact: { span: 'lg:col-span-2', stat: 'Experimental', strong: 'a new test pay first' },
+// The frame of each tile and the count its stat quotes; its words are in copy.families.tiles.
+const layout: Record<FamilyId, { span: string; count?: number; wide?: boolean }> = {
+  audit: { wide: true, span: 'lg:col-span-3', count: ofRule('absence-anchor') },
+  gate: { wide: true, span: 'lg:col-span-3', count: ofRule('fail-closed-setup') },
+  hygiene: { span: 'lg:col-span-2', count: ofRule('duplicate-test') },
+  flake: { span: 'lg:col-span-2' },
+  impact: { span: 'lg:col-span-2' },
 };
+
+type Words = LandingCopy['families']['tiles'][FamilyId];
 
 function Question({ text, strong }: { text: string; strong: string }) {
   const [before, after] = text.split(strong);
@@ -46,7 +50,7 @@ function follow(event: PointerEvent<HTMLUListElement>) {
 const INK = { '--ink': 'rgb(187 162 205 / 0.3)', '--ink-text': 'rgb(187 162 205 / 0.62)', '--ink-fill': '#1F1829' } as CSSProperties;
 const LIT = { '--ink': 'rgb(215 178 245 / 0.85)', '--ink-text': '#EBDCF9', '--ink-fill': '#261D33' } as CSSProperties;
 
-function Tile({ family, art, wide }: { family: Family; art: ReactNode; wide: boolean }) {
+function Tile({ family, words, art, wide }: { family: Family; words: Words; art: ReactNode; wide: boolean }) {
   const ref = useRef<HTMLLIElement>(null);
   const [hover, setHover] = useState(false);
   const [touch, setTouch] = useState(false);
@@ -66,10 +70,10 @@ function Tile({ family, art, wide }: { family: Family; art: ReactNode; wide: boo
       <div className="relative z-10 px-6 pt-6">
         <p className="flex items-center gap-2.5 text-fd-foreground">
           <Icon src={family.icon} className="size-[18px] text-fd-foreground" />
-          <span className="font-medium">{family.title}</span>
-          <span className="ml-auto font-mono text-xs text-fd-muted-foreground">{look.stat}</span>
+          <span className="font-medium">{words.title}</span>
+          <span className="ml-auto font-mono text-xs text-fd-muted-foreground">{fill(words.stat, { count: look.count ?? '' })}</span>
         </p>
-        <Question text={family.question} strong={look.strong} />
+        <Question text={words.question} strong={words.strong} />
       </div>
       <Active.Provider value={hover || (touch && centred)}>
         <div aria-hidden className="absolute inset-x-0 bottom-0 top-[var(--art-top)] [mask-image:linear-gradient(to_bottom,transparent,#000_34px)]">
@@ -88,11 +92,11 @@ function Tile({ family, art, wide }: { family: Family; art: ReactNode; wide: boo
   );
 }
 
-export function TileGrid({ art }: { art: Record<FamilyId, ReactNode> }) {
+export function TileGrid({ art, tiles }: { art: Record<FamilyId, ReactNode>; tiles: LandingCopy['families']['tiles'] }) {
   return (
     <ul onPointerMove={follow} className="group/grid mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-6">
       {families.map((family, index) => (
-        <Tile key={family.id} family={family} art={art[family.id]} wide={index === 4} />
+        <Tile key={family.id} family={family} words={tiles[family.id]} art={art[family.id]} wide={index === 4} />
       ))}
     </ul>
   );

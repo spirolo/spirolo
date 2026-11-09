@@ -5,6 +5,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Coil } from './coil';
 import { findingCount, ofRule, repos, seconds, tests } from './runs';
+import { fill, type LandingCopy } from './copy/types';
 import { Band } from './shared';
 
 const HOLD_MS = 1800;
@@ -12,17 +13,12 @@ const HOLD_MS = 1800;
 // Play order, which is also the table order: fast first, then fast and slow in turn.
 const shown = ['styled-components/styled-components', 'expo/expo', 'gatsbyjs/gatsby', 'mui/material-ui', 'carbon-design-system/carbon', 'mantinedev/mantine'];
 const rows = shown.flatMap((name) => repos.filter((repo) => repo.name === name));
-const kinds = [
-  { rule: 'absence-anchor', label: 'weak tests' },
-  { rule: 'fail-closed-setup', label: 'missing guards' },
-  { rule: 'dead-skip', label: 'skips nobody tracks' },
-  { rule: 'duplicate-test', label: 'duplicate tests' },
-];
+const kinds = ['absence-anchor', 'fail-closed-setup', 'dead-skip', 'duplicate-test'] as const;
 
 const printed = (time: string) => time.replace(/(\d)(m?s)$/, '$1 $2');
 const elapsed = (ms: number) => (ms < 1000 ? `${Math.round(ms)} ms` : `${(ms / 1000).toFixed(1)} s`);
 
-export function RunReplay() {
+export function RunReplay({ copy }: { copy: LandingCopy['replay'] & { numbers: string } }) {
   const root = useRef<HTMLElement>(null);
   const [{ index, progress }, setPlay] = useState({ index: 0, progress: 1 });
 
@@ -62,7 +58,7 @@ export function RunReplay() {
             <div className="min-w-0">
               <p className="text-5xl font-semibold tabular-nums tracking-tight sm:text-6xl">
                 {Math.round(repo.findings * progress)}
-                <span className="ml-2 text-xl font-normal tracking-normal text-fd-muted-foreground">findings</span>
+                <span className="ml-2 text-xl font-normal tracking-normal text-fd-muted-foreground">{copy.findings}</span>
               </p>
               <p className="mt-1 text-sm tabular-nums text-fd-muted-foreground">
                 <span className="font-medium text-fd-foreground">{repo.name.split('/')[1]}</span> ·{' '}
@@ -71,17 +67,17 @@ export function RunReplay() {
             </div>
           </div>
           <p className="mt-6 text-lg font-medium leading-snug text-fd-foreground">
-            {findingCount} findings across {repos.length} open-source projects.
+            {fill(copy.total, { findings: findingCount, repos: repos.length })}
           </p>
           <p className="mt-1 text-sm leading-relaxed text-fd-muted-foreground">
-            {tests.toLocaleString('en-US')} tests read in about {seconds} seconds.
+            {fill(copy.read, { tests: tests.toLocaleString(copy.numbers), seconds })}
           </p>
           <dl className="mt-4 grid grid-cols-2 gap-2">
-            {kinds.map((kind) => (
-              <div key={kind.rule} className="rounded-xl border border-fd-border bg-night/40 px-3 py-2">
-                <dt className="sr-only">{kind.label}</dt>
-                <dd className="text-xl font-semibold tabular-nums text-fd-foreground">{ofRule(kind.rule)}</dd>
-                <dd className="text-sm text-fd-muted-foreground">{kind.label}</dd>
+            {kinds.map((rule) => (
+              <div key={rule} className="rounded-xl border border-fd-border bg-night/40 px-3 py-2">
+                <dt className="sr-only">{copy.kinds[rule]}</dt>
+                <dd className="text-xl font-semibold tabular-nums text-fd-foreground">{ofRule(rule)}</dd>
+                <dd className="text-sm text-fd-muted-foreground">{copy.kinds[rule]}</dd>
               </div>
             ))}
           </dl>
@@ -89,10 +85,10 @@ export function RunReplay() {
         <table className="w-full min-w-0 text-left text-sm">
           <thead>
             <tr className="text-xs text-fd-muted-foreground">
-              <th className="px-2 pb-2 font-medium">Project</th>
-              <th className="px-2 pb-2 text-right font-medium">Tests</th>
-              <th className="px-2 pb-2 text-right font-medium">Findings</th>
-              <th className="px-2 pb-2 text-right font-medium">Read in</th>
+              <th className="px-2 pb-2 font-medium">{copy.table.project}</th>
+              <th className="px-2 pb-2 text-right font-medium">{copy.table.tests}</th>
+              <th className="px-2 pb-2 text-right font-medium">{copy.table.findings}</th>
+              <th className="px-2 pb-2 text-right font-medium">{copy.table.readIn}</th>
             </tr>
           </thead>
           <tbody className="tabular-nums">
@@ -111,7 +107,7 @@ export function RunReplay() {
                       {row.name.split('/')[1]}
                     </a>
                   </td>
-                  <td className="px-2 py-2 text-right text-fd-muted-foreground">{row.tests.toLocaleString('en-US')}</td>
+                  <td className="px-2 py-2 text-right text-fd-muted-foreground">{row.tests.toLocaleString(copy.numbers)}</td>
                   <td className="px-2 py-2 text-right text-fd-foreground">{row.findings}</td>
                   <td className="px-2 py-2 text-right text-glow">{printed(row.time)}</td>
                 </tr>
@@ -120,8 +116,7 @@ export function RunReplay() {
           </tbody>
         </table>
         <figcaption className="text-xs leading-relaxed text-fd-muted-foreground md:col-span-2">
-          Replayed at real speed: full runs of the alpha, start to exit, median of seven on one Linux machine at pinned
-          commits. Findings are advisory, not confirmed bugs.
+          {copy.caption}
         </figcaption>
       </figure>
     </Band>

@@ -7,10 +7,14 @@ export function Wordmark() {
   );
 }
 
-export function baseOptions(): BaseLayoutProps {
+/** The home pages pass their language's labels and the switch to the other language; docs pages pass nothing. */
+export function baseOptions(nav?: { docs: string; language: { text: string; url: string } }): BaseLayoutProps {
   return {
     nav: { title: <Wordmark /> },
-    links: [{ text: 'Docs', url: '/docs', active: 'nested-url' }],
+    links: [
+      { text: nav?.docs ?? 'Docs', url: '/docs', active: 'nested-url' },
+      ...(nav ? [{ text: nav.language.text, url: nav.language.url }] : []),
+    ],
     githubUrl: product.repoUrl,
     themeSwitch: { enabled: false },
   };

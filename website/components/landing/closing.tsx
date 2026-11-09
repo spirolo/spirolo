@@ -5,26 +5,25 @@ import { Sticker } from '@/components/sticker';
 import { installCommand, product, runCommand } from '@/lib/product';
 import { stickers } from '@/lib/rules';
 import { findingCount, repos } from './runs';
+import { fill, type LandingCopy } from './copy/types';
 import { Band } from './shared';
 
-export function Closing() {
+export function Closing({ copy }: { copy: LandingCopy }) {
   return (
     <Band ground="plum">
       <div className="grid items-center gap-10 md:grid-cols-2">
-        <Sticker art={stickers.cleanRun} className="mx-auto w-full max-w-sm" />
+        <Sticker art={{ ...stickers.cleanRun, alt: copy.stickers.cleanRun }} className="mx-auto w-full max-w-sm" />
         <div className="home-reveal flex min-w-0 flex-col gap-5">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            What would {product.name} find in your test suite?
+            {fill(copy.closing.title, { product: product.name })}
           </h2>
           <p className="leading-relaxed text-fd-muted-foreground">
-            Your tests are the last check before production. In {repos.length} popular open-source projects it found{' '}
-            {findingCount} findings, each project read in seconds. Install your project&rsquo;s dependencies first, then
-            run it from the root.
+            {fill(copy.closing.text, { repos: repos.length, findings: findingCount })}
           </p>
-          <InstallCommand command={installCommand} />
-          <InstallCommand command={runCommand} />
+          <InstallCommand command={installCommand} labels={copy.install} />
+          <InstallCommand command={runCommand} labels={copy.install} />
           <Link href="/docs/install" className="text-sm font-medium text-glow hover:underline">
-            Install and first run
+            {copy.closing.link}
           </Link>
         </div>
       </div>
