@@ -1,0 +1,24 @@
+---
+title: handler-drift
+description: A mock handler that cannot match the URLs your code calls.
+---
+
+<RuleStatusCard rule="handler-drift" />
+
+<HiddenReason rule="handler-drift">
+  Its review dropped it: open-source suites gave it almost no handlers it could decide without configuration.
+</HiddenReason>
+
+## What it reports
+
+An MSW or nock handler's URL pattern cannot match any URL under the production base URLs you declared, so it never intercepts a request. The tests that rely on it run against an unmocked or fallback response.
+
+## What to do
+
+Change the pattern to the base the code really calls, or delete the handler.
+
+## What it reads
+
+The rule needs `urlSources` (and `env` for URLs built from environment variables) in [the config](/docs/configuration#keys-for-the-weak-tests-and-merge-gate-rules).
+
+`spirolo explain handler-drift` prints the same claim and status from your installed binary.

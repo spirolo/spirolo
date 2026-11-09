@@ -1,0 +1,44 @@
+---
+title: Commands
+description: Every subcommand, in one place.
+---
+
+Most commands take the project root as their last argument; `impact` and `flake ingest` take
+`--root <root>` instead. The root defaults to the current directory. `spirolo <command> --help` prints the full options.
+
+| Command | What it does |
+| --- | --- |
+| `spirolo check` | Builds the graph once and runs every rule. |
+| `spirolo audit` | Only the Weak tests rules. |
+| `spirolo gate` | Only the Merge gate rules. |
+| `spirolo hygiene` | Only the Unused tests rules. |
+| `spirolo flake` | Only the Flaky rules. `flake ingest` reads runner reports into the run ledger; `flake quarantine` adds the observed flakes to `.spirolo/quarantine.json` (nothing is applied to the runner). |
+| `spirolo impact <files>` | The test files a change reaches, ranked, each with its evidence. `--print` prints them as runner arguments; `--hotspots` ranks source modules instead. |
+| `spirolo explain <rule or id>` | What a rule claims and its measured status, or one finding by the id the JSON output prints. |
+| `spirolo list` | The test files and cases the graph can see. |
+| `spirolo ratchet` | Records today's findings as `.spirolo/baseline.json`. |
+| `spirolo init` | Writes a commented `.spirolorc.jsonc`. |
+| `spirolo rule-status` | The built-in measurement table, as JSON. |
+| `spirolo lsp` | A language server over stdio. See [Editor](/docs/editor). |
+| `spirolo mcp` | An MCP server over stdio. See [Agents (MCP)](/docs/mcp). |
+
+## Options of check and the family commands
+
+| Option | Effect |
+| --- | --- |
+| `--format <format>` | `human` (default), `json`, `sarif`, `agent`, `markdown` or `github-annotations`. |
+| `--agent` | Short for `--format agent`: tab-separated rows, no decoration. |
+| `--all` | Show every rule's findings, each section labelled with its tier. With `--rule`, also lift the display caps. |
+| `--rule <rule>` | Run one rule. |
+| `--config <file>` | Read another config file. |
+| `--churn <file>` | Read churn from a `git log --numstat` file, or `-` for stdin. |
+| `--propose` | `check` and `hygiene` only: add a `merge`, `delete` or `keep` proposal to each Unused tests finding. Nothing is written to your files. |
+| `--fail-on-stale-baseline` | Exit non-zero when a quarter or more of the baseline matches nothing. |
+
+## Exit codes
+
+| Code | When |
+| --- | --- |
+| `0` | No decided finding at `warn` or `error` outside the baseline. With no config every finding is `info`, so `check` exits 0. |
+| `1` | A decided finding at `warn` or `error` is not in the baseline, or `--fail-on-stale-baseline` found a quarter or more of the baseline matching nothing. |
+| `2` | The command could not run as asked: a config that does not parse, an `error` severity on an Unused tests rule, or an unknown `--rule`. |

@@ -1,0 +1,29 @@
+---
+title: untested-hotspot
+description: A source module whose behaviour no test pins.
+---
+
+<RuleStatusCard rule="untested-hotspot" />
+
+## What it reports
+
+A product source module's behaviour is not pinned by the suite: no test reaches it, or most changes to its code would survive every test that runs it. Findings are ranked by churn, complexity and test weakness, so the top of the list is where a new test pays first.
+
+## What to do
+
+Add tests that assert what the module does before relying on the suite to catch a change to it. `spirolo impact --hotspots` prints the ranking on its own.
+
+## What it reads
+
+Without churn, the ranking uses complexity and weakness alone. Save `git log --numstat --format= --since=180.days` to a file and pass it with `--churn <file>`, or name it in `inputs.churn`.
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "untested-hotspot": "warn" } }
+```
+
+`spirolo explain untested-hotspot` prints the same claim and status from your installed binary.

@@ -1,0 +1,42 @@
+---
+title: Rules
+description: Sixteen rules in five families, each with its measured status.
+---
+
+Every rule runs on every `check`. [How far to trust a finding](/docs/trust) explains which ones
+you see by default. None fails the build until you say so.
+
+<RuleTable />
+
+## Weak tests
+
+Would this test notice if the code were wrong? [absence-anchor](/docs/rules/absence-anchor),
+[weak-assertion](/docs/rules/weak-assertion), [handler-drift](/docs/rules/handler-drift),
+[data-layer-mock](/docs/rules/data-layer-mock), [generator-walk](/docs/rules/generator-walk).
+`spirolo audit` runs only these.
+
+## Merge gate
+
+Does a broken test actually block the merge? [fail-closed-setup](/docs/rules/fail-closed-setup),
+[dead-skip](/docs/rules/dead-skip), [gate-truth](/docs/rules/gate-truth). `spirolo gate` runs only
+these.
+
+## Unused tests
+
+Which tests add nothing? [duplicate-test](/docs/rules/duplicate-test),
+[redundant-test](/docs/rules/redundant-test), [unused-mock](/docs/rules/unused-mock),
+[orphan-test](/docs/rules/orphan-test), [stale-snapshot](/docs/rules/stale-snapshot). `spirolo
+hygiene` runs only these. They accept `warn` at most: `error` is
+a config error.
+
+## Flaky
+
+Which tests can pass on one run and fail on the next?
+[flake-candidate](/docs/rules/flake-candidate) reads the code;
+[flake-observed](/docs/rules/flake-observed) reads your recorded runs. `spirolo flake` runs only
+these.
+
+## Health
+
+Where does a new test pay first? [untested-hotspot](/docs/rules/untested-hotspot) ranks source
+modules by churn, complexity and test weakness.

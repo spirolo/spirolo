@@ -1,0 +1,20 @@
+---
+title: stale-snapshot
+description: A stored snapshot no test writes any more.
+---
+
+<RuleStatusCard rule="stale-snapshot" />
+
+<HiddenReason rule="stale-snapshot">
+  Its review dropped it: Jest and Vitest already report obsolete snapshots on a full run, and the static reading was not right often enough to add to that.
+</HiddenReason>
+
+## What it reports
+
+A `.snap` entry is obsolete: no test in its sibling test file writes that key any more, because the test it was taken for was renamed or removed.
+
+## What to do
+
+Delete the entry, or run the runner with `-u`.
+
+`spirolo explain stale-snapshot` prints the same claim and status from your installed binary.

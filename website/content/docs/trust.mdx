@@ -1,0 +1,66 @@
+---
+title: How far to trust a finding
+description: How rules are measured, the four tiers, and what can fail your build.
+---
+
+No rule is proven yet. Every rule still runs on every `check`, but the default view only shows the
+rules whose measurements say they are usually right.
+
+## How a rule is measured
+
+Each rule runs on a corpus of open-source projects. A sample of its findings is read against the
+source, one by one, and each is decided true or false. The counts are recorded in a status table
+that is built into the binary, so `spirolo explain <rule>` and `spirolo rule-status` print what your
+copy carries.
+
+Each rule has a verdict:
+
+| Verdict | Meaning |
+| --- | --- |
+| `PASS` | Proven: cleared the bar below. No rule has yet. |
+| `UNADJUDICATED` | Findings were read and counted, without the adjudication a verdict needs. |
+| `INSUFFICIENT` | Too few decided findings in the corpus to call it. |
+| `SKIPPED` | The measurement skipped the rule; no precision claim. |
+| `UNMEASURED` | No row in the table. |
+| `FAIL` | Precision measured below the bar. |
+| `DROPPED` | Retired by its review: never shown by default, never gates. |
+
+A rule is proven when the lower bound of its 95% Wilson interval reaches 0.9 on the pooled sample,
+which means at least 35 decided findings with none false, and it then holds on a fresh held-out
+check.
+
+## The four tiers
+
+| Tier | Which rules | Default view | Without an override |
+| --- | --- | --- | --- |
+| proven | verdict `PASS` | shown | the rule's own severity |
+| advisory | not FAIL or DROPPED, at least 15 decided, at least 80% true | shown | `info` |
+| experimental | every other rule that is not FAIL or DROPPED | `--all` only | `info` |
+| hidden | verdict `FAIL` or `DROPPED` | `--all` only | `info`, always |
+
+The tier is computed from the table alone, so a rule moves when its numbers change, with no code
+change. 16 true out of 20 is advisory; 11 out of 15 is not.
+
+## Every rule today
+
+<RuleTable />
+
+## What can fail your build
+
+Nothing, until you say so. An unproven rule reports at `info` and leaves the exit code at 0. To make
+a rule gate, give it `warn` or `error` in [`.spirolorc.jsonc`](/docs/configuration):
+
+```jsonc
+{ "rules": { "dead-skip": { "severity": "warn" } } }
+```
+
+- On an advisory or experimental rule, the override applies: its rows show by default at that
+  severity, and a `warn` or `error` row exits 1.
+- On a FAIL or DROPPED rule, the override is not applied. The report says so:
+  `note   config severity for orphan-test not applied: rule is DROPPED`.
+- An `info` override is accepted but changes nothing.
+- The Unused tests rules accept `warn` at most. `error` on one of them is a config error, and the
+  command exits 2.
+
+When you upgrade, a rule that drops below a floor leaves the default view but keeps gating if you
+opted it in. A rule that becomes FAIL or DROPPED stops gating, with the note above.

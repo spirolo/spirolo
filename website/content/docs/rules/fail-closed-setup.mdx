@@ -1,0 +1,61 @@
+---
+title: fail-closed-setup
+description: A runner setup that lets a broken test pass.
+---
+
+<RuleStatusCard rule="fail-closed-setup" />
+
+## What it reports
+
+The setup of a Jest or Vitest config lets a test pass over a condition that should fail it:
+
+- **mock reset:** a mock or spy set in one test survives into the next;
+- **console guard:** a `console.error` or `console.warn` logged during a test does not fail it;
+- **unhandled requests:** a request no MSW handler matches passes with a warning;
+- **global server:** the MSW server is not started in a `beforeAll` of the setup.
+
+The two MSW guards are judged only when the suite has a mock server.
+
+The finding is about the config and the setup files it loads, not about one test. It is reported once per missing guard, at the setup file (or the config when it has none). A config that cannot be read statically gives one *could not decide* row instead.
+
+## Example
+
+```
+jest.config.ts (2)
+  :0 setup does not guard the console (no throwing console.error/warn spy or fail-on-console package)
+  :0 setup does not restore mocks between tests (no restoreMocks or afterEach restoreAllMocks)
+```
+
+## What to do
+
+Add the missing guard once, in the config or a setup file, so every test under that config fails on it:
+
+```ts
+// vitest.config.ts
+export default defineConfig({
+  test: { restoreMocks: true, setupFiles: ['./test/setup.ts'] },
+});
+```
+
+```ts
+// test/setup.ts
+beforeEach(() => {
+  vi.spyOn(console, 'error').mockImplementation((...args) => {
+    throw new Error(args.join(' '));
+  });
+});
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
+```
+
+A fail-on-console package counts as a console guard. An `afterEach(() => vi.restoreAllMocks())` counts as a mock reset; an `afterAll` one does not.
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "fail-closed-setup": "warn" } }
+```
+
+`spirolo explain fail-closed-setup` prints the same claim and status from your installed binary.

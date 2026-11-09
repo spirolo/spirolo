@@ -1,0 +1,20 @@
+---
+title: weak-assertion
+description: Assertions that check a value exists without checking what it is.
+---
+
+<RuleStatusCard rule="weak-assertion" />
+
+<HiddenReason rule="weak-assertion">
+  Its review dropped it: most of its findings were checks like `expect(screen.queryByText('Saved')).toBeTruthy()`, where the query already carries the expected value.
+</HiddenReason>
+
+## What it reports
+
+The test never compares what the code produced with an expected value: every assertion only checks that a result exists (truthy, defined, not null). The code could return a wrong result and the test would still pass.
+
+## What to do
+
+Compare the result with the value it should have: `toBe`, `toEqual`, `toHaveTextContent`.
+
+`spirolo explain weak-assertion` prints the same claim and status from your installed binary.

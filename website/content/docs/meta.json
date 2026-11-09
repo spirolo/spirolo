@@ -1,0 +1,17 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "install",
+    "reading-a-report",
+    "trust",
+    "configuration",
+    "rules",
+    "---Where it runs---",
+    "ci",
+    "editor",
+    "mcp",
+    "---Reference---",
+    "commands"
+  ]
+}

@@ -1,0 +1,58 @@
+---
+title: Reading a report
+description: What each line of `spirolo check` means, on a real run.
+---
+
+import sample from '@/data/sample-check.json';
+
+This is the unedited output of `spirolo check` on
+[react-day-picker](https://github.com/gpbl/react-day-picker) at commit `19033b4`:
+
+<Terminal output={sample.output} command={sample.command} />
+
+## The header
+
+The first line counts what the graph holds: files, test files, tests per runner, `expect` calls,
+MSW or nock handlers, runner configs, and how long the pass took.
+
+`Health C (61)` is a provisional score out of 100. Each family takes off points for the share of
+its subjects that have findings, up to a cap per family. Rules outside the default view count half. The score is a
+summary to watch over time: nothing gates on it, and machine formats do not carry it.
+
+## Families and rules
+
+Findings are grouped under one banner per family: **Weak tests** (`audit`), **Merge gate**
+(`gate`), **Unused tests** (`hygiene`) and **Flaky** (`flake`). Under each banner, each rule
+appears once:
+
+```
+● dead-skip (1 file, 2 findings) · 1 info · 1 listed · advisory: 18/18 (INSUFFICIENT)
+```
+
+- the rule and how many files and findings it has;
+- the severity counts. `listed` rows are context that never counts as a finding;
+- the trust label: `advisory` is the tier, `18/18` means 18 of its 18 decided corpus findings
+  were true, and `INSUFFICIENT` is its verdict (not enough decided to call it proven).
+  [How far to trust a finding](/docs/trust) explains each part.
+
+Then the rows, file by file, with line numbers. A `:0` row is about the whole file or config. The
+last two lines of each rule state what it claims and how to make it gate.
+
+## The closing lines
+
+```
+7 findings in 4 of 16 rules · 0 warn · 0 error · 7 info · 1 listed · exit 0
+ hidden 227 findings: 222 experimental (...), 5 from DROPPED or FAIL rules (...); spirolo check --all shows them
+```
+
+The summary counts what was shown and gives the exit code. The `hidden` line counts the findings
+of rules the default view leaves out: experimental rules, and rules whose measurement failed or
+that were dropped. `spirolo check --all` shows them, each labelled.
+
+A `note` line flags missing input. Here, without a churn file, `untested-hotspot` ranks modules by
+complexity and test weakness alone.
+
+## Caps
+
+Long sections are capped by files and rows, and end with `… and N more files` and the command that
+lifts the cap: `spirolo check --rule <rule> --all`.

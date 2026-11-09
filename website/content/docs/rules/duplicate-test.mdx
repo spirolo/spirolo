@@ -1,0 +1,31 @@
+---
+title: duplicate-test
+description: Two tests that check one behaviour twice.
+---
+
+<RuleStatusCard rule="duplicate-test" />
+
+## What it reports
+
+Two or more tests run the same code on the same input under the same setup and make the same assertions, under different names. One of them adds nothing.
+
+## Example
+
+```
+examples/Input.test.tsx:26 updates the calendar when a date is typed in duplicates 1 other test
+```
+
+## What to do
+
+Delete all but one. If a title promises a case its body does not test, which is often a copy-paste slip, change that body to test what its title says. `check --propose` adds a `merge`, `delete` or `keep` proposal to each finding; nothing is written to your files.
+
+## Make it gate
+
+It reports at `info` until you raise it. Rules in the Unused tests family accept `warn` at most.
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "duplicate-test": "warn" } }
+```
+
+`spirolo explain duplicate-test` prints the same claim and status from your installed binary.

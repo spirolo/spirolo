@@ -1,0 +1,24 @@
+---
+title: redundant-test
+description: Two tests that kill exactly the same mutants.
+---
+
+<RuleStatusCard rule="redundant-test" />
+
+<HiddenReason rule="redundant-test">
+  Its review dropped it: none of its decided findings held. Tests that kill the same mutants still differed in what they checked.
+</HiddenReason>
+
+## What it reports
+
+In a Stryker mutation report, these tests kill exactly the same mutants, so deleting all but one would lose nothing the suite checks.
+
+## What to do
+
+Merge them into one test, or delete the extras.
+
+## What it reads
+
+The rule reads mutation reports named in `inputs.mutation` (by default `**/reports/mutation/mutation.json`). It never runs a mutation engine.
+
+`spirolo explain redundant-test` prints the same claim and status from your installed binary.

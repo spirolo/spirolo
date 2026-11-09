@@ -1,0 +1,35 @@
+---
+title: dead-skip
+description: A skipped test that nothing tracks.
+---
+
+<RuleStatusCard rule="dead-skip" />
+
+## What it reports
+
+A test is skipped unconditionally (`it.skip`, `describe.skip`, `.todo`, `.fixme`, or `skip(true)` at its definition), so it never runs, and no issue reference tracks why: no `#123`, `owner/repo#123`, issue URL or `KEY-123` ticket in its title, its skip reason, a trailing comment or the comment lines just above it. A focused test (`.only`) is reported too, since it skips every other case.
+
+## Example
+
+```ts
+it.skip('retries after a 503', async () => {
+  // ...
+});
+```
+
+A skip with a visible condition (`it.skipIf(process.platform === 'win32')`) is listed as context, not reported. A skip scoped to CI (`it.skipIf(process.env.CI)`) is still reported.
+
+## What to do
+
+Link the ticket that justifies the skip, in a comment above it or in its reason. Or fix the test and remove the skip, or delete it if it is dead.
+
+## Make it gate
+
+It reports at `info` until you raise it:
+
+```jsonc
+// .spirolorc.jsonc
+{ "rules": { "dead-skip": "warn" } }
+```
+
+`spirolo explain dead-skip` prints the same claim and status from your installed binary.

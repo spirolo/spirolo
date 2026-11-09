@@ -1,0 +1,76 @@
+---
+title: Configuration
+description: The optional .spirolorc.jsonc, rule severities, and the baseline.
+---
+
+`check` runs with no config. When you want one, `spirolo init` detects the stack and writes a
+commented `.spirolorc.jsonc` at the project root, with every key explained in place. Delete a key to
+keep the default.
+
+## Make a rule fail the build
+
+Every rule reports at `info` by default, which never changes the exit code. Raise a rule to `warn`
+or `error` to make it gate:
+
+```jsonc
+// .spirolorc.jsonc
+{
+  "rules": {
+    "dead-skip": "warn",
+    "fail-closed-setup": { "severity": "error" }
+  }
+}
+```
+
+A bare string and an object with `severity` mean the same thing. A rule raised this way shows in
+the default view even when it is experimental, and a `warn` or `error` row exits 1. Overrides on
+FAIL or DROPPED rules are not applied; see [How far to trust a finding](/docs/trust#what-can-fail-your-build).
+
+## Accept today's findings
+
+To adopt a gate on a suite that already has findings, record them first:
+
+```sh
+npx spirolo ratchet
+```
+
+This writes `.spirolo/baseline.json`. Commit it. From then on, `check` fails only on findings that
+are not in the baseline. `spirolo ratchet --tighten` lowers the recorded ceilings to the current run,
+and `spirolo ratchet --prune` drops entries that no longer match anything. `check
+--fail-on-stale-baseline` exits non-zero when a quarter or more of the baseline matches nothing.
+
+## Inputs
+
+Some rules read files your tools already write. Name them under `inputs`:
+
+```jsonc
+{
+  "inputs": {
+    // Stryker reports, for redundant-test. This glob is the default.
+    "mutation": ["**/reports/mutation/mutation.json"],
+    // the output of `git log --numstat --format= --since=180.days`, for untested-hotspot
+    "churn": "churn.numstat"
+  }
+}
+```
+
+For flaky tests, `spirolo flake ingest` reads Vitest JSON or JUnit XML reports into a run ledger under
+`.spirolo/runs/`. `flake-observed` reads that ledger.
+
+## Keys for the Weak tests and Merge gate rules
+
+| Key | Read by | What it holds |
+| --- | --- | --- |
+| `handlers` | `handler-drift` | Globs of MSW or nock handler files. Empty: any file under a `mocks` or `msw` directory that imports the library. |
+| `urlSources` | `handler-drift` | The modules or JSON keys that define your base URLs, as `path#name`. |
+| `env` | `handler-drift` | Assumed values for environment variables used in URLs. Read from this file only, never from your real environment. |
+| `dataLayer` | `data-layer-mock` | The modules that own network access: your API client, a fetch wrapper. |
+| `dataLayerScope` | `data-layer-mock` | Globs of the tests where the network should answer, such as integration specs. |
+| `claims` | `gate-truth` | Markdown files whose testing claims ("thresholds enforced") are checked against the real config. |
+
+`spirolo init` writes the handler files it found and the default scope, and proposes candidates for
+`dataLayer`, `urlSources` and `claims`, commented out.
+
+## Another config file
+
+Every command takes `--config <file>` to read a config other than `.spirolorc.jsonc` in the root.

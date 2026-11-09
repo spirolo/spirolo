@@ -1,0 +1,34 @@
+{
+  "name": "spirolo-website",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "sync": "node scripts/sync.mjs",
+    "dev": "node scripts/sync.mjs && next dev",
+    "build": "node scripts/sync.mjs && next build",
+    "start": "serve out",
+    "check:public": "node scripts/check-public.mjs",
+    "types:check": "node scripts/sync.mjs && next typegen && tsc --noEmit"
+  },
+  "dependencies": {
+    "fumadocs-core": "16.17.10",
+    "fumadocs-mdx": "15.4.10",
+    "fumadocs-ui": "npm:@fumadocs/base-ui@16.17.5",
+    "motion": "^14.9.1",
+    "next": "16.4.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.4",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "postcss": "^8.5.32",
+    "serve": "^14.2.6",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^7.0.2"
+  }
+}

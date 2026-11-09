@@ -1,0 +1,285 @@
+{
+  "_note": "Real `spirolo check .` runs (NO_COLOR=1), built from main 46cb8c75 (0.1.0-alpha.1), linux-x64 (Ryzen 7 5825U), 2026-11-06, in corpus clones at their pinned commits with dependencies installed, warm file cache. seconds/time: median wall-clock of seven full process runs (runs), start to exit. printed: the time on the report header, which covers only part of the run. Tests and findings are the run header and summary lines, default view.",
+  "repos": [
+    {
+      "name": "expo/expo",
+      "url": "https://github.com/expo/expo",
+      "commit": "500d25dea3746c8ceeb751b3c55f432b269be410",
+      "files": 8151,
+      "tests": 12649,
+      "findings": 156,
+      "time": "4.5s",
+      "seconds": 4.55,
+      "byRule": {
+        "absence-anchor": 8,
+        "fail-closed-setup": 74,
+        "dead-skip": 15,
+        "duplicate-test": 59
+      },
+      "printed": "3.6s",
+      "runs": [
+        4.401,
+        4.813,
+        5.096,
+        4.475,
+        4.493,
+        5.32,
+        4.55
+      ]
+    },
+    {
+      "name": "hyperdxio/hyperdx",
+      "url": "https://github.com/hyperdxio/hyperdx",
+      "commit": "19182e7e21d0dd987bee43f5a623acf4a7785e30",
+      "files": 1523,
+      "tests": 7466,
+      "findings": 116,
+      "time": "893ms",
+      "seconds": 0.893,
+      "byRule": {
+        "absence-anchor": 106,
+        "fail-closed-setup": 2,
+        "duplicate-test": 8
+      },
+      "printed": "689ms",
+      "runs": [
+        0.886,
+        0.904,
+        0.899,
+        0.885,
+        0.891,
+        0.893,
+        0.954
+      ]
+    },
+    {
+      "name": "mantinedev/mantine",
+      "url": "https://github.com/mantinedev/mantine",
+      "commit": "f38933cb4f1c534600f4ff59ee3ddbb4685a4bc4",
+      "files": 5510,
+      "tests": 5013,
+      "findings": 72,
+      "time": "2.6s",
+      "seconds": 2.632,
+      "byRule": {
+        "absence-anchor": 60,
+        "fail-closed-setup": 2,
+        "duplicate-test": 10
+      },
+      "printed": "939ms",
+      "runs": [
+        2.976,
+        3.699,
+        2.426,
+        2.414,
+        2.951,
+        2.479,
+        2.632
+      ]
+    },
+    {
+      "name": "mui/material-ui",
+      "url": "https://github.com/mui/material-ui",
+      "commit": "6780195595c12252a130aa5ae5c5bd461229c6b7",
+      "files": 27675,
+      "tests": 4832,
+      "findings": 14,
+      "time": "3.1s",
+      "seconds": 3.104,
+      "byRule": {
+        "fail-closed-setup": 4,
+        "dead-skip": 2,
+        "duplicate-test": 8
+      },
+      "printed": "1.8s",
+      "runs": [
+        3.672,
+        3.073,
+        3.104,
+        3.17,
+        3.056,
+        3.435,
+        3.099
+      ]
+    },
+    {
+      "name": "algolia/instantsearch",
+      "url": "https://github.com/algolia/instantsearch",
+      "commit": "3892320b3aa642121c1b610441017f41ef947b2f",
+      "files": 1925,
+      "tests": 4664,
+      "findings": 30,
+      "time": "1.3s",
+      "seconds": 1.311,
+      "byRule": {
+        "absence-anchor": 15,
+        "fail-closed-setup": 8,
+        "dead-skip": 2,
+        "duplicate-test": 5
+      },
+      "printed": "725ms",
+      "runs": [
+        1.311,
+        1.348,
+        1.286,
+        1.377,
+        1.316,
+        1.278,
+        1.293
+      ]
+    },
+    {
+      "name": "carbon-design-system/carbon",
+      "url": "https://github.com/carbon-design-system/carbon",
+      "commit": "40f8d5cfaed733feefa2e7c39b8e9eea1795d97d",
+      "files": 3088,
+      "tests": 4662,
+      "findings": 110,
+      "time": "1.1s",
+      "seconds": 1.073,
+      "byRule": {
+        "absence-anchor": 85,
+        "fail-closed-setup": 1,
+        "dead-skip": 1,
+        "duplicate-test": 23
+      },
+      "printed": "1.0s",
+      "runs": [
+        1.073,
+        1.037,
+        1.033,
+        1.255,
+        1.359,
+        1.062,
+        1.297
+      ]
+    },
+    {
+      "name": "styled-components/styled-components",
+      "url": "https://github.com/styled-components/styled-components",
+      "commit": "2698155f6a14b408ab1bfe691d4f0c75bde95d6d",
+      "files": 523,
+      "tests": 3845,
+      "findings": 52,
+      "time": "395ms",
+      "seconds": 0.395,
+      "byRule": {
+        "fail-closed-setup": 4,
+        "dead-skip": 1,
+        "duplicate-test": 47
+      },
+      "printed": "131ms",
+      "runs": [
+        0.385,
+        0.395,
+        0.499,
+        0.483,
+        0.427,
+        0.381,
+        0.36
+      ]
+    },
+    {
+      "name": "gatsbyjs/gatsby",
+      "url": "https://github.com/gatsbyjs/gatsby",
+      "commit": "8999a2ed4dd8b40bab6571f7d23c7d196ebdb83e",
+      "files": 4101,
+      "tests": 3509,
+      "findings": 117,
+      "time": "862ms",
+      "seconds": 0.862,
+      "byRule": {
+        "fail-closed-setup": 36,
+        "dead-skip": 71,
+        "duplicate-test": 10
+      },
+      "printed": "659ms",
+      "runs": [
+        0.911,
+        0.845,
+        0.857,
+        0.864,
+        0.862,
+        0.89,
+        0.842
+      ]
+    },
+    {
+      "name": "remix-run/react-router",
+      "url": "https://github.com/remix-run/react-router",
+      "commit": "54fd9629cc46fca255ba06fbf444bbc1126f2ac9",
+      "files": 721,
+      "tests": 3046,
+      "findings": 11,
+      "time": "264ms",
+      "seconds": 0.264,
+      "byRule": {
+        "fail-closed-setup": 2,
+        "dead-skip": 1,
+        "duplicate-test": 8
+      },
+      "printed": "157ms",
+      "runs": [
+        0.264,
+        0.242,
+        0.251,
+        0.235,
+        0.276,
+        0.275,
+        0.304
+      ]
+    },
+    {
+      "name": "marmelab/react-admin",
+      "url": "https://github.com/marmelab/react-admin",
+      "commit": "99e8c52b7db1712c0afa4eeed533e4a713dfc1ec",
+      "files": 1686,
+      "tests": 2748,
+      "findings": 63,
+      "time": "907ms",
+      "seconds": 0.907,
+      "byRule": {
+        "absence-anchor": 38,
+        "fail-closed-setup": 1,
+        "dead-skip": 4,
+        "duplicate-test": 20
+      },
+      "printed": "698ms",
+      "runs": [
+        0.907,
+        1.183,
+        1.156,
+        0.914,
+        0.841,
+        0.881,
+        0.867
+      ]
+    },
+    {
+      "name": "gpbl/react-day-picker",
+      "url": "https://github.com/gpbl/react-day-picker",
+      "commit": "19033b454689bc761d9847301de429bbbb53eed4",
+      "files": 904,
+      "tests": 938,
+      "findings": 7,
+      "time": "144ms",
+      "seconds": 0.144,
+      "byRule": {
+        "absence-anchor": 2,
+        "fail-closed-setup": 2,
+        "dead-skip": 1,
+        "duplicate-test": 2
+      },
+      "printed": "84ms",
+      "runs": [
+        0.169,
+        0.145,
+        0.141,
+        0.142,
+        0.144,
+        0.142,
+        0.146
+      ]
+    }
+  ]
+}

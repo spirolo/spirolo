@@ -1,0 +1,20 @@
+---
+title: generator-walk
+description: A saga test that pins the order of yields instead of the outcome.
+---
+
+<RuleStatusCard rule="generator-walk" />
+
+<HiddenReason rule="generator-walk">
+  Its review dropped it: the open-source corpus has almost no tests of this shape.
+</HiddenReason>
+
+## What it reports
+
+A redux-saga test steps the generator with `.next()` and asserts each yielded effect in sequence. It pins how the saga is written, not what it does, and breaks on a reorder that changes no behaviour.
+
+## What to do
+
+Run the saga instead (`expectSaga(saga).run()`, one test per branch) and keep the effects it asserts. Do not delete the assertions.
+
+`spirolo explain generator-walk` prints the same claim and status from your installed binary.

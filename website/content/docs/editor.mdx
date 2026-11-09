@@ -1,0 +1,39 @@
+---
+title: Editor
+description: Findings in VS Code, on every save.
+---
+
+The VS Code extension is a thin client over `spirolo lsp`, a language server that runs the whole
+`check` pass when it starts and on every save. Findings arrive as diagnostics. Hover shows what the
+finding claims and its rule's measured status.
+
+The extension is not published yet. Its Marketplace and Open VSX links will be here when it is.
+
+The extension uses the project's own binary first (`node_modules/.bin/spirolo`), then the
+`spirolo.path` setting (default: `spirolo` on your `PATH`).
+
+## Severity in the editor
+
+The editor never shows an unproven rule as a warning:
+
+- a `warn` or `error` finding of a proven rule shows at that level;
+- an `info` finding of a rule the default view shows is **Information**;
+- an `info` finding of any other rule is a **Hint**.
+
+## Views
+
+An activity-bar container holds one view per family (Weak tests, Merge gate, Unused tests,
+Flaky), each listing its rules with their finding counts, plus a **Health** view with the score
+and its parts, and a **File** view for the file in the active editor. **By folder** groups a
+family's findings under their directories; **By rule** switches back.
+
+## Settings
+
+| Setting | Default | Effect |
+| --- | --- | --- |
+| `spirolo.path` | `spirolo` | Binary to run when the project has none in `node_modules`. |
+| `spirolo.all` | `false` | Show every rule's findings (`spirolo lsp --all`). Takes effect after a restart. |
+
+## Other editors
+
+Any editor that speaks LSP over stdio can run `spirolo lsp` (add `--all` for every rule).
