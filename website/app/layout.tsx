@@ -4,6 +4,7 @@ import { Provider } from '@/components/provider';
 import { en } from '@/components/landing/copy/en';
 import { fill } from '@/components/landing/copy/types';
 import { product } from '@/lib/product';
+import { siteUrl } from '@/lib/site';
 import './global.css';
 
 // Plex Sans sets every page text and heading. The wordmark is outlined in the logo files, so Fredoka is not loaded.
@@ -11,11 +12,6 @@ const plexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '600'], var
 const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-plex-mono' });
 
 const description = fill(en.meta.description, { product: product.name });
-
-// Vercel names the production host; anything else (a local build) falls back to localhost.
-const siteUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
