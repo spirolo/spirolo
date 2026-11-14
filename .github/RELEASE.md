@@ -15,6 +15,15 @@ and creates a GitHub release with all staged files and checksums attached.
 Prerelease tags create prereleases. The package job still performs its dry run
 before the publish job starts. No workflow dispatch or pull request can publish.
 
+After the publish job, the `registry` job lists the version on the
+[MCP Registry](https://registry.modelcontextprotocol.io) as
+`io.github.spirolo/spirolo`, from the generated `server.json`. It signs in with
+the workflow's own identity (no token), using a pinned `mcp-publisher` whose
+signature is verified first. The registry accepts a version only when that npm
+version's `package.json` carries the same `mcpName`, which is why the job runs
+after npm. It is a separate job: if the registry is down, rerun that job alone.
+A registry entry cannot be edited once published; a fix is a new version.
+
 Before preparing a release, maintainers need:
 
 - After creating the repo, run `scripts/public/settings.sh spirolo/spirolo --apply`.

@@ -38,12 +38,26 @@ for (const os of ['linux', 'darwin']) {
     }));
   }
 }
+// The MCP Registry lists the launcher as a server. It accepts a version only when that npm
+// version's `mcpName` equals the name in server.json, so both come from this one constant.
+const mcpName = 'io.github.spirolo/spirolo';
+const description = 'Whole-project analyzer for JavaScript test suites';
 generated('npm/spirolo/package.json', json({
-  name: 'spirolo', version,
-  description: 'Whole-project analyzer for JavaScript test suites',
+  name: 'spirolo', version, description, mcpName,
   license: 'Apache-2.0', homepage: 'https://spirolo.com', repository: 'https://github.com/spirolo/spirolo',
   engines: { node: '>=20' }, bin: { spirolo: 'bin/spirolo.cjs' },
   files: ['bin/spirolo.cjs', 'resolve.cjs'], optionalDependencies,
+}));
+generated('server.json', json({
+  $schema: 'https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json',
+  name: mcpName, title: 'Spirolo', description,
+  repository: { url: 'https://github.com/spirolo/spirolo', source: 'github' },
+  websiteUrl: 'https://spirolo.com', version,
+  // `spirolo mcp` starts the stdio server: the subcommand is the one positional argument.
+  packages: [{
+    registryType: 'npm', registryBaseUrl: 'https://registry.npmjs.org', identifier: 'spirolo', version,
+    transport: { type: 'stdio' }, packageArguments: [{ type: 'positional', value: 'mcp' }],
+  }],
 }));
 const editor = JSON.parse(read('editors/vscode/package.json'));
 editor.version = version;

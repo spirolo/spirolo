@@ -1,0 +1,29 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.spirolo/spirolo",
+  "title": "Spirolo",
+  "description": "Whole-project analyzer for JavaScript test suites",
+  "repository": {
+    "url": "https://github.com/spirolo/spirolo",
+    "source": "github"
+  },
+  "websiteUrl": "https://spirolo.com",
+  "version": "0.1.0-alpha.1",
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "spirolo",
+      "version": "0.1.0-alpha.1",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        }
+      ]
+    }
+  ]
+}
