@@ -28,6 +28,7 @@ test('every workflow pins actions, limits token permissions and discards checkou
       const permissions = job.permissions ?? workflow.permissions;
       const expected = name === 'release.yml' && jobName === 'publish'
         ? { contents: 'write', 'id-token': 'write' }
+        : name === 'release.yml' && jobName === 'registry' ? { contents: 'read', 'id-token': 'write' }
         : name === 'codeql.yml' ? { contents: 'read', 'security-events': 'write' } : { contents: 'read' };
       assert.deepEqual(permissions, expected, `${name}/${jobName}: token permissions`);
     }
@@ -58,6 +59,25 @@ test('a v tag builds all npm platforms and rehearses before explicitly enabled p
   assert.ok(!publish.steps.some(step => step.run?.includes('--generate-notes')));
   assert.ok(release.jobs.package.steps.some(step =>
     step.uses?.startsWith('actions/upload-artifact@') && step.with.path === 'target/rc/*'));
+});
+
+test('the MCP Registry listing follows the npm publication, from a verified pinned publisher', () => {
+  const { registry, publish } = documents.find(({ name }) => name === 'release.yml').workflow.jobs;
+  assert.equal(registry.needs, 'publish');
+  assert.equal(registry.if, publish.if);
+  assert.match(registry.env.MCP_PUBLISHER_VERSION, /^v\d+\.\d+\.\d+$/);
+  const verify = registry.steps.findIndex(step => step.run?.includes('cosign verify-blob'));
+  const submit = registry.steps.findIndex(step => step.run?.includes('mcp-publisher" publish'));
+  assert.ok(verify >= 0 && submit > verify, 'the publisher is verified before it runs');
+  assert.ok(!registry.steps.some(step => step.run?.includes('releases/latest')), 'never the mutable latest URL');
+  assert.ok(registry.steps[submit].run.includes('login github-oidc'), 'no stored token');
+  // The registry reads `mcpName` from the npm version server.json names, so the three must agree.
+  const server = JSON.parse(readFileSync(new URL('../server.json', import.meta.url), 'utf8'));
+  const launcher = JSON.parse(readFileSync(new URL('../npm/spirolo/package.json', import.meta.url), 'utf8'));
+  assert.equal(server.name, launcher.mcpName);
+  assert.deepEqual([server.version, server.packages.map(pkg => `${pkg.identifier}@${pkg.version}`)],
+    [launcher.version, [`${launcher.name}@${launcher.version}`]]);
+  assert.ok(server.description.length <= 100, 'the registry refuses a description over 100 characters');
 });
 
 test('native artifacts come from locked release builds for the selected matrix target', () => {
