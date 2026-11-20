@@ -1589,7 +1589,7 @@ checksum = "e8e2fb0f499abb4d162f2bedad68f5ef91a1682b5a03596ddb67efd37768d100"
 
 [[package]]
 name = "spirolo"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "assert_cmd",
  "clap",
@@ -1610,7 +1610,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-bench"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "criterion",
  "flate2",
@@ -1623,7 +1623,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-frameworks"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "globset",
  "insta",
@@ -1640,7 +1640,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-inputs"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "insta",
  "roxmltree",
@@ -1652,7 +1652,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-model"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "globset",
  "ignore",
@@ -1673,7 +1673,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-report"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "insta",
  "serde",
@@ -1685,7 +1685,7 @@ dependencies = [
 
 [[package]]
 name = "spirolo-rules"
-version = "0.1.0-alpha.1"
+version = "0.1.0-alpha.2"
 dependencies = [
  "globset",
  "insta",

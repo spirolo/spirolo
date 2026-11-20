@@ -114,8 +114,8 @@ Health C (60)
 
 | 规则 | 级别 | 状态 | 判定为正确 / 已判定 | 精确率 | 95% Wilson 置信区间 | 测量条目数 |
 | --- | --- | --- | ---: | ---: | --- | ---: |
-| absence-anchor | advisory | UNADJUDICATED | 16 / 20 | 0.800 | 0.584–0.919 | 12 |
-| dead-skip | advisory | INSUFFICIENT | 18 / 18 | 1.000 | 0.824–1.000 | 7 |
+| absence-anchor | advisory | UNADJUDICATED | 28 / 28 | 1.000 | 0.879–1.000 | 16 |
+| dead-skip | advisory | UNADJUDICATED | 39 / 39 | 1.000 | 0.910–1.000 | 21 |
 | duplicate-test | advisory | UNADJUDICATED | 15 / 18 | 0.833 | 0.608–0.942 | 19 |
 | fail-closed-setup | advisory | UNADJUDICATED | 19 / 19 | 1.000 | 0.832–1.000 | 10 |
 | flake-candidate | experimental | INSUFFICIENT | 3 / 6 | 0.500 | 0.188–0.812 | 7 |
@@ -151,7 +151,7 @@ Vue、Cypress、其他语言及任意非 React 框架均不在已测量范围内
 
 ## 当前状态与限制
 
-**版本 `0.1.0-alpha.1`：提示级 alpha 版本。** 已在 npm 上以 `spirolo@alpha` 发布；VS Code 扩展尚未发布。在 1.0 之前，任何 alpha 版本都可能更改命令、输出和规则行为；[更新日志](CHANGELOG.md)（英文）列出了每项变更。
+**版本 `0.1.0-alpha.2`：提示级 alpha 版本。** 已在 npm 上以 `spirolo@alpha` 发布；VS Code 扩展尚未发布。在 1.0 之前，任何 alpha 版本都可能更改命令、输出和规则行为；[更新日志](CHANGELOG.md)（英文）列出了每项变更。
 
 静态分析可能遗漏动态配置和未建模的模式。如果 TypeScript 配置无法加载，Spirolo 会报告模块解析问题，并将受影响的发现项标记为不可靠。在依据这些条目作出判断前，请安装缺失的依赖并解决配置警告。
 

@@ -2,7 +2,7 @@
   "name": "spirolo",
   "displayName": "Spirolo",
   "description": "Spirolo's findings as diagnostics, with one view per rule family, a provisional Health score and a panel for the open file, over `spirolo lsp`",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "private": true,
   "license": "Apache-2.0",
   "engines": {

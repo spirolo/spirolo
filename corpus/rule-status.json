@@ -77,24 +77,28 @@
     "absence-anchor": {
       "verdict": "UNADJUDICATED",
       "carried": null,
-      "precision": 0.8,
+      "precision": 1,
       "interval": [
-        0.584,
-        0.919
+        0.879,
+        1
       ],
-      "truths": 16,
-      "falses": 4,
+      "truths": 28,
+      "falses": 0,
       "measured_on": [
+        "akveo__react-native-ui-kitten",
         "algolia__instantsearch",
-        "carbon-design-system__carbon",
+        "boardgameio__boardgame.io",
         "chrisvel__tududi",
-        "expo__expo",
+        "decaporg__decap-cms",
         "fastrepl__anarlog",
         "gpbl__react-day-picker",
+        "grommet__grommet",
         "hyperdxio__hyperdx",
         "mantinedev__mantine",
         "marmelab__react-admin",
+        "notionnext-org__NotionNext",
         "radix-ui__primitives",
+        "react-hook-form__react-hook-form",
         "rjsf-team__react-jsonschema-form",
         "usekaneo__kaneo"
       ]
@@ -129,10 +133,10 @@
     "fail-closed-setup": {
       "verdict": "UNADJUDICATED",
       "carried": null,
-      "precision": 1.0,
+      "precision": 1,
       "interval": [
         0.832,
-        1.0
+        1
       ],
       "truths": 19,
       "falses": 0,
@@ -171,23 +175,37 @@
       ]
     },
     "dead-skip": {
-      "verdict": "INSUFFICIENT",
+      "verdict": "UNADJUDICATED",
       "carried": null,
-      "precision": 1.0,
+      "precision": 1,
       "interval": [
-        0.824,
-        1.0
+        0.91,
+        1
       ],
-      "truths": 18,
+      "truths": 39,
       "falses": 0,
       "measured_on": [
         "Nozbe__WatermelonDB",
+        "algolia__instantsearch",
+        "boardgameio__boardgame.io",
+        "callstack__react-native-paper",
+        "carbon-design-system__carbon",
+        "decaporg__decap-cms",
         "expo__expo",
         "gatsbyjs__gatsby",
+        "gpbl__react-day-picker",
         "marmelab__react-admin",
         "midwayjs__midway",
         "mobxjs__mobx",
-        "radix-ui__primitives"
+        "mui__material-ui",
+        "necolas__react-native-web",
+        "pmndrs__valtio",
+        "radix-ui__primitives",
+        "react__react",
+        "remix-run__react-router",
+        "rjsf-team__react-jsonschema-form",
+        "shuding__nextra",
+        "styled-components__styled-components"
       ]
     },
     "duplicate-test": {
@@ -225,9 +243,9 @@
     "redundant-test": {
       "verdict": "DROPPED",
       "carried": null,
-      "precision": 0.0,
+      "precision": 0,
       "interval": [
-        0.0,
+        0,
         0.243
       ],
       "truths": 0,
