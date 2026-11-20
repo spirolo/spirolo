@@ -2,6 +2,8 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve, dirname } from 'node:path';
+import { execFileSync } from 'node:child_process';
+import { alignClaims, precisionTable, speaksOfRelease, tierFloors } from './claims.mjs';
 import { staleLockEntries, workspaceCrates, workspaceVersion } from './cargo-lock.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -69,35 +71,23 @@ generated('editors/vscode/package-lock.json', json(lock));
 const status = JSON.parse(read('corpus/rule-status.json'));
 // The tier floors are read from the Rust source the binary is built from, so the README's tier
 // column cannot drift from what `spirolo check` shows by default.
-const statusSource = read('crates/spirolo-rules/src/status.rs');
-const constant = name => {
-  const match = statusSource.match(new RegExp(`pub const ${name}: [^=]+= ([^;]+);`));
-  if (!match) throw new Error(`crates/spirolo-rules/src/status.rs no longer declares ${name}`);
-  return match[1];
-};
-const decidedFloor = Number(constant('SHOWN_DECIDED_FLOOR'));
-const [numerator, denominator] = constant('SHOWN_PRECISION_FLOOR').match(/^\((\d+), (\d+)\)$/).slice(1).map(Number);
-const tiers = ['proven', 'advisory', 'experimental', 'hidden'];
-const tier = row => {
-  if (row.verdict === 'PASS') return 'proven';
-  if (['FAIL', 'DROPPED'].includes(row.verdict)) return 'hidden';
-  const decided = row.truths + row.falses;
-  return decided >= decidedFloor && row.truths * denominator >= decided * numerator ? 'advisory' : 'experimental';
-};
-const number = value => value === null ? 'n/a' : value.toFixed(3);
-const rows = Object.entries(status.rules)
-  .sort(([a, x], [b, y]) => tiers.indexOf(tier(x)) - tiers.indexOf(tier(y)) || a.localeCompare(b))
-  .map(([name, row]) =>
-    `| ${name} | ${tier(row)} | ${row.verdict} | ${row.truths} / ${row.truths + row.falses} | ${number(row.precision)} | ${row.interval ? row.interval.map(number).join('–') : 'n/a'} | ${row.measured_on?.length ?? 0} |`);
-const table = [
-  `Measured at spirolo commit \`${status.spirolo_commit}\` across ${status.entries.length} OSS dev entries.`,
-  `Advisory: at least ${decidedFloor} decided and shown precision at least ${(numerator / denominator).toFixed(2)}.`,
-  '', '| Rule | Tier | Status | True / decided | Precision | 95% Wilson interval | Measured entries |',
-  '| --- | --- | --- | ---: | ---: | --- | ---: |', ...rows,
-].join('\n');
-const readme = read('README.md').replace(/<!-- precision:start -->[\s\S]*?<!-- precision:end -->/,
-  `<!-- precision:start -->\n${table}\n<!-- precision:end -->`);
-generated('README.md', readme);
+const floors = tierFloors(read('crates/spirolo-rules/src/status.rs'));
+const withTable = (path, language) => read(path).replace(/<!-- precision:start -->[\s\S]*?<!-- precision:end -->/,
+  `<!-- precision:start -->\n${precisionTable(status, floors, language)}\n<!-- precision:end -->`);
+const tables = { 'README.md': withTable('README.md', 'en'), 'README.zh-CN.md': withTable('README.zh-CN.md', 'zh') };
+// Hand-written words about this release (sample output, "no rule is proven", the version) are
+// held to the same table: sync rewrites what it can, and what needs a person is named and fails.
+const problems = [];
+const published = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' })
+  .split('\0').filter(speaksOfRelease);
+for (const path of published) {
+  const { aligned, problems: found } = alignClaims(path, tables[path] ?? read(path), { status, floors, version });
+  problems.push(...found);
+  generated(path, aligned);
+}
+if (problems.length > 0) {
+  throw new Error(`${problems.join('\n')}\nThese words are written by hand: rewrite them to match corpus/rule-status.json and Cargo.toml.`);
+}
 generated('editors/vscode/LICENSE', read('LICENSE'));
 for (const dir of ['spirolo', 'linux-x64', 'linux-arm64', 'darwin-x64', 'darwin-arm64']) {
   generated(`npm/${dir}/LICENSE`, read('LICENSE'));

@@ -33,7 +33,7 @@ Windows and Alpine/musl are not release targets.
 
 ## An advisory alpha
 
-`0.1.0-alpha.1` is an advisory release: **no rule is proven yet.** Every rule runs, and each
+`0.1.0-alpha.2` is an advisory release: **no rule is proven yet.** Every rule runs, and each
 finding is a signal for you to judge, labelled with how often the rule has been right on an
 open-source corpus.
 

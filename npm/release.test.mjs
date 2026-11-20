@@ -10,13 +10,13 @@ test('Cargo, npm and VSIX metadata agree on the canonical version', () => {
   assert.equal(result.status, 0, result.stderr);
 });
 
-test('the README precision table is current with the embedded OSS status', () => {
+test('the README precision tables and the hand-written claims are current with the embedded OSS status', () => {
   const result = spawnSync(process.execPath, ['npm/release.mjs', 'check'], { encoding: 'utf8' });
   assert.equal(result.status, 0, result.stderr);
-  // The public document must actually contain the generated table.
-  return import('node:fs').then(({ readFileSync }) => {
-    assert.match(readFileSync('README.md', 'utf8'), /<!-- precision:start -->/);
-  });
+  // Both public documents must actually contain the generated table.
+  for (const path of ['README.md', 'README.zh-CN.md']) {
+    assert.match(readFileSync(path, 'utf8'), /<!-- precision:start -->/);
+  }
 });
 
 test('a prerelease publishes under its identifier, never latest', () => {

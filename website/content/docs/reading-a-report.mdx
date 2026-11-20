@@ -26,13 +26,13 @@ Findings are grouped under one banner per family: **Weak tests** (`audit`), **Me
 appears once:
 
 ```
-● dead-skip (1 file, 2 findings) · 1 info · 1 listed · advisory: 18/18 (INSUFFICIENT)
+● dead-skip (1 file, 2 findings) · 1 info · 1 listed · advisory: 39/39 (UNADJUDICATED)
 ```
 
 - the rule and how many files and findings it has;
 - the severity counts. `listed` rows are context that never counts as a finding;
-- the trust label: `advisory` is the tier, `18/18` means 18 of its 18 decided corpus findings
-  were true, and `INSUFFICIENT` is its verdict (not enough decided to call it proven).
+- the trust label: the rule's tier, then how many of its decided corpus findings were true out of
+  how many were decided, then its verdict in brackets. Only the verdict `PASS` makes a rule proven.
   [How far to trust a finding](/docs/trust) explains each part.
 
 Then the rows, file by file, with line numbers. A `:0` row is about the whole file or config. The

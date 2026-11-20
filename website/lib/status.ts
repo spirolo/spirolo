@@ -1,6 +1,7 @@
 // Reads the measured rule table the binary embeds and places each rule in the tier the default
-// view uses. The floors mirror SHOWN_DECIDED_FLOOR and SHOWN_PRECISION_FLOOR in
-// crates/spirolo-rules/src/status.rs; docs/tiers.md explains them.
+// view uses. The floors are SHOWN_DECIDED_FLOOR and SHOWN_PRECISION_FLOOR of
+// crates/spirolo-rules/src/status.rs, copied by scripts/sync.mjs; docs/tiers.md explains them.
+import release from './generated/release.json';
 import table from './generated/rule-status.json';
 
 export type Tier = 'proven' | 'advisory' | 'experimental' | 'hidden';
@@ -25,12 +26,12 @@ interface Row {
   measured_on: string[];
 }
 
-const DECIDED_FLOOR = 15;
+const { decided: DECIDED_FLOOR, numerator, denominator } = release.floors;
 
 function tierOf(verdict: string, truths: number, decided: number): Tier {
   if (verdict === 'PASS') return 'proven';
   if (verdict === 'FAIL' || verdict === 'DROPPED') return 'hidden';
-  if (decided >= DECIDED_FLOOR && truths * 5 >= decided * 4) return 'advisory';
+  if (decided >= DECIDED_FLOOR && truths * denominator >= decided * numerator) return 'advisory';
   return 'experimental';
 }
 

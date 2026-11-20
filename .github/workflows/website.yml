@@ -10,12 +10,20 @@ on:
       - 'website/**'
       - 'branding/**'
       - 'corpus/rule-status.json'
+      - 'Cargo.toml'
+      - 'crates/spirolo-rules/src/status.rs'
+      - 'npm/claims.mjs'
+      - 'npm/cargo-lock.mjs'
       - '.github/workflows/website.yml'
   pull_request:
     paths:
       - 'website/**'
       - 'branding/**'
       - 'corpus/rule-status.json'
+      - 'Cargo.toml'
+      - 'crates/spirolo-rules/src/status.rs'
+      - 'npm/claims.mjs'
+      - 'npm/cargo-lock.mjs'
       - '.github/workflows/website.yml'
 jobs:
   build:
