@@ -16,11 +16,14 @@ the measurement set. The other rows are unchanged.
 | `absence-anchor` | 16 right of 20 decided | 28 right of 28 decided |
 | `dead-skip` | 18 right of 18 decided | 39 right of 39 decided |
 
-For `absence-anchor`, most of the change comes from the checker, not from the rule: it
-now decides test shapes it used to leave undecided (a title written with `it.each`, a file
-that names its test environment in a comment, a suite that silences the console). The
-earlier sample dates from October. The three most recent samples have had no finding
-judged wrong. Of 39 sampled findings, 11 are still undecided: the render sits in an
+For `absence-anchor`, the rule is the same and the figure is a fresh sample of 39
+findings, checked by a checker that now decides test shapes it used to leave undecided (a
+title written with `it.each`, a file that names its test environment in a comment, a suite
+that silences the console). The sample differs from the previous one, so the change cannot
+be credited to the checker alone: of the 17 findings present in both, 3 that were undecided
+are now decided and no verdict changed. The earlier figure, 16 of 20, comes from a sample
+taken before the release of 0.1.0-alpha.1; the three samples since have had no finding
+judged wrong. Of the 39 sampled findings, 11 are still undecided: the render sits in an
 imported helper the checker cannot reach, the project's tests do not run in the
 measurement environment, or the test does not render with React.
 
