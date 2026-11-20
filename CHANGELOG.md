@@ -22,8 +22,8 @@ title written with `it.each`, a file that names its test environment in a commen
 that silences the console). The sample differs from the previous one, so the change cannot
 be credited to the checker alone: of the 17 findings present in both, 3 that were undecided
 are now decided and no verdict changed. The earlier figure, 16 of 20, comes from a sample
-taken before the release of 0.1.0-alpha.1; the three samples since have had no finding
-judged wrong. Of the 39 sampled findings, 11 are still undecided: the render sits in an
+taken before the release of 0.1.0-alpha.1; the three most recent samples have had no
+finding judged wrong. Of the 39 sampled findings, 11 are still undecided: the render sits in an
 imported helper the checker cannot reach, the project's tests do not run in the
 measurement environment, or the test does not render with React.
 
