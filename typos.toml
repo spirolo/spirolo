@@ -1,0 +1,13 @@
+# typos: spelling in hand-written source and docs.
+[files]
+extend-exclude = [
+  # Test fixtures are vendored from real projects, and snapshots pin output about them.
+  "fixtures/",
+  "snapshots/",
+  # Generated from the dependency tree; crate names are not prose.
+  "THIRD_PARTY_NOTICES.md",
+]
+
+[default.extend-identifiers]
+# Yarn Plug'n'Play.
+PnP = "PnP"

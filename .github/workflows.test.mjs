@@ -148,3 +148,32 @@ test('Dependabot maintains Cargo, npm and Actions in weekly groups', () => {
   const launcher = JSON.parse(readFileSync(new URL('../npm/spirolo/package.json', import.meta.url), 'utf8'));
   assert.ok(npm.ignore.some(entry => entry['dependency-name'] === `${launcher.name}*`), 'native versions follow Cargo');
 });
+
+test('the required check formats, lints, spell-checks and audits dependencies, with its tools installed', () => {
+  // `just ci` is the whole required check, so a gate missing from the recipe is a gate nobody runs.
+  const recipes = new Map();
+  let body;
+  for (const line of readFileSync(new URL('../justfile', import.meta.url), 'utf8').split('\n')) {
+    const head = line.match(/^([a-z][\w-]*):(.*)$/);
+    if (head) recipes.set(head[1], { needs: head[2].trim().split(/\s+/).filter(Boolean), runs: body = [] });
+    else if (/^\s+\S/.test(line)) body?.push(line.trim());
+  }
+  const runs = recipes.get('ci').needs.flatMap(name => recipes.get(name).runs);
+  for (const gate of [
+    'cargo fmt --all --check',
+    'cargo clippy --locked --workspace --all-targets --all-features -- -D warnings',
+    'typos',
+    'cargo deny check',
+  ]) assert.ok(runs.includes(gate), `just ci runs: ${gate}`);
+
+  const { steps } = documents.find(({ name }) => name === 'ci.yml').workflow.jobs.snapshot;
+  assert.equal(steps.at(-1).run, 'just ci');
+  // dtolnay/rust-toolchain installs the minimal profile: no clippy, no rustfmt unless asked.
+  const listed = (action, input) => steps.find(step => step.uses?.startsWith(`${action}@`)).with[input].split(/,\s*/);
+  for (const component of ['clippy', 'rustfmt']) {
+    assert.ok(listed('dtolnay/rust-toolchain', 'components').includes(component), `toolchain component: ${component}`);
+  }
+  for (const tool of ['cargo-deny', 'cargo-nextest', 'just', 'typos']) {
+    assert.ok(listed('taiki-e/install-action', 'tool').includes(tool), `runner tool: ${tool}`);
+  }
+});

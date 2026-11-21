@@ -1,6 +1,22 @@
-# The snapshot's standalone gate. Requires Rust, cargo-nextest, Node >=20.10, npm and Git.
+# The snapshot's standalone gate. Requires Rust, cargo-nextest, typos, cargo-deny, Node >=20.10, npm and Git.
 default:
     @just --list
+
+# Formatting, without rewriting anything (`cargo fmt --all` fixes it).
+fmt-check:
+    cargo fmt --all --check
+
+# Spelling, as configured in typos.toml.
+typos:
+    typos
+
+# Clippy over every target and feature; a warning is an error.
+clippy:
+    cargo clippy --locked --workspace --all-targets --all-features -- -D warnings
+
+# Advisories, licences, bans and sources, as configured in deny.toml.
+deny:
+    cargo deny check
 
 # Build the shipped workspace, using its committed lockfile.
 build:
@@ -30,4 +46,4 @@ rc-test:
 website:
     cd website && pnpm install --frozen-lockfile && pnpm check:public && pnpm types:check && pnpm build
 
-ci: build test node-tests
+ci: fmt-check typos clippy build test node-tests deny

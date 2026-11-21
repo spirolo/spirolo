@@ -15,21 +15,26 @@ open an issue to propose it first, so the approach is agreed before the code is 
 ## The dev loop
 
 You need the stable Rust toolchain (`rust-toolchain.toml` adds rustfmt and clippy), Node 20 or
-newer with npm, [`just`](https://github.com/casey/just) and
-[`cargo-nextest`](https://nexte.st). Updating snapshots also needs
+newer with npm, [`just`](https://github.com/casey/just),
+[`cargo-nextest`](https://nexte.st), [`typos`](https://github.com/crate-ci/typos) and
+[`cargo-deny`](https://github.com/EmbarkStudios/cargo-deny). Updating snapshots also needs
 [`cargo-insta`](https://insta.rs).
 
 ```sh
 just --list                                            # every recipe
 just ci                                                # what CI runs; run it before pushing
 cargo fmt --all                                        # format
-cargo clippy --all-targets --all-features -- -D warnings
+just clippy                                            # lint alone
 cargo insta test --accept --all-features               # accept changed snapshots
 ```
 
-`just ci` builds the workspace from the committed lockfile, runs every Rust test with nextest,
-then the doctests, then every committed Node suite (the editor views, the npm launcher and
-release metadata, and the workflow checks). Clippy warnings are errors.
+`just ci` checks formatting (`cargo fmt --all --check`) and spelling (`typos`, configured in
+[`typos.toml`](typos.toml)), runs clippy with warnings as errors, builds the workspace from the
+committed lockfile, runs every Rust test with nextest, then the doctests, then every committed
+Node suite (the editor views, the npm launcher and release metadata, and the workflow checks),
+and ends with `cargo deny check` (advisories, licences and sources, configured in
+[`deny.toml`](deny.toml)). The required check on a pull request is this one command, so any of
+them failing blocks the merge.
 
 Output is pinned with [insta](https://insta.rs) snapshots (`snapshots/*.snap` next to the
 tests). `cargo insta test --accept` accepts every changed snapshot, so read each snapshot diff in `git diff`
