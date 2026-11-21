@@ -315,8 +315,7 @@ impl Project<'_> {
                     .walk
                     .units
                     .get(&key)
-                    .map(|unit| unit.pushes.clone())
-                    .unwrap_or_default();
+                    .map_or_default(|unit| unit.pushes.clone());
                 for (binding, path) in pushes {
                     if let Some(target) = self.target(module, &binding, &path, &[]) {
                         recorders.push(target);

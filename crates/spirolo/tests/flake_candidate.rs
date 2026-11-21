@@ -99,8 +99,7 @@ fn summary(findings: &[serde_json::Value]) -> Vec<(String, String, String)> {
                 .unwrap()
                 .iter()
                 .find(|e| e["key"] == "kind")
-                .map(|e| e["value"].as_str().unwrap().to_owned())
-                .unwrap_or_default();
+                .map_or_default(|e| e["value"].as_str().unwrap().to_owned());
             (
                 f["test"]["title"].as_str().unwrap_or_default().to_owned(),
                 kind,

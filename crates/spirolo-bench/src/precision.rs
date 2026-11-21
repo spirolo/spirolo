@@ -1050,8 +1050,7 @@ pub fn reported_findings(check_json: &Value) -> Vec<ReportedFinding> {
     check_json
         .get("findings")
         .and_then(Value::as_array)
-        .map(Vec::as_slice)
-        .unwrap_or_default()
+        .map_or_default(Vec::as_slice)
         .iter()
         .filter_map(|finding| {
             let rule = finding.get("rule").and_then(Value::as_str)?;
@@ -1087,8 +1086,7 @@ fn evidence(finding: &Value) -> BTreeMap<String, String> {
     finding
         .get("evidence")
         .and_then(Value::as_array)
-        .map(Vec::as_slice)
-        .unwrap_or_default()
+        .map_or_default(Vec::as_slice)
         .iter()
         .filter_map(|row| {
             let key = row.get("key")?.as_str()?;

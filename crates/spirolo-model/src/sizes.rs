@@ -210,7 +210,7 @@ pub fn capture(expr: &Expression<'_>) -> Size {
                     ArrayExpressionElement::SpreadElement(spread) => {
                         Item::Spread(capture(&spread.argument))
                     }
-                    _ => Item::One(element.as_expression().map(props_of).unwrap_or_default()),
+                    _ => Item::One(element.as_expression().map_or_default(props_of)),
                 })
                 .collect();
             Size::Items(items, row_arity(array.elements.first()))

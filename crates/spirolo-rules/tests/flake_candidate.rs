@@ -104,8 +104,7 @@ fn flagged(model: &Model) -> Vec<(String, String)> {
                 .evidence
                 .iter()
                 .find(|e| e.key == "kind")
-                .map(|e| e.value.clone())
-                .unwrap_or_default();
+                .map_or_default(|e| e.value.clone());
             (f.test.unwrap().title.unwrap(), kind)
         })
         .collect()

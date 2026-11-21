@@ -115,8 +115,7 @@ pub fn explain_round_trip(
 ) -> ExplainScore {
     let findings: Vec<&Value> = check["findings"]
         .as_array()
-        .map(|all| all.iter().collect())
-        .unwrap_or_default();
+        .map_or_default(|all| all.iter().collect());
     let chunk = findings.len().div_ceil(workers.max(1)).max(1);
     let mut misses: Vec<(usize, String)> = std::thread::scope(|scope| {
         // Collected so every worker is spawned before the first join.
@@ -199,8 +198,7 @@ pub fn status_mismatches(file: &Value, run: &Value) -> Vec<String> {
     let names = |value: &Value| -> Vec<String> {
         value["rules"]
             .as_object()
-            .map(|rules| rules.keys().cloned().collect())
-            .unwrap_or_default()
+            .map_or_default(|rules| rules.keys().cloned().collect())
     };
     let mut rules = names(file);
     rules.extend(names(run));

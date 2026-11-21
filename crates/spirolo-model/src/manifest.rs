@@ -56,26 +56,24 @@ pub fn read(path: &str, source: &str) -> Result<Manifest, Diagnostic> {
             named_scripts: value
                 .get("scripts")
                 .and_then(serde_json::Value::as_object)
-                .map(|scripts| {
+                .map_or_default(|scripts| {
                     scripts
                         .iter()
                         .filter_map(|(name, command)| {
                             Some((name.clone(), command.as_str()?.to_owned()))
                         })
                         .collect()
-                })
-                .unwrap_or_default(),
+                }),
             scripts: value
                 .get("scripts")
                 .and_then(serde_json::Value::as_object)
-                .map(|scripts| {
+                .map_or_default(|scripts| {
                     scripts
                         .values()
                         .filter_map(serde_json::Value::as_str)
                         .map(str::to_owned)
                         .collect()
-                })
-                .unwrap_or_default(),
+                }),
         }),
         Err(error) => Err(Diagnostic {
             code: "manifest_invalid".to_owned(),

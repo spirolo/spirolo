@@ -1,5 +1,9 @@
 //! MCP's newline-delimited JSON-RPC stdio transport; analysis stays in process.
 
+// `StatusInput` has no fields, and serde's derive expands that to an enum without variants.
+// An `allow` on the struct does not reach the derive's output.
+#![allow(clippy::empty_enums)]
+
 use std::io::{BufRead as _, Write as _};
 use std::path::PathBuf;
 

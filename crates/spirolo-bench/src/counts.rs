@@ -51,8 +51,7 @@ pub fn by_framework(
     let rows = list_json
         .get("test_cases")
         .and_then(Value::as_array)
-        .map(Vec::as_slice)
-        .unwrap_or_default();
+        .map_or_default(Vec::as_slice);
 
     // Suites by file, so a row finds its enclosing suites without scanning every row.
     let mut suites_by_file: BTreeMap<&str, Vec<&Value>> = BTreeMap::new();
@@ -83,13 +82,7 @@ pub fn by_framework(
             .and_then(Value::as_str)
             .unwrap_or("unknown");
 
-        let suites = enclosing_suites(
-            suites_by_file
-                .get(file)
-                .map(Vec::as_slice)
-                .unwrap_or_default(),
-            row,
-        );
+        let suites = enclosing_suites(suites_by_file.get(file).map_or_default(Vec::as_slice), row);
         let lists_by_mode = matches!(framework, "vitest" | "jest");
         if lists_by_mode && (skipped(row) || suites.iter().any(|suite| skipped(suite))) {
             continue;
@@ -194,8 +187,7 @@ fn multiplicity(row: &Value) -> u64 {
         .map_or(1, cases);
     row.get("loops")
         .and_then(Value::as_array)
-        .map(Vec::as_slice)
-        .unwrap_or_default()
+        .map_or_default(Vec::as_slice)
         .iter()
         .fold(own, |product, table| product.saturating_mul(cases(table)))
 }

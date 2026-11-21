@@ -518,8 +518,7 @@ fn spelled(assertion: &Assertion) -> String {
         let argument = assertion
             .argument
             .as_deref()
-            .map(|a| format!("({a})"))
-            .unwrap_or_default();
+            .map_or_default(|a| format!("({a})"));
         format!("queryBy*.{not}{matcher}{argument}")
     } else {
         format!("{not}{matcher}")

@@ -151,8 +151,7 @@ pub fn read_snapshots(root: &Path, modules: &[Module]) -> Snapshots {
         let imported_calls = sibling
             .as_deref()
             .and_then(|path| Some((path, std::fs::read_to_string(root.join(path)).ok()?)))
-            .map(|(path, source)| imported_calls(path, &source))
-            .unwrap_or_default();
+            .map_or_default(|(path, source)| imported_calls(path, &source));
         result.snapshots.push(Snapshot {
             file: relative,
             sibling,
