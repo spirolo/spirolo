@@ -821,3 +821,50 @@ test('K5 document body', () => {
         ]
     );
 }
+
+/// An index into a list query for `body`, `html` or `head` returns the document's own node
+/// whatever the component rendered, so a negated jest-dom matcher on it holds against an
+/// empty render: those tests stay findings, while an index into a list query for a
+/// rendered tag still anchors.
+#[test]
+fn an_index_into_a_list_query_for_the_document_body_stays_reported() {
+    let root = project("aa-52-persistent-list");
+    write(
+        &root,
+        "src/modal.test.tsx",
+        r"import { render } from '@testing-library/react';
+
+test('T1 body by tag name', () => {
+  render(<Modal open={false} />);
+  expect(document.getElementsByTagName('body')[0]).not.toHaveClass('modal-open');
+});
+
+test('T2 html by tag name', () => {
+  render(<Theme />);
+  expect(document.getElementsByTagName('html')[0]).not.toHaveAttribute('data-theme');
+});
+
+test('T3 body through querySelectorAll', () => {
+  render(<Modal open={false} />);
+  const bodies = document.querySelectorAll('body');
+  expect(bodies[0]).not.toHaveStyle({ overflow: 'hidden' });
+});
+
+test('C1 rendered tag by tag name', () => {
+  render(<Grid />);
+  expect(document.getElementsByTagName('table')[0]).not.toHaveClass('wide');
+});
+",
+    );
+
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "T1 body by tag name",
+            "T2 html by tag name",
+            "T3 body through querySelectorAll",
+        ]
+    );
+}

@@ -271,8 +271,8 @@ fn bearing(assertion: &Assertion) -> Bearing {
 /// its subject before the negation, so on an element read off the render (a call, an optional
 /// call chain, a nullable DOM child property, a member or index read off one, or a local
 /// bound or destructured from one), nullish once the render produced nothing, it fails. On
-/// a subject that survives an empty render (`container`, `baseElement`, `document.body`) it
-/// holds, and stays an absence read.
+/// a subject that survives an empty render (`container`, `baseElement`, `document.body`,
+/// `document.getElementsByTagName('body')[0]`) it holds, and stays an absence read.
 fn checks_element(matcher: &str, assertion: &Assertion) -> bool {
     assertion.negated && assertion.subject_is_call && matcher != "toBeInTheDocument"
 }

@@ -16,7 +16,9 @@ nullable child properties such as `container.firstChild`, members and indexes re
 those (`renderGrid().row`, `items[0]`), and locals bound to those reads or destructured
 from them (`const { row } = renderGrid()`) count as anchors for these matchers. A
 `container` or `baseElement` taken from a render result survives an empty render, so a
-negated matcher on it, like one on `document.body`, remains an absence check.
+negated matcher on it, like one on `document.body`, remains an absence check. So does
+an index into a list query for the document's own nodes, such as
+`document.getElementsByTagName('body')[0]` or `document.querySelectorAll('html')[0]`.
 `not.toBeInTheDocument()` accepts a missing element and remains an absence check.
 
 ## What to do

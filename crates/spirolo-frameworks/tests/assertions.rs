@@ -410,6 +410,9 @@ fn an_element_read_through_a_helper_result_or_an_index_is_recorded() {
         "expect(container.querySelectorAll('.item')[1]).not.toHaveAttribute('data-x')",
         "const items = container.querySelectorAll('.item'); const first = items[0]; expect(first).not.toHaveClass('x')",
         "const row = renderGrid().row; expect(row).not.toHaveClass('x')",
+        "expect(document.getElementsByTagName('table')[0]).not.toHaveClass('x')",
+        "expect(document.querySelectorAll('body .item')[0]).not.toHaveClass('x')",
+        "expect(screen.queryAllByText('body')[0]).not.toHaveClass('x')",
     ] {
         assert!(reads_an_element(body), "{body} reads an element");
     }
@@ -433,6 +436,28 @@ fn a_node_that_survives_an_empty_render_is_no_element_read() {
         "const items = []; expect(items[0]).not.toHaveClass('x')",
         "expect(rows[0]).not.toHaveClass('x')",
         "const { row } = grid; expect(row).not.toHaveClass('x')",
+    ] {
+        assert!(!reads_an_element(body), "{body} reads no element");
+    }
+}
+
+#[test]
+fn an_index_into_a_list_query_for_a_node_there_before_any_render_is_no_element_read() {
+    // `getElementsByTagName('body')[0]` and `querySelectorAll('body')[0]` return the
+    // document's own `body`, `html` or `head` whatever the component rendered, so a negated
+    // matcher on them holds against an empty render and must stay an absence read.
+    for body in [
+        "expect(document.getElementsByTagName('body')[0]).not.toHaveClass('modal-open')",
+        "expect(document.getElementsByTagName('html')[0]).not.toHaveAttribute('data-theme')",
+        "expect(document.getElementsByTagName('head')[0]).not.toHaveAttribute('data-x')",
+        "expect(document.getElementsByTagName('BODY')[0]).not.toHaveClass('x')",
+        "expect(document.querySelectorAll('body')[0]).not.toHaveStyle({ overflow: 'hidden' })",
+        "expect(document.querySelectorAll(` html `)[0]).not.toHaveClass('x')",
+        "expect((await getDocument()).querySelectorAll('body')[0]).not.toHaveClass('x')",
+        "const bodies = document.querySelectorAll('body'); expect(bodies[0]).not.toHaveStyle({ overflow: 'hidden' })",
+        "const bodies = document.getElementsByTagName('body'); const first = bodies[0]; expect(first).not.toHaveClass('x')",
+        "const { [0]: first } = document.getElementsByTagName('body'); expect(first).not.toHaveClass('x')",
+        "expect(document.getElementsByTagName('body')[0].parentElement).not.toHaveClass('x')",
     ] {
         assert!(!reads_an_element(body), "{body} reads no element");
     }

@@ -77,7 +77,7 @@ pub fn body_facts(lines: &LineIndex, source: &str, callback: &Expression<'_>) ->
     let mut collector = BodyCollector {
         lines,
         source,
-        calls: calls.names,
+        calls,
         assertions: Vec::new(),
         mocks: Vec::new(),
         throwing_queries: Vec::new(),
@@ -127,7 +127,7 @@ struct BodyCollector<'a> {
     lines: &'a LineIndex,
     source: &'a str,
     /// The names a `const`/`let` in the callback binds to a call: see [`CallBindings`].
-    calls: HashSet<String>,
+    calls: CallBindings,
     assertions: Vec<Assertion>,
     mocks: Vec<Mock>,
     throwing_queries: Vec<ThrowingQuery>,
@@ -426,9 +426,10 @@ fn subject_is_query(root: &CallExpression<'_>) -> bool {
 
 /// Whether the subject is a potentially missing element: a call, a nullable DOM child
 /// property, a member or index read off one of those, or a local bound to any of them.
-/// Persistent nodes (`container`, `baseElement`, `document.body`) are left out. The model
-/// retains the historical `subject_is_call` field name.
-fn subject_is_element_read(root: &CallExpression<'_>, calls: &HashSet<String>) -> bool {
+/// Persistent nodes (`container`, `baseElement`, `document.body`,
+/// `getElementsByTagName('body')[0]`) are left out. The model retains the historical
+/// `subject_is_call` field name.
+fn subject_is_element_read(root: &CallExpression<'_>, calls: &CallBindings) -> bool {
     let Some(subject) = root.arguments.first().and_then(Argument::as_expression) else {
         return false;
     };
@@ -439,11 +440,12 @@ fn subject_is_element_read(root: &CallExpression<'_>, calls: &HashSet<String>) -
 /// index read off an element read (`renderGrid().row`, `items[0]`), or a name in `calls`.
 /// An optional call yields `undefined` on an empty render, which jest-dom rejects just like
 /// `null`; a member or index of a missing result is missing too, or throws. A
-/// [persistent](is_persistent) member is the exception: it survives an empty render.
-fn is_element_read(expression: &Expression<'_>, calls: &HashSet<String>) -> bool {
+/// [persistent](is_persistent) member, or an index into a [persistent
+/// list](is_persistent_list), is the exception: it survives an empty render.
+fn is_element_read(expression: &Expression<'_>, calls: &CallBindings) -> bool {
     match unawaited(expression) {
         Expression::CallExpression(_) => true,
-        Expression::Identifier(id) => calls.contains(id.name.as_str()),
+        Expression::Identifier(id) => calls.names.contains(id.name.as_str()),
         Expression::StaticMemberExpression(member) => {
             is_nullable_child(&member.property.name)
                 || (!is_persistent(&member.property.name) && is_element_read(&member.object, calls))
@@ -452,7 +454,8 @@ fn is_element_read(expression: &Expression<'_>, calls: &HashSet<String>) -> bool
             !matches!(
                 member.expression.get_inner_expression(),
                 Expression::StringLiteral(key) if key.value.as_str().is_some_and(is_persistent)
-            ) && is_element_read(&member.object, calls)
+            ) && !is_persistent_list(&member.object, calls)
+                && is_element_read(&member.object, calls)
         }
         Expression::ChainExpression(chain) => match &chain.expression {
             ChainElement::CallExpression(_) => true,
@@ -472,6 +475,37 @@ fn is_persistent(name: &str) -> bool {
         name,
         "container" | "baseElement" | "body" | "documentElement" | "head"
     )
+}
+
+/// A list query for a node that is there before any render: `getElementsByTagName` or
+/// `querySelectorAll` on any receiver, with a literal `body`, `html` or `head` (in any case,
+/// spaces trimmed), or a name in `calls` bound to one. Its first item is the document's own
+/// node, whatever the component rendered.
+fn is_persistent_list(expression: &Expression<'_>, calls: &CallBindings) -> bool {
+    let call = match unawaited(expression) {
+        Expression::CallExpression(call) => call,
+        Expression::Identifier(id) => return calls.persistent_lists.contains(id.name.as_str()),
+        _ => return false,
+    };
+    let Expression::StaticMemberExpression(callee) = call.callee.get_inner_expression() else {
+        return false;
+    };
+    let tag = match call.arguments.first().and_then(Argument::as_expression) {
+        Some(Expression::StringLiteral(literal)) => Some(StaticPropertyName::from(literal.value)),
+        Some(Expression::TemplateLiteral(literal)) => {
+            literal.single_quasi().map(StaticPropertyName::from)
+        }
+        _ => None,
+    }
+    .and_then(StaticPropertyName::into_cow_str);
+    matches!(
+        callee.property.name.as_str(),
+        "getElementsByTagName" | "querySelectorAll"
+    ) && tag.is_some_and(|tag| {
+        ["body", "html", "head"]
+            .iter()
+            .any(|node| tag.trim().eq_ignore_ascii_case(node))
+    })
 }
 
 /// Child reads that can be null even though their container survives an empty render.
@@ -496,20 +530,29 @@ fn unawaited<'e, 'a>(expression: &'e Expression<'a>) -> &'e Expression<'a> {
 /// a name destructured off one (`const { row } = renderGrid()`) unless its key is
 /// [persistent](is_persistent). Matched by name within the callback, never by scope; read
 /// in source order, so a binding can build on an earlier one (`const first = items[0]`).
+/// Nothing is destructured off a [persistent list](is_persistent_list).
 #[derive(Default)]
 struct CallBindings {
     names: HashSet<String>,
+    /// The names bound to a [persistent list](is_persistent_list) (`const bodies =
+    /// document.querySelectorAll('body')`), so an index into them is no element read.
+    persistent_lists: HashSet<String>,
 }
 
 impl<'a> Visit<'a> for CallBindings {
     fn visit_variable_declarator(&mut self, declarator: &VariableDeclarator<'a>) {
         if let Some(init) = &declarator.init {
-            if is_element_read(init, &self.names) {
+            if is_element_read(init, self) {
+                let persistent_list = is_persistent_list(init, self);
                 match &declarator.id {
                     BindingPattern::BindingIdentifier(binding) => {
-                        self.names.insert(binding.name.as_str().to_owned());
+                        let name = binding.name.as_str().to_owned();
+                        if persistent_list {
+                            self.persistent_lists.insert(name.clone());
+                        }
+                        self.names.insert(name);
                     }
-                    BindingPattern::ObjectPattern(object) => {
+                    BindingPattern::ObjectPattern(object) if !persistent_list => {
                         for property in &object.properties {
                             let key = property
                                 .key
