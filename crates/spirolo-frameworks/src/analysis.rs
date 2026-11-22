@@ -561,7 +561,7 @@ impl<'a> Visit<'a> for CallBindings {
                             if let (Some(key), BindingPattern::BindingIdentifier(binding)) =
                                 (key, &property.value)
                             {
-                                if !property.computed && !is_persistent(&key) {
+                                if !is_persistent(&key) {
                                     self.names.insert(binding.name.as_str().to_owned());
                                 }
                             }

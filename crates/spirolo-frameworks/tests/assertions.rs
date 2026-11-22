@@ -410,6 +410,8 @@ fn an_element_read_through_a_helper_result_or_an_index_is_recorded() {
         "expect(container.querySelectorAll('.item')[1]).not.toHaveAttribute('data-x')",
         "const items = container.querySelectorAll('.item'); const first = items[0]; expect(first).not.toHaveClass('x')",
         "const row = renderGrid().row; expect(row).not.toHaveClass('x')",
+        "const { ['row']: first } = renderGrid(); expect(first).not.toHaveClass('x')",
+        "const { [0]: first } = container.querySelectorAll('.item'); expect(first).not.toHaveClass('x')",
         "expect(document.getElementsByTagName('table')[0]).not.toHaveClass('x')",
         "expect(document.querySelectorAll('body .item')[0]).not.toHaveClass('x')",
         "expect(screen.queryAllByText('body')[0]).not.toHaveClass('x')",
@@ -436,6 +438,7 @@ fn a_node_that_survives_an_empty_render_is_no_element_read() {
         "const items = []; expect(items[0]).not.toHaveClass('x')",
         "expect(rows[0]).not.toHaveClass('x')",
         "const { row } = grid; expect(row).not.toHaveClass('x')",
+        "const { ['container']: root } = render(Grid); expect(root).not.toHaveClass('x')",
     ] {
         assert!(!reads_an_element(body), "{body} reads no element");
     }
