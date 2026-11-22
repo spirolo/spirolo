@@ -501,6 +501,64 @@ describe('renderer', () => {
     );
 }
 
+/// A plain `toBeEmptyDOMElement()` runs the same element check as the negated matchers: on a
+/// node read from the render (`null` after an empty render) it throws, so it anchors (#51).
+/// On `container` or `document.body`, which survive an empty render, it passes and stays an
+/// absence read, as does `not.toBeInTheDocument` on a queried node.
+#[test]
+fn to_be_empty_dom_element_on_a_queried_node_anchors() {
+    let root = project("aa-51-empty-dom-element");
+    write(
+        &root,
+        "src/grid.test.tsx",
+        r"import { render } from '@testing-library/react';
+import { Grid } from './grid';
+
+test('queried button is empty', () => {
+  const { container } = render(<Grid />);
+  expect(container.querySelector('button')).toBeEmptyDOMElement();
+});
+
+test('first child is empty', () => {
+  const { container } = render(<Grid />);
+  expect(container.firstChild).toBeEmptyDOMElement();
+});
+
+test('bound button is empty', () => {
+  const { container } = render(<Grid />);
+  const button = container.querySelector('button');
+  expect(button).toBeEmptyDOMElement();
+});
+
+test('container is empty', () => {
+  const { container } = render(<Grid hidden />);
+  expect(container).toBeEmptyDOMElement();
+});
+
+test('body is empty', () => {
+  render(<Grid hidden />);
+  expect(document.body).toBeEmptyDOMElement();
+});
+
+test('queried link is not in the document', () => {
+  const { container } = render(<Grid hidden />);
+  expect(container.querySelector('a')).not.toBeInTheDocument();
+});
+",
+    );
+
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "body is empty",
+            "container is empty",
+            "queried link is not in the document"
+        ]
+    );
+}
+
 /// A same-file helper whose body calls a throwing query (`findByTestId`, `getByText`) throws
 /// when the render came up empty, so a test that awaits it is anchored; a helper that only
 /// renders anchors nothing. Verbatim from tududi `AdminUsersPage.test.tsx:704` (round 2 row
