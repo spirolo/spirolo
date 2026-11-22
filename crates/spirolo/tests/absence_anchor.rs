@@ -740,3 +740,173 @@ describe('LayoutGridField', () => {
         ["renders nothing when there is no uiSchema"]
     );
 }
+
+// ------------------------------------------------------------- asserting helpers (#53)
+
+/// One test per shape, calling the helpers of [`asserting_helpers`] and its own.
+const SHAPES: &str = r"import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { expectSubmitted, expectNotSubmitted } from './helpers';
+
+const expectCalledOnce = (spy: unknown) => {
+  expect(spy).toHaveBeenCalledTimes(1);
+};
+
+const expectNeverCalled = (spy: unknown) => {
+  expect(spy).toHaveBeenCalledTimes(0);
+};
+
+function expectShown(el: unknown) {
+  expect(el).toBeInTheDocument();
+}
+
+function expectGone(el: unknown) {
+  expect(el).not.toBeInTheDocument();
+}
+
+function expectSubmittedOnce(spy: unknown) {
+  expectCalledOnce(spy);
+}
+
+test('imported spy helper', async () => {
+  const onSubmit = vi.fn();
+  const { container } = render(<Grid onSubmit={onSubmit} />);
+  expect(container.querySelector('.missing')).not.toBeInTheDocument();
+  await userEvent.click(container.querySelector('button')!);
+  expectSubmitted(onSubmit, { a: 1 });
+});
+
+test('inline spy assertion', async () => {
+  const onSubmit = vi.fn();
+  const { container } = render(<Grid onSubmit={onSubmit} />);
+  expect(container.querySelector('.missing')).not.toBeInTheDocument();
+  await userEvent.click(container.querySelector('button')!);
+  expect(onSubmit).toHaveBeenLastCalledWith({ a: 1 });
+});
+
+test('same-file count helper', async () => {
+  const onSubmit = vi.fn();
+  render(<Grid onSubmit={onSubmit} />);
+  expect(screen.queryByText('error')).toBeNull();
+  expectCalledOnce(onSubmit);
+});
+
+test('same-file presence helper', () => {
+  render(<Grid />);
+  expect(screen.queryByText('error')).toBeNull();
+  expectShown(screen.queryByText('ready'));
+});
+
+test('helper through a helper', () => {
+  const onSubmit = vi.fn();
+  render(<Grid onSubmit={onSubmit} />);
+  expect(screen.queryByText('error')).toBeNull();
+  expectSubmittedOnce(onSubmit);
+});
+
+describe('hooked', () => {
+  const onLoad = vi.fn();
+  beforeEach(() => {
+    render(<Grid onLoad={onLoad} />);
+    expectCalledOnce(onLoad);
+  });
+
+  test('anchored by a hook that calls a spy helper', () => {
+    expect(screen.queryByText('error')).toBeNull();
+  });
+});
+
+test('imported negated spy helper', async () => {
+  const onSubmit = vi.fn();
+  render(<Grid onSubmit={onSubmit} />);
+  expect(screen.queryByText('error')).toBeNull();
+  expectNotSubmitted(onSubmit);
+});
+
+test('zero count helper', () => {
+  const onSubmit = vi.fn();
+  render(<Grid onSubmit={onSubmit} />);
+  expect(screen.queryByText('error')).toBeNull();
+  expectNeverCalled(onSubmit);
+});
+
+test('absence helper', () => {
+  render(<Grid />);
+  expectGone(screen.queryByText('error'));
+  expect(screen.queryByText('warning')).toBeNull();
+});
+
+test('interaction only', async () => {
+  const { container } = render(<Grid />);
+  await userEvent.click(container.querySelector('button')!);
+  expect(screen.queryByText('error')).not.toBeInTheDocument();
+});
+";
+
+/// A project with helpers that assert, imported (`src/helpers.tsx`) and of the test file's
+/// own, and one test per shape. The tests that call a helper with an anchoring assertion,
+/// directly, through another helper or from a hook, and the one written inline, are
+/// anchored; the others are not.
+fn asserting_helpers(name: &str) -> PathBuf {
+    let root = project(name);
+    write(
+        &root,
+        "src/helpers.tsx",
+        r"import { expect } from 'vitest';
+
+export function expectSubmitted(spy: unknown, data: unknown) {
+  expect(spy).toHaveBeenLastCalledWith(data);
+}
+
+export function expectNotSubmitted(spy: unknown) {
+  expect(spy).not.toHaveBeenCalled();
+}
+",
+    );
+    write(&root, "src/shapes.test.tsx", SHAPES);
+    root
+}
+
+/// A helper whose own body holds an assertion that anchors when written inline (a plain
+/// spy-call assertion with a count other than `0`, a positive jest-dom matcher) fails on an
+/// empty render the same way, so a test that calls it is anchored: imported or of the same
+/// file, directly or through another helper of that file, from the test or from a hook
+/// around it.
+#[test]
+fn a_helper_with_an_anchoring_assertion_anchors() {
+    let root = asserting_helpers("aa-53-anchoring-helper");
+    let titles = flagged(&root);
+    for anchored in [
+        "imported spy helper",
+        "inline spy assertion",
+        "same-file count helper",
+        "same-file presence helper",
+        "helper through a helper",
+        "anchored by a hook that calls a spy helper",
+    ] {
+        assert!(
+            !titles.iter().any(|t| t == anchored),
+            "{anchored:?} is flagged: {titles:?}"
+        );
+    }
+}
+
+/// A helper that holds only absence reads or assertions that hold against an empty body
+/// (`not.toHaveBeenCalled()`, `toHaveBeenCalledTimes(0)`) anchors nothing, and neither does
+/// an interaction alone: a `userEvent.click` on a missing element does not throw.
+#[test]
+fn a_helper_with_only_absence_or_inert_assertions_does_not_anchor() {
+    let root = asserting_helpers("aa-53-inert-helper");
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "absence helper",
+            "imported negated spy helper",
+            "interaction only",
+            "zero count helper",
+        ]
+    );
+}

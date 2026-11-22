@@ -2,7 +2,7 @@
 
 use std::path::Path;
 
-use spirolo_model::{BuildOptions, Enclosing, FlakeKind, FlakeNames, Model};
+use spirolo_model::{BuildOptions, Enclosing, Expectation, FlakeKind, FlakeNames, Model};
 
 #[test]
 fn a_real_while_true_poll_can_compute_its_deadline_comparison_inside_the_body() {
@@ -261,4 +261,67 @@ fn names_follow_imports_renamed_destructuring_literal_keys_and_export_links() {
     // An export list or a default export of a binding runs nothing at module scope.
     let top = names.calls.get(&Enclosing::Module);
     assert!(top.is_none_or(|top| !top.contains("local") && !top.contains("viaAlias")));
+}
+
+#[test]
+fn a_named_function_records_the_expect_chains_it_writes() {
+    let root = Path::new(env!("CARGO_TARGET_TMPDIR")).join("flake-names-expects");
+    let _ = std::fs::remove_dir_all(&root);
+    std::fs::create_dir_all(&root).unwrap();
+    std::fs::write(
+        root.join("helpers.ts"),
+        "export function submitted(spy: unknown, data: unknown) {\n\
+         \x20 expect(spy).toHaveBeenLastCalledWith(data)\n\
+         }\n\
+         export const never = (spy: unknown) => {\n\
+         \x20 [1].forEach(() => expect(spy).toHaveBeenCalledTimes(0))\n\
+         }\n\
+         export function shown(el: unknown) {\n\
+         \x20 expect.soft(el).not.not.toBeVisible()\n\
+         \x20 expect(el).resolves.not.toBeInTheDocument()\n\
+         }\n\
+         export function inert(value: unknown) {\n\
+         \x20 return check(value).toBe(1)\n\
+         }\n\
+         expect(1).toBe(1)\n",
+    )
+    .unwrap();
+    let model = Model::build(&root, &BuildOptions::default());
+    let names = model
+        .flake_names
+        .iter()
+        .find(|n| n.file == "helpers.ts")
+        .unwrap();
+    let expectation = |matcher: &str, negated: bool, argument: Option<&str>| Expectation {
+        matcher: matcher.to_owned(),
+        negated,
+        argument: argument.map(str::to_owned),
+    };
+    let of = |name: &str| -> Vec<&Expectation> { names.expects[name].iter().collect() };
+    assert_eq!(
+        of("submitted"),
+        [&expectation(
+            "toHaveBeenLastCalledWith",
+            false,
+            Some("data")
+        )]
+    );
+    // A callback in a named function writes as that function.
+    assert_eq!(
+        of("never"),
+        [&expectation("toHaveBeenCalledTimes", false, Some("0"))]
+    );
+    // `expect.soft` opens a chain, and a double `.not` reads as positive.
+    assert_eq!(
+        of("shown"),
+        [
+            &expectation("toBeInTheDocument", true, None),
+            &expectation("toBeVisible", false, None),
+        ]
+    );
+    // A chain not rooted at `expect` is none, and module scope records nothing.
+    assert_eq!(
+        names.expects.keys().collect::<Vec<_>>(),
+        ["never", "shown", "submitted"]
+    );
 }
