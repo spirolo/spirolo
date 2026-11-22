@@ -13,7 +13,7 @@ use oxc_ast::ast::{
     Argument, ArrowFunctionBody, BindingPattern, CallExpression, ChainElement, Expression,
     TSInterfaceHeritage, TSTypeName, VariableDeclarator,
 };
-use oxc_ast::{AstKind, AstType};
+use oxc_ast::{AstKind, AstType, StaticPropertyName};
 use oxc_ast_visit::{walk, Visit};
 use oxc_span::GetSpan;
 use spirolo_model::{Assertion, LineIndex, Mock, MockKind, Span, ThrowingQuery, ValueLess};
@@ -425,22 +425,35 @@ fn subject_is_query(root: &CallExpression<'_>) -> bool {
 }
 
 /// Whether the subject is a potentially missing element: a call, a nullable DOM child
-/// property, or a local bound to either. Persistent nodes (`container`, `document.body`)
-/// are left out. The model retains the historical `subject_is_call` field name.
+/// property, a member or index read off one of those, or a local bound to any of them.
+/// Persistent nodes (`container`, `baseElement`, `document.body`) are left out. The model
+/// retains the historical `subject_is_call` field name.
 fn subject_is_element_read(root: &CallExpression<'_>, calls: &HashSet<String>) -> bool {
     let Some(subject) = root.arguments.first().and_then(Argument::as_expression) else {
         return false;
     };
-    is_element_read(subject)
-        || matches!(unawaited(subject), Expression::Identifier(id) if calls.contains(id.name.as_str()))
+    is_element_read(subject, calls)
 }
 
-/// A call result (including an optional chain) or a nullable child property. An optional
-/// call yields `undefined` on an empty render, which jest-dom rejects just like `null`.
-fn is_element_read(expression: &Expression<'_>) -> bool {
+/// A call result (including an optional chain), a nullable child property, a member or
+/// index read off an element read (`renderGrid().row`, `items[0]`), or a name in `calls`.
+/// An optional call yields `undefined` on an empty render, which jest-dom rejects just like
+/// `null`; a member or index of a missing result is missing too, or throws. A
+/// [persistent](is_persistent) member is the exception: it survives an empty render.
+fn is_element_read(expression: &Expression<'_>, calls: &HashSet<String>) -> bool {
     match unawaited(expression) {
         Expression::CallExpression(_) => true,
-        Expression::StaticMemberExpression(member) => is_nullable_child(&member.property.name),
+        Expression::Identifier(id) => calls.contains(id.name.as_str()),
+        Expression::StaticMemberExpression(member) => {
+            is_nullable_child(&member.property.name)
+                || (!is_persistent(&member.property.name) && is_element_read(&member.object, calls))
+        }
+        Expression::ComputedMemberExpression(member) => {
+            !matches!(
+                member.expression.get_inner_expression(),
+                Expression::StringLiteral(key) if key.value.as_str().is_some_and(is_persistent)
+            ) && is_element_read(&member.object, calls)
+        }
         Expression::ChainExpression(chain) => match &chain.expression {
             ChainElement::CallExpression(_) => true,
             ChainElement::StaticMemberExpression(member) => {
@@ -450,6 +463,15 @@ fn is_element_read(expression: &Expression<'_>) -> bool {
         },
         _ => false,
     }
+}
+
+/// Members of a render result, or of a document, that exist whatever the component
+/// rendered, so a negated matcher on them holds against an empty render.
+fn is_persistent(name: &str) -> bool {
+    matches!(
+        name,
+        "container" | "baseElement" | "body" | "documentElement" | "head"
+    )
 }
 
 /// Child reads that can be null even though their container survives an empty render.
@@ -469,9 +491,11 @@ fn unawaited<'e, 'a>(expression: &'e Expression<'a>) -> &'e Expression<'a> {
     node
 }
 
-/// The names a callback's `const`/`let` declarations bind to an element read: a call,
-/// an optional call chain or a nullable DOM child property. Matched by name within the
-/// callback, never by scope.
+/// The names a callback's `const`/`let` declarations bind to an element read (see
+/// [`is_element_read`]): a plain binding (`const link = container.querySelector('a')`), or
+/// a name destructured off one (`const { row } = renderGrid()`) unless its key is
+/// [persistent](is_persistent). Matched by name within the callback, never by scope; read
+/// in source order, so a binding can build on an earlier one (`const first = items[0]`).
 #[derive(Default)]
 struct CallBindings {
     names: HashSet<String>,
@@ -479,11 +503,29 @@ struct CallBindings {
 
 impl<'a> Visit<'a> for CallBindings {
     fn visit_variable_declarator(&mut self, declarator: &VariableDeclarator<'a>) {
-        if let (Some(init), BindingPattern::BindingIdentifier(binding)) =
-            (&declarator.init, &declarator.id)
-        {
-            if is_element_read(init) {
-                self.names.insert(binding.name.as_str().to_owned());
+        if let Some(init) = &declarator.init {
+            if is_element_read(init, &self.names) {
+                match &declarator.id {
+                    BindingPattern::BindingIdentifier(binding) => {
+                        self.names.insert(binding.name.as_str().to_owned());
+                    }
+                    BindingPattern::ObjectPattern(object) => {
+                        for property in &object.properties {
+                            let key = property
+                                .key
+                                .static_name()
+                                .and_then(StaticPropertyName::into_cow_str);
+                            if let (Some(key), BindingPattern::BindingIdentifier(binding)) =
+                                (key, &property.value)
+                            {
+                                if !property.computed && !is_persistent(&key) {
+                                    self.names.insert(binding.name.as_str().to_owned());
+                                }
+                            }
+                        }
+                    }
+                    _ => {}
+                }
             }
         }
         walk::walk_variable_declarator(self, declarator);

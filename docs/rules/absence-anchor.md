@@ -12,9 +12,12 @@ Playwright tests and tests with assertions the rule cannot classify are left alo
 
 Most negated jest-dom matchers still require an element: `not.toHaveClass()` or
 `not.toHaveAttribute()` throws on a missing subject. Calls, optional call chains,
-nullable child properties such as `container.firstChild`, and locals bound to those
-reads count as anchors for these matchers. `not.toBeInTheDocument()` accepts a
-missing element and remains an absence check.
+nullable child properties such as `container.firstChild`, members and indexes read off
+those (`renderGrid().row`, `items[0]`), and locals bound to those reads or destructured
+from them (`const { row } = renderGrid()`) count as anchors for these matchers. A
+`container` or `baseElement` taken from a render result survives an empty render, so a
+negated matcher on it, like one on `document.body`, remains an absence check.
+`not.toBeInTheDocument()` accepts a missing element and remains an absence check.
 
 ## What to do
 

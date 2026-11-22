@@ -389,3 +389,51 @@ fn the_matcher_argument_is_recorded_verbatim() {
         );
     }
 }
+
+/// Whether the one assertion of a test body records an element-read subject.
+fn reads_an_element(body: &str) -> bool {
+    assertion(body).subject_is_call
+}
+
+#[test]
+fn an_element_read_through_a_helper_result_or_an_index_is_recorded() {
+    // Each subject is nullish after an empty render, so jest-dom's element check throws on
+    // it (#52): a name destructured off a call, a member read off a call, and an index
+    // into a local bound to a call or into a call itself.
+    for body in [
+        "const { row } = renderGrid(); expect(row).not.toHaveStyle({ display: 'grid' })",
+        "const { row: first } = renderGrid(); expect(first).not.toHaveClass('x')",
+        "const { row } = await renderGrid(); expect(row).not.toHaveClass('x')",
+        "expect(renderGrid().row).not.toHaveAttribute('span')",
+        "expect((await renderGrid()).row).not.toHaveAttribute('span')",
+        "const items = container.querySelectorAll('.item'); expect(items[0]).not.toHaveAttribute('data-x')",
+        "expect(container.querySelectorAll('.item')[1]).not.toHaveAttribute('data-x')",
+        "const items = container.querySelectorAll('.item'); const first = items[0]; expect(first).not.toHaveClass('x')",
+        "const row = renderGrid().row; expect(row).not.toHaveClass('x')",
+    ] {
+        assert!(reads_an_element(body), "{body} reads an element");
+    }
+}
+
+#[test]
+fn a_node_that_survives_an_empty_render_is_no_element_read() {
+    // `container` and `baseElement` exist whatever the component renders, so a negated
+    // matcher on them holds against an empty render and must stay an absence read.
+    for body in [
+        "const { container } = render(Grid); expect(container).not.toHaveClass('x')",
+        "const { baseElement } = render(Grid); expect(baseElement).not.toHaveClass('x')",
+        "const { container: root } = render(Grid); expect(root).not.toHaveClass('x')",
+        "const { container, row } = renderGrid(); expect(container).not.toHaveClass('x')",
+        "const { getByText, rerender, unmount, debug, asFragment, container } = render(Grid); expect(container).not.toHaveClass('x')",
+        "expect(render(Grid).container).not.toHaveClass('x')",
+        "expect(render(Grid).baseElement).not.toHaveClass('x')",
+        "expect(render(Grid)['container']).not.toHaveClass('x')",
+        "const { container } = render(Grid); expect(container[0]).not.toHaveClass('x')",
+        "expect(document.body).not.toHaveClass('x')",
+        "const items = []; expect(items[0]).not.toHaveClass('x')",
+        "expect(rows[0]).not.toHaveClass('x')",
+        "const { row } = grid; expect(row).not.toHaveClass('x')",
+    ] {
+        assert!(!reads_an_element(body), "{body} reads no element");
+    }
+}

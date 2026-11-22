@@ -269,9 +269,10 @@ fn bearing(assertion: &Assertion) -> Bearing {
 /// Whether a negated jest-dom matcher throws on an empty render: every one but
 /// `toBeInTheDocument` (which lets `null` through when negated) runs `checkHtmlElement` on
 /// its subject before the negation, so on an element read off the render (a call, an optional
-/// call chain, a nullable DOM child property, or a local bound to one), nullish once
-/// the render produced nothing, it fails. On a subject that survives an empty render
-/// (`container`, `document.body`) it holds, and stays an absence read.
+/// call chain, a nullable DOM child property, a member or index read off one, or a local
+/// bound or destructured from one), nullish once the render produced nothing, it fails. On
+/// a subject that survives an empty render (`container`, `baseElement`, `document.body`) it
+/// holds, and stays an absence read.
 fn checks_element(matcher: &str, assertion: &Assertion) -> bool {
     assertion.negated && assertion.subject_is_call && matcher != "toBeInTheDocument"
 }

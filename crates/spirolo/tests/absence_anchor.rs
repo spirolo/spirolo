@@ -740,3 +740,84 @@ describe('LayoutGridField', () => {
         ["renders nothing when there is no uiSchema"]
     );
 }
+
+/// An element read off a render helper's result, by destructuring or member access, or an
+/// index into the list a query returned, is nullish after an empty render, so a negated
+/// jest-dom matcher on it throws and anchors the test (#52). The `container` and
+/// `baseElement` of a render result survive an empty render and stay absence reads.
+#[test]
+fn an_element_read_through_a_helper_result_or_an_index_anchors() {
+    let root = project("aa-52-helper-result");
+    write(
+        &root,
+        "src/shapes.test.tsx",
+        r"import { render } from '@testing-library/react';
+
+function renderGrid() {
+  const { container } = render(<Grid />);
+  return {
+    container,
+    row: container.querySelector('.row'),
+    column: container.querySelector('.item'),
+  };
+}
+
+test('A1 destructured member of a helper result', () => {
+  const { row } = renderGrid();
+  expect(row).not.toHaveStyle({ display: 'grid' });
+});
+
+test('A2 member access on a helper call', () => {
+  expect(renderGrid().row).not.toHaveAttribute('span');
+});
+
+test('A3 indexed element of querySelectorAll', () => {
+  const { container } = render(<Grid />);
+  const items = container.querySelectorAll('.item');
+  expect(items[0]).not.toHaveAttribute('data-x');
+});
+
+test('C0 direct call subject', () => {
+  const { container } = render(<Grid />);
+  expect(container.querySelector('.row')).not.toHaveClass('wide');
+});
+
+test('K1 destructured container', () => {
+  const { container } = render(<Grid />);
+  expect(container).not.toHaveClass('x');
+});
+
+test('K2 destructured baseElement', () => {
+  const { baseElement } = render(<Grid />);
+  expect(baseElement).not.toHaveClass('x');
+});
+
+test('K3 container member of a render call', () => {
+  expect(render(<Grid />).container).not.toHaveClass('x');
+});
+
+test('K4 container of a helper result', () => {
+  const { container } = renderGrid();
+  expect(container).not.toHaveClass('x');
+});
+
+test('K5 document body', () => {
+  render(<Grid />);
+  expect(document.body).not.toHaveClass('x');
+});
+",
+    );
+
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "K1 destructured container",
+            "K2 destructured baseElement",
+            "K3 container member of a render call",
+            "K4 container of a helper result",
+            "K5 document body",
+        ]
+    );
+}
