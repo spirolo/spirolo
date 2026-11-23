@@ -92,6 +92,12 @@ struct Collector<'a> {
     vocabulary: Vocabulary,
     /// Enclosing `describe` titles, outermost first — the current row's `suite_path`.
     suite_path: Vec<String>,
+    /// The comment lines adjacent to each enclosing `describe`, outermost first, parallel to
+    /// `suite_path`. A skip inherits the last entry only, the `describe` directly around it:
+    /// a real suite (gatsby catch-links.js) puts its issue link above the `describe`, not
+    /// above each `it.skip`. A comment further out is too far from the skip to count as its
+    /// link. Popped when the describe closes, so a skip written after it inherits nothing.
+    suite_comments: Vec<Vec<String>>,
     /// The `const` tables walked past and the loops currently open, so a `.each` over a
     /// local binding is counted here and a definition in a loop knows its multiplicity.
     tables: Tables,
@@ -126,6 +132,7 @@ impl<'a> Collector<'a> {
             source: file.source,
             vocabulary: Vocabulary::read(file.program),
             suite_path: Vec::new(),
+            suite_comments: Vec::new(),
             tables: Tables::default(),
             rows: Vec::new(),
             file_mocks: Vec::new(),
@@ -197,7 +204,13 @@ impl<'a> Collector<'a> {
             }
         }
         if let Some(skip) = skip.as_mut() {
-            skip.comments = comments_beside(self.source, call);
+            // The skip's own adjacent comments come first, then those of the `describe`
+            // directly around it. A rule looking for an issue reference reads both.
+            let mut comments = comments_beside(self.source, call);
+            if let Some(parent) = self.suite_comments.last() {
+                comments.extend(parent.iter().cloned());
+            }
+            skip.comments = comments;
         }
         if info.fixtures {
             modifiers.push("fixtures".to_owned());
@@ -338,6 +351,7 @@ impl<'a> Visit<'a> for Collector<'a> {
             // modifiers) with this title on the suite path.
             self.suite_path
                 .push(row.title.clone().unwrap_or_else(|| "<dynamic>".to_owned()));
+            self.suite_comments.push(comments_beside(self.source, call));
             self.rows.push(row);
             self.tables.enter_suite();
             self.scope_mocks.push(Vec::new());
@@ -347,6 +361,7 @@ impl<'a> Visit<'a> for Collector<'a> {
             self.open_scopes.pop();
             self.tables.leave_suite();
             self.suite_path.pop();
+            self.suite_comments.pop();
         } else {
             // A test/hook/bench body defines no further case — a test called inside
             // another test is a collection error in both frameworks — so it is not

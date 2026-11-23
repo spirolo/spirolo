@@ -316,7 +316,8 @@ pub struct Skip {
     pub reason: Option<String>,
     /// The comment text written beside a definition-level skip: up to three comment lines
     /// (`//`, `/*` or ` *`) directly above the definition, in source order, stopping at the
-    /// first blank or code line, then a trailing `//` comment on the title's line. A rule that looks for an
+    /// first blank or code line, then a trailing `//` comment on the title's line; then the same
+    /// reading of the `describe` directly around the definition (Vitest and Jest). A rule that looks for an
     /// issue reference reads them beside the title and the reason. Empty for an in-body
     /// annotation and when no comment sits there.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]

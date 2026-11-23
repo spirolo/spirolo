@@ -6,7 +6,9 @@ Lists skipped and focused tests, and reports unconditional skips without a nearb
 
 Unconditional `skip`, `todo` and `fixme` definitions need an issue reference in the
 title, reason or adjacent comments. The reader checks a trailing comment and up to
-three comment lines above the call, stopping at a blank or code line. Issue numbers,
+three comment lines above the call, stopping at a blank or code line. In Vitest and
+Jest files it reads the comments of the `describe` directly around the skip the same
+way, so one link above a `describe` covers the skips written in it. Issue numbers,
 issue and pull-request URLs, merge-request URLs and ticket keys are recognized.
 
 Environment-dependent skips are reported separately. Focused tests using `only`
@@ -21,7 +23,9 @@ CI job enables them.
 ## Limits
 
 A linked issue is evidence of intent, not proof that a skip is still justified or
-that the issue remains open. Comments inside a test body are not read. Conditional
+that the issue remains open. Comments inside a test body are not read. A link above
+a `describe` covers only the skips directly in it, not those in a nested `describe`,
+and a Playwright `test.describe` passes nothing down. Conditional
 in-body skips can be left alone when their guard cannot be understood. The rule
 does not run skipped tests or determine whether they would pass.
 
