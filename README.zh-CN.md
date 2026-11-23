@@ -160,6 +160,16 @@ Vue、Cypress、其他语言及任意非 React 框架均不在已测量范围内
 欢迎贡献：请参阅 [CONTRIBUTING.md](CONTRIBUTING.md)（英文）。
 如需报告安全漏洞，请参阅 [SECURITY.md](SECURITY.md)（英文）。
 
+<p align="center">
+  <a href="https://github.com/spirolo/spirolo/stargazers"><img src="branding/stickers/star.webp" alt="紫色千足虫吉祥物 Spirolo 递出一颗星" width="240"></a>
+</p>
+
+<p align="center">
+  <b>在你的测试套件中发现了真实的问题？</b><br>
+  点个 <a href="https://github.com/spirolo/spirolo/stargazers">Star</a>，能帮助更多团队找到 Spirolo。<br>
+  发现了误报？<a href="https://github.com/spirolo/spirolo/issues/new?template=false-positive.yml">请告诉我们</a>（英文）：规则就是这样改进的。
+</p>
+
 ## 许可证
 
 [Apache 2.0](LICENSE)（英文）。
