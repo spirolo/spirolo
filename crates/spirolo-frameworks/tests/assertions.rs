@@ -389,3 +389,105 @@ fn the_matcher_argument_is_recorded_verbatim() {
         );
     }
 }
+
+/// Whether the one assertion of a test body records an element-read subject.
+fn reads_an_element(body: &str) -> bool {
+    assertion(body).subject_is_call
+}
+
+#[test]
+fn an_element_read_through_a_helper_result_or_an_index_is_recorded() {
+    // Each subject is nullish after an empty render, so jest-dom's element check throws on
+    // it (#52): a name destructured off a call, a member read off a call, and an index
+    // into a local bound to a call or into a call itself.
+    for body in [
+        "const { row } = renderGrid(); expect(row).not.toHaveStyle({ display: 'grid' })",
+        "const { row: first } = renderGrid(); expect(first).not.toHaveClass('x')",
+        "const { row } = await renderGrid(); expect(row).not.toHaveClass('x')",
+        "expect(renderGrid().row).not.toHaveAttribute('span')",
+        "expect((await renderGrid()).row).not.toHaveAttribute('span')",
+        "const items = container.querySelectorAll('.item'); expect(items[0]).not.toHaveAttribute('data-x')",
+        "expect(container.querySelectorAll('.item')[1]).not.toHaveAttribute('data-x')",
+        "const items = container.querySelectorAll('.item'); const first = items[0]; expect(first).not.toHaveClass('x')",
+        "const row = renderGrid().row; expect(row).not.toHaveClass('x')",
+        "const { row } = renderGrid(); expect(row.parentElement).not.toHaveClass('x')",
+        "expect(renderGrid().row.parentElement).not.toHaveClass('x')",
+        "expect(renderGrid().rows[0]).not.toHaveClass('x')",
+        "expect(renderGrid()[`row`]).not.toHaveClass('x')",
+        "expect(renderGrid()[`${side}Row`]).not.toHaveClass('x')",
+        "expect(renderGrid()[key]).not.toHaveClass('x')",
+        "const { ['row']: first } = renderGrid(); expect(first).not.toHaveClass('x')",
+        "const { [0]: first } = container.querySelectorAll('.item'); expect(first).not.toHaveClass('x')",
+        "expect(document.getElementsByTagName('table')[0]).not.toHaveClass('x')",
+        "expect(document.querySelectorAll('body .item')[0]).not.toHaveClass('x')",
+        "expect(screen.queryAllByText('body')[0]).not.toHaveClass('x')",
+    ] {
+        assert!(reads_an_element(body), "{body} reads an element");
+    }
+}
+
+#[test]
+fn a_node_that_survives_an_empty_render_is_no_element_read() {
+    // `container` and `baseElement` exist whatever the component renders, so a negated
+    // matcher on them holds against an empty render and must stay an absence read.
+    for body in [
+        "const { container } = render(Grid); expect(container).not.toHaveClass('x')",
+        "const { baseElement } = render(Grid); expect(baseElement).not.toHaveClass('x')",
+        "const { container: root } = render(Grid); expect(root).not.toHaveClass('x')",
+        "const { container, row } = renderGrid(); expect(container).not.toHaveClass('x')",
+        "const { getByText, rerender, unmount, debug, asFragment, container } = render(Grid); expect(container).not.toHaveClass('x')",
+        // An Angular fixture's host element is there whatever the template renders.
+        "const fixture = TestBed.createComponent(Banner); expect(fixture.nativeElement).not.toHaveClass('x')",
+        "const { fixture } = await render(Banner); expect(fixture.nativeElement).not.toHaveClass('x')",
+        "expect(render(Grid).container).not.toHaveClass('x')",
+        "expect(render(Grid).baseElement).not.toHaveClass('x')",
+        "expect(render(Grid)['container']).not.toHaveClass('x')",
+        "expect(render(Grid)[`container`]).not.toHaveClass('x')",
+        "const view = render(Grid); expect(view[`container`]).not.toHaveClass('x')",
+        "expect(render(Grid)[('container')]).not.toHaveClass('x')",
+        "expect(render(Grid)['container' as const]).not.toHaveClass('x')",
+        "expect(render(Grid)[`container` as const]).not.toHaveClass('x')",
+        "const { container } = render(Grid); expect(container[0]).not.toHaveClass('x')",
+        "expect(document.body).not.toHaveClass('x')",
+        "const items = []; expect(items[0]).not.toHaveClass('x')",
+        "expect(rows[0]).not.toHaveClass('x')",
+        "const { row } = grid; expect(row).not.toHaveClass('x')",
+        "const { ['container']: root } = render(Grid); expect(root).not.toHaveClass('x')",
+        "const { [`container`]: root } = render(Grid); expect(root).not.toHaveClass('x')",
+        "const { [key]: root } = render(Grid); expect(root).not.toHaveClass('x')",
+        "expect(getDocument().body).not.toHaveClass('x')",
+        "expect(getDocument().head).not.toHaveClass('x')",
+        "expect(getDocument().documentElement).not.toHaveClass('x')",
+        "const { body } = getDocument(); expect(body).not.toHaveClass('x')",
+        "const { head: top } = getDocument(); expect(top).not.toHaveClass('x')",
+        "const { documentElement } = getDocument(); expect(documentElement).not.toHaveClass('x')",
+    ] {
+        assert!(!reads_an_element(body), "{body} reads no element");
+    }
+}
+
+#[test]
+fn an_index_into_a_list_query_for_a_node_there_before_any_render_is_no_element_read() {
+    // `getElementsByTagName('body')[0]` and `querySelectorAll('body')[0]` return the
+    // document's own `body`, `html` or `head` whatever the component rendered, so a negated
+    // matcher on them holds against an empty render and must stay an absence read.
+    for body in [
+        "expect(document.getElementsByTagName('body')[0]).not.toHaveClass('modal-open')",
+        "expect(document.getElementsByTagName('html')[0]).not.toHaveAttribute('data-theme')",
+        "expect(document.getElementsByTagName('head')[0]).not.toHaveAttribute('data-x')",
+        "expect(document.getElementsByTagName('BODY')[0]).not.toHaveClass('x')",
+        "expect(document.querySelectorAll('body')[0]).not.toHaveStyle({ overflow: 'hidden' })",
+        "expect(document.querySelectorAll(` html `)[0]).not.toHaveClass('x')",
+        "expect((await getDocument()).querySelectorAll('body')[0]).not.toHaveClass('x')",
+        "expect((await document.querySelectorAll('body'))[0]).not.toHaveClass('x')",
+        "expect((document.getElementsByTagName('body') as HTMLCollection)[0]).not.toHaveClass('x')",
+        "expect(document.getElementsByTagName('body' as const)[0]).not.toHaveClass('x')",
+        "const bodies = document.querySelectorAll('body'); expect((bodies)[0]).not.toHaveClass('x')",
+        "const bodies = document.querySelectorAll('body'); expect(bodies[0]).not.toHaveStyle({ overflow: 'hidden' })",
+        "const bodies = document.getElementsByTagName('body'); const first = bodies[0]; expect(first).not.toHaveClass('x')",
+        "const { [0]: first } = document.getElementsByTagName('body'); expect(first).not.toHaveClass('x')",
+        "expect(document.getElementsByTagName('body')[0].parentElement).not.toHaveClass('x')",
+    ] {
+        assert!(!reads_an_element(body), "{body} reads no element");
+    }
+}

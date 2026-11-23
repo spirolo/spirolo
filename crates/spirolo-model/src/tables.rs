@@ -372,8 +372,13 @@ pub struct Assertion {
     /// `const`/`let` in the same callback binds to such a call (`const link =
     /// container.querySelector('a')`). Optional call chains and nullable DOM child reads
     /// (`container.firstChild`, `firstElementChild`, `lastChild`, `lastElementChild`) count
-    /// too, directly or through a local. The field retains its historical name for
-    /// compatibility. Every jest-dom matcher but `toBeInTheDocument` checks
+    /// too, directly or through a local, and so does a member or index read off any of
+    /// these (`renderGrid().row`, `items[0]`) or a name destructured off one (`const { row }
+    /// = renderGrid()`). A member that survives an empty render (`container`,
+    /// `baseElement`, `body`, `documentElement`, `head`) does not count, read or
+    /// destructured, and neither does an index into a list query for `body`, `html` or
+    /// `head` (`document.getElementsByTagName('body')[0]`). The field retains its
+    /// historical name for compatibility. Every jest-dom matcher but `toBeInTheDocument` checks
     /// its subject is an element before any negation and throws on `null`, so a negated one
     /// on such a subject fails against an empty body. Read by `absence-anchor`. Left out of
     /// the serialized row when false.

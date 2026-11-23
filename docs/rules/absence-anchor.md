@@ -19,11 +19,17 @@ Playwright tests and tests with assertions the rule cannot classify are left alo
 Most negated jest-dom matchers still require an element: `not.toHaveClass()` or
 `not.toHaveAttribute()` throws on a missing subject. So does a plain
 `toBeEmptyDOMElement()`. Calls, optional call chains, nullable child properties such
-as `container.firstChild`, and locals bound to those reads count as anchors for these
-matchers: `expect(container.querySelector('button')).toBeEmptyDOMElement()` fails when
-nothing rendered. `expect(container).toBeEmptyDOMElement()` passes on an empty render
-and remains an absence check. `not.toBeInTheDocument()` accepts a missing element and
-remains an absence check on any subject.
+as `container.firstChild`, members and indexes read off those (`renderGrid().row`,
+`items[0]`), and locals bound to those reads or destructured from them
+(`const { row } = renderGrid()`) count as anchors for these matchers:
+`expect(container.querySelector('button')).toBeEmptyDOMElement()` fails when nothing
+rendered. A `container` or `baseElement` taken from a render result survives an empty
+render, so `expect(container).toBeEmptyDOMElement()` or a negated matcher on it, like
+one on `document.body`, remains an absence check. So does one on an index into a list
+query for the document's own nodes, such as
+`document.getElementsByTagName('body')[0]` or `document.querySelectorAll('html')[0]`.
+`not.toBeInTheDocument()` accepts a missing element and remains an absence check on
+any subject.
 
 ## What to do
 
@@ -40,7 +46,9 @@ props. It can also miss anchors expressed through unsupported helpers or propert
 accesses. Helpers are matched by name, and an assertion anywhere in a helper's body
 counts, even in a branch the test never takes. A negated jest-dom matcher in a helper,
 such as `not.toHaveClass()`, is read as an absence check, since the rule does not know
-what the helper was passed. A finding is a reason to inspect the test, not proof that a
+what the helper was passed. A member of a helper's result, such as `row` in `const { row } = renderGrid()`, is
+read as missing after an empty render; only `container`, `baseElement`, an Angular
+`nativeElement` and the document's own nodes are known to survive one. A finding is a reason to inspect the test, not proof that a
 broken component would pass. Assertions the rule leaves unread can hide a real gap.
 
 ## Status and evidence

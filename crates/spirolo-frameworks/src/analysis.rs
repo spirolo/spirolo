@@ -6,6 +6,7 @@
 //! way. Everything here is a pure function of the callback and the file's source text.
 //! [`mock_of`] is also what the file walk uses for a mock written outside any case.
 
+use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 
 use crate::kind_code;
@@ -13,7 +14,7 @@ use oxc_ast::ast::{
     Argument, ArrowFunctionBody, BindingPattern, CallExpression, ChainElement, Expression,
     TSInterfaceHeritage, TSTypeName, VariableDeclarator,
 };
-use oxc_ast::{AstKind, AstType};
+use oxc_ast::{AstKind, AstType, StaticPropertyName};
 use oxc_ast_visit::{walk, Visit};
 use oxc_span::GetSpan;
 use spirolo_model::{Assertion, LineIndex, Mock, MockKind, Span, ThrowingQuery, ValueLess};
@@ -77,7 +78,7 @@ pub fn body_facts(lines: &LineIndex, source: &str, callback: &Expression<'_>) ->
     let mut collector = BodyCollector {
         lines,
         source,
-        calls: calls.names,
+        calls,
         assertions: Vec::new(),
         mocks: Vec::new(),
         throwing_queries: Vec::new(),
@@ -127,7 +128,7 @@ struct BodyCollector<'a> {
     lines: &'a LineIndex,
     source: &'a str,
     /// The names a `const`/`let` in the callback binds to a call: see [`CallBindings`].
-    calls: HashSet<String>,
+    calls: CallBindings,
     assertions: Vec<Assertion>,
     mocks: Vec<Mock>,
     throwing_queries: Vec<ThrowingQuery>,
@@ -425,22 +426,36 @@ fn subject_is_query(root: &CallExpression<'_>) -> bool {
 }
 
 /// Whether the subject is a potentially missing element: a call, a nullable DOM child
-/// property, or a local bound to either. Persistent nodes (`container`, `document.body`)
-/// are left out. The model retains the historical `subject_is_call` field name.
-fn subject_is_element_read(root: &CallExpression<'_>, calls: &HashSet<String>) -> bool {
+/// property, a member or index read off one of those, or a local bound to any of them.
+/// Persistent nodes (`container`, `baseElement`, `document.body`,
+/// `getElementsByTagName('body')[0]`) are left out. The model retains the historical
+/// `subject_is_call` field name.
+fn subject_is_element_read(root: &CallExpression<'_>, calls: &CallBindings) -> bool {
     let Some(subject) = root.arguments.first().and_then(Argument::as_expression) else {
         return false;
     };
-    is_element_read(subject)
-        || matches!(unawaited(subject), Expression::Identifier(id) if calls.contains(id.name.as_str()))
+    is_element_read(subject, calls)
 }
 
-/// A call result (including an optional chain) or a nullable child property. An optional
-/// call yields `undefined` on an empty render, which jest-dom rejects just like `null`.
-fn is_element_read(expression: &Expression<'_>) -> bool {
+/// A call result (including an optional chain), a nullable child property, a member or
+/// index read off an element read (`renderGrid().row`, `items[0]`), or a name in `calls`.
+/// An optional call yields `undefined` on an empty render, which jest-dom rejects just like
+/// `null`; a member or index of a missing result is missing too, or throws. A
+/// [persistent](is_persistent) member, or an index into a [persistent
+/// list](is_persistent_list), is the exception: it survives an empty render.
+fn is_element_read(expression: &Expression<'_>, calls: &CallBindings) -> bool {
     match unawaited(expression) {
         Expression::CallExpression(_) => true,
-        Expression::StaticMemberExpression(member) => is_nullable_child(&member.property.name),
+        Expression::Identifier(id) => calls.names.contains(id.name.as_str()),
+        Expression::StaticMemberExpression(member) => {
+            is_nullable_child(&member.property.name)
+                || (!is_persistent(&member.property.name) && is_element_read(&member.object, calls))
+        }
+        Expression::ComputedMemberExpression(member) => {
+            !literal_text(&member.expression).is_some_and(|key| is_persistent(&key))
+                && !is_persistent_list(&member.object, calls)
+                && is_element_read(&member.object, calls)
+        }
         Expression::ChainExpression(chain) => match &chain.expression {
             ChainElement::CallExpression(_) => true,
             ChainElement::StaticMemberExpression(member) => {
@@ -450,6 +465,56 @@ fn is_element_read(expression: &Expression<'_>) -> bool {
         },
         _ => false,
     }
+}
+
+/// Members of a render result, of an Angular fixture or of a document, that exist whatever
+/// the component rendered, so a negated matcher on them holds against an empty render.
+fn is_persistent(name: &str) -> bool {
+    matches!(
+        name,
+        "container" | "baseElement" | "nativeElement" | "body" | "documentElement" | "head"
+    )
+}
+
+/// A list query for a node that is there before any render: `getElementsByTagName` or
+/// `querySelectorAll` on any receiver, with a literal `body`, `html` or `head` (in any case,
+/// spaces trimmed), or a name in `calls` bound to one. Its first item is the document's own
+/// node, whatever the component rendered.
+fn is_persistent_list(expression: &Expression<'_>, calls: &CallBindings) -> bool {
+    let call = match unawaited(expression) {
+        Expression::CallExpression(call) => call,
+        Expression::Identifier(id) => return calls.persistent_lists.contains(id.name.as_str()),
+        _ => return false,
+    };
+    let Expression::StaticMemberExpression(callee) = call.callee.get_inner_expression() else {
+        return false;
+    };
+    let tag = call
+        .arguments
+        .first()
+        .and_then(Argument::as_expression)
+        .and_then(literal_text);
+    matches!(
+        callee.property.name.as_str(),
+        "getElementsByTagName" | "querySelectorAll"
+    ) && tag.is_some_and(|tag| {
+        ["body", "html", "head"]
+            .iter()
+            .any(|node| tag.trim().eq_ignore_ascii_case(node))
+    })
+}
+
+/// The text of a string literal or of a template literal without substitutions, any
+/// parentheses or TS cast peeled off.
+fn literal_text<'a>(expression: &Expression<'a>) -> Option<Cow<'a, str>> {
+    match expression.get_inner_expression() {
+        Expression::StringLiteral(literal) => Some(StaticPropertyName::from(literal.value)),
+        Expression::TemplateLiteral(literal) => {
+            literal.single_quasi().map(StaticPropertyName::from)
+        }
+        _ => None,
+    }
+    .and_then(StaticPropertyName::into_cow_str)
 }
 
 /// Child reads that can be null even though their container survives an empty render.
@@ -469,21 +534,50 @@ fn unawaited<'e, 'a>(expression: &'e Expression<'a>) -> &'e Expression<'a> {
     node
 }
 
-/// The names a callback's `const`/`let` declarations bind to an element read: a call,
-/// an optional call chain or a nullable DOM child property. Matched by name within the
-/// callback, never by scope.
+/// The names a callback's `const`/`let` declarations bind to an element read (see
+/// [`is_element_read`]): a plain binding (`const link = container.querySelector('a')`), or
+/// a name destructured off one (`const { row } = renderGrid()`) unless its key is
+/// [persistent](is_persistent). Matched by name within the callback, never by scope; read
+/// in source order, so a binding can build on an earlier one (`const first = items[0]`).
+/// Nothing is destructured off a [persistent list](is_persistent_list).
 #[derive(Default)]
 struct CallBindings {
     names: HashSet<String>,
+    /// The names bound to a [persistent list](is_persistent_list) (`const bodies =
+    /// document.querySelectorAll('body')`), so an index into them is no element read.
+    persistent_lists: HashSet<String>,
 }
 
 impl<'a> Visit<'a> for CallBindings {
     fn visit_variable_declarator(&mut self, declarator: &VariableDeclarator<'a>) {
-        if let (Some(init), BindingPattern::BindingIdentifier(binding)) =
-            (&declarator.init, &declarator.id)
-        {
-            if is_element_read(init) {
-                self.names.insert(binding.name.as_str().to_owned());
+        if let Some(init) = &declarator.init {
+            if is_element_read(init, self) {
+                let persistent_list = is_persistent_list(init, self);
+                match &declarator.id {
+                    BindingPattern::BindingIdentifier(binding) => {
+                        let name = binding.name.as_str().to_owned();
+                        if persistent_list {
+                            self.persistent_lists.insert(name.clone());
+                        }
+                        self.names.insert(name);
+                    }
+                    BindingPattern::ObjectPattern(object) if !persistent_list => {
+                        for property in &object.properties {
+                            let key = property
+                                .key
+                                .static_name()
+                                .and_then(StaticPropertyName::into_cow_str);
+                            if let (Some(key), BindingPattern::BindingIdentifier(binding)) =
+                                (key, &property.value)
+                            {
+                                if !is_persistent(&key) {
+                                    self.names.insert(binding.name.as_str().to_owned());
+                                }
+                            }
+                        }
+                    }
+                    _ => {}
+                }
             }
         }
         walk::walk_variable_declarator(self, declarator);

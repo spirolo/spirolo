@@ -71,7 +71,7 @@ use crate::{tests, Config, Family, Rule, Severity};
 /// | assertion | bearing |
 /// |---|---|
 /// | `toBeInTheDocument`, `toBeVisible`, `toHaveTextContent`, `toHaveAttribute`, `toHaveValue`, `toHaveDisplayValue`, `toHaveClass`, `toHaveStyle`, `toHaveFocus`, `toHaveRole`, `toContainElement`, `toContainHTML`, `toBeChecked`, `toBePartiallyChecked`, `toBeDisabled`, `toBeEnabled`, `toBeRequired`, `toBeValid`, `toBeInvalid`, `toHaveFormValues`, `toHaveAccessibleName`, `toHaveAccessibleDescription`, `toHaveAccessibleErrorMessage`, `toHaveDescription`, `toHaveErrorMessage` | anchor |
-/// | `not.` any of the above but `toBeInTheDocument`, on a call or a local bound to one (`container.querySelector('a')`, `gridcell(day)`) | anchor (jest-dom checks the subject is an element first, and throws on the `null` an empty render leaves) |
+/// | `not.` any of the above but `toBeInTheDocument`, on a call, a local bound to one, or a member or index of either (`container.querySelector('a')`, `gridcell(day)`, `renderGrid().row`, `rows[0]`) | anchor (jest-dom checks the subject is an element first, and throws on the `null` an empty render leaves) |
 /// | `not.` any of the above on anything else (`container`, `document.body`), and `not.toBeInTheDocument` on anything | absence |
 /// | `not.toBeEmptyDOMElement` | anchor (an empty body has no content to fail it otherwise) |
 /// | `toBeEmptyDOMElement` on a call or a local bound to one (`container.querySelector('button')`) | anchor (the same element check throws on the `null` an empty render leaves) |
@@ -279,10 +279,12 @@ fn bearing(assertion: &Assertion) -> Bearing {
 /// Whether a jest-dom matcher that would otherwise hold on an empty render throws on one
 /// instead: every one but `toBeInTheDocument` (which lets `null` through when negated) runs
 /// `checkHtmlElement` on its subject before it negates or looks inside, so on an element read
-/// off the render (a call, an optional call chain, a nullable DOM child property, or a local
-/// bound to one), nullish once the render produced nothing, it fails. That covers a negated
-/// matcher and a plain `toBeEmptyDOMElement()` alike. On a subject that survives an empty
-/// render (`container`, `document.body`) either holds, and stays an absence read.
+/// off the render (a call, an optional call chain, a nullable DOM child property, a member or
+/// index read off one, or a local bound or destructured from one), nullish once the render
+/// produced nothing, it fails. That covers a negated matcher and a plain
+/// `toBeEmptyDOMElement()` alike. On a subject that survives an empty render (`container`,
+/// `baseElement`, `document.body`, `document.getElementsByTagName('body')[0]`) either holds,
+/// and stays an absence read.
 fn checks_element(matcher: &str, assertion: &Assertion) -> bool {
     assertion.subject_is_call && matcher != "toBeInTheDocument"
 }

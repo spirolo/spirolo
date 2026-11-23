@@ -799,6 +799,140 @@ describe('LayoutGridField', () => {
     );
 }
 
+/// An element read off a render helper's result, by destructuring or member access, or an
+/// index into the list a query returned, is nullish after an empty render, so a negated
+/// jest-dom matcher on it throws and anchors the test (#52). The `container` and
+/// `baseElement` of a render result survive an empty render and stay absence reads.
+#[test]
+fn an_element_read_through_a_helper_result_or_an_index_anchors() {
+    let root = project("aa-52-helper-result");
+    write(
+        &root,
+        "src/shapes.test.tsx",
+        r"import { render } from '@testing-library/react';
+
+function renderGrid() {
+  const { container } = render(<Grid />);
+  return {
+    container,
+    row: container.querySelector('.row'),
+    column: container.querySelector('.item'),
+  };
+}
+
+test('A1 destructured member of a helper result', () => {
+  const { row } = renderGrid();
+  expect(row).not.toHaveStyle({ display: 'grid' });
+});
+
+test('A2 member access on a helper call', () => {
+  expect(renderGrid().row).not.toHaveAttribute('span');
+});
+
+test('A3 indexed element of querySelectorAll', () => {
+  const { container } = render(<Grid />);
+  const items = container.querySelectorAll('.item');
+  expect(items[0]).not.toHaveAttribute('data-x');
+});
+
+test('C0 direct call subject', () => {
+  const { container } = render(<Grid />);
+  expect(container.querySelector('.row')).not.toHaveClass('wide');
+});
+
+test('K1 destructured container', () => {
+  const { container } = render(<Grid />);
+  expect(container).not.toHaveClass('x');
+});
+
+test('K2 destructured baseElement', () => {
+  const { baseElement } = render(<Grid />);
+  expect(baseElement).not.toHaveClass('x');
+});
+
+test('K3 container member of a render call', () => {
+  expect(render(<Grid />).container).not.toHaveClass('x');
+});
+
+test('K4 container of a helper result', () => {
+  const { container } = renderGrid();
+  expect(container).not.toHaveClass('x');
+});
+
+test('K5 document body', () => {
+  render(<Grid />);
+  expect(document.body).not.toHaveClass('x');
+});
+
+test('K6 container by a template literal key', () => {
+  const view = render(<Grid />);
+  expect(view[`container`]).not.toHaveClass('x');
+});
+",
+    );
+
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "K1 destructured container",
+            "K2 destructured baseElement",
+            "K3 container member of a render call",
+            "K4 container of a helper result",
+            "K5 document body",
+            "K6 container by a template literal key",
+        ]
+    );
+}
+
+/// An index into a list query for `body`, `html` or `head` returns the document's own node
+/// whatever the component rendered, so a negated jest-dom matcher on it holds against an
+/// empty render: those tests stay findings, while an index into a list query for a
+/// rendered tag still anchors.
+#[test]
+fn an_index_into_a_list_query_for_the_document_body_stays_reported() {
+    let root = project("aa-52-persistent-list");
+    write(
+        &root,
+        "src/modal.test.tsx",
+        r"import { render } from '@testing-library/react';
+
+test('T1 body by tag name', () => {
+  render(<Modal open={false} />);
+  expect(document.getElementsByTagName('body')[0]).not.toHaveClass('modal-open');
+});
+
+test('T2 html by tag name', () => {
+  render(<Theme />);
+  expect(document.getElementsByTagName('html')[0]).not.toHaveAttribute('data-theme');
+});
+
+test('T3 body through querySelectorAll', () => {
+  render(<Modal open={false} />);
+  const bodies = document.querySelectorAll('body');
+  expect(bodies[0]).not.toHaveStyle({ overflow: 'hidden' });
+});
+
+test('C1 rendered tag by tag name', () => {
+  render(<Grid />);
+  expect(document.getElementsByTagName('table')[0]).not.toHaveClass('wide');
+});
+",
+    );
+
+    let mut titles = flagged(&root);
+    titles.sort();
+    assert_eq!(
+        titles,
+        [
+            "T1 body by tag name",
+            "T2 html by tag name",
+            "T3 body through querySelectorAll",
+        ]
+    );
+}
+
 // ------------------------------------------------------------- asserting helpers (#53)
 
 /// One test per shape, calling the helpers of [`asserting_helpers`] and its own.
