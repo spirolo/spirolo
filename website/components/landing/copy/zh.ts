@@ -9,7 +9,7 @@ export const zh: LandingCopy = {
     description:
       '测试套件通过，只能说明测试运行过。{product} 读取整个测试套件，连同初始化文件和 CI，找出哪些测试即使通过也不能证明什么。它从不运行测试。',
   },
-  nav: { docs: '文档', language: { text: 'English', url: '/' } },
+  nav: { docs: '文档', star: '在 GitHub 上点 Star', language: { text: 'English', url: '/' } },
   footer: { licence: 'Apache 2.0 许可证', docs: '文档', rules: '规则', source: '源码' },
   install: { copy: '复制', copied: '已复制', copyCommand: '复制 {command}' },
   stickers: {
@@ -210,5 +210,8 @@ export const zh: LandingCopy = {
     title: '{product} 会在你的\u200b测试套件中\u200b发现什么？',
     text: '测试是上线前的最后一道检查。它在 {repos} 个热门开源项目中检出 {findings} 条发现项，每个项目都只需数秒即可读取。先安装项目依赖，再从项目根目录运行。',
     link: '安装与首次运行（英文）',
+    ask: '发现了真实的问题？在 GitHub 上点个 Star，能帮助更多团队找到 {product}。发现了误报？请告诉我们：规则就是这样改进的。',
+    star: '在 GitHub 上点 Star',
+    report: '报告误报（英文）',
   },
 };

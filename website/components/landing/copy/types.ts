@@ -22,7 +22,7 @@ export interface LandingCopy {
   /** Number grouping for counts. */
   numbers: string;
   meta: { title: string; description: string };
-  nav: { docs: string; language: { text: string; url: string } };
+  nav: { docs: string; star: string; language: { text: string; url: string } };
   footer: { licence: string; docs: string; rules: string; source: string };
   install: { copy: string; copied: string; copyCommand: string };
   stickers: { bugInAJar: string; cleanRun: string };
@@ -61,7 +61,7 @@ export interface LandingCopy {
     foldedTail: string;
   };
   questions: { title: string; faqs: { question: string; answer: string }[] };
-  closing: { title: string; text: string; link: string };
+  closing: { title: string; text: string; link: string; ask: string; star: string; report: string };
 }
 
 /** Fills each `{name}` from `values`; an unknown name is left as is, so a typo shows on the page. */

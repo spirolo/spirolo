@@ -9,7 +9,7 @@ export const en: LandingCopy = {
     description:
       'A passing suite tells you the tests ran. {product} reads the whole suite, with its setup files and CI, and shows where a pass proves nothing. It never runs your tests.',
   },
-  nav: { docs: 'Docs', language: { text: '简体中文', url: '/zh' } },
+  nav: { docs: 'Docs', star: 'Star on GitHub', language: { text: '简体中文', url: '/zh' } },
   footer: { licence: 'Apache 2.0 licence', docs: 'Docs', rules: 'Rules', source: 'Source' },
   install: { copy: 'Copy', copied: 'Copied', copyCommand: 'Copy {command}' },
   stickers: {
@@ -210,5 +210,8 @@ export const en: LandingCopy = {
     title: 'What would {product} find in your test suite?',
     text: 'Your tests are the last check before production. In {repos} popular open-source projects it found {findings} findings, each project read in seconds. Install your project’s dependencies first, then run it from the root.',
     link: 'Install and first run',
+    ask: 'Found something real? A star helps the next team find {product}. Found something wrong? Report it: that is how a rule gets better.',
+    star: 'Star on GitHub',
+    report: 'Report a wrong finding',
   },
 };
