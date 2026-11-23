@@ -89,12 +89,13 @@ pub use crate::resolve::PLATFORMS;
 pub use crate::span::{LineIndex, Span};
 pub use crate::tables::{
     Assertion, Bail, Churn, CollectionProject, Constant, ContextRef, Coverage, Each, Enclosing,
-    Export, ExportKind, FlakeGuard, FlakeKind, FlakeNames, FlakeSite, FlakeSource, Gate, GateFlag,
-    GateTool, Handler, HandlerLibrary, Hook, IdentRef, Import, ImportKind, Invariant, JoinedCase,
-    Language, LineCoverage, Load, Mock, MockKind, Module, MutantStatus, Mutants, MutationReport,
-    MutationTest, Pairing, PairingReason, ParseStatus, PatternKind, PresetImport, Run, RunOutcome,
-    SagaStepKind, SagaWalk, SetupInvariants, Skip, SkipKind, Snapshot, SnapshotEntry, Spy,
-    StateAccess, TestCase, TestFile, TestKind, Threshold, ThrowingQuery, Uncollected,
+    Expectation, Export, ExportKind, FlakeGuard, FlakeKind, FlakeNames, FlakeSite, FlakeSource,
+    Gate, GateFlag, GateTool, Handler, HandlerLibrary, Hook, IdentRef, Import, ImportKind,
+    Invariant, JoinedCase, Language, LineCoverage, Load, Mock, MockKind, Module, MutantStatus,
+    Mutants, MutationReport, MutationTest, Pairing, PairingReason, ParseStatus, PatternKind,
+    PresetImport, Run, RunOutcome, SagaStepKind, SagaWalk, SetupInvariants, Skip, SkipKind,
+    Snapshot, SnapshotEntry, Spy, StateAccess, TestCase, TestFile, TestKind, Threshold,
+    ThrowingQuery, Uncollected,
 };
 pub use crate::value_less::ValueLess;
 

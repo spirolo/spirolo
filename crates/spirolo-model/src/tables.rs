@@ -316,7 +316,8 @@ pub struct Skip {
     pub reason: Option<String>,
     /// The comment text written beside a definition-level skip: up to three comment lines
     /// (`//`, `/*` or ` *`) directly above the definition, in source order, stopping at the
-    /// first blank or code line, then a trailing `//` comment on the title's line. A rule that looks for an
+    /// first blank or code line, then a trailing `//` comment on the title's line; then the same
+    /// reading of the `describe` directly around the definition (Vitest and Jest). A rule that looks for an
     /// issue reference reads them beside the title and the reason. Empty for an in-body
     /// annotation and when no comment sits there.
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
@@ -820,6 +821,11 @@ pub struct FlakeNames {
     /// Every reference with its byte offset, in source order; kept only for a file with
     /// recognised test cases, where the rule places each one in a test's scope.
     pub uses: Vec<(u32, String)>,
+    /// For each named function (see [`Enclosing::Named`]), the `expect` chains its own code
+    /// writes, read by `absence-anchor` to tell a helper whose assertion anchors a render
+    /// from one that only checks absence. Code of no name, a test's callback included,
+    /// records none.
+    pub expects: std::collections::BTreeMap<String, std::collections::BTreeSet<Expectation>>,
 }
 
 impl FlakeNames {
@@ -827,6 +833,23 @@ impl FlakeNames {
     /// whose key is not a literal, or an iteration over an import's values. No identifier
     /// spells it.
     pub const DYNAMIC: &'static str = "*";
+}
+
+/// One `expect(…)` chain a named function writes.
+///
+/// It is reduced to what decides how it bears on a render: its matcher, its negation and
+/// its first argument. The chain opens the way an [`Assertion`] does (`expect`,
+/// `expectTypeOf`, `expect.soft`, `expect.poll`, `expect.element`), with `.not` toggled on
+/// the way down.
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub struct Expectation {
+    /// Matcher name, for example `toHaveBeenCalledTimes`.
+    pub matcher: String,
+    /// True when the chain goes through `.not` an odd number of times.
+    pub negated: bool,
+    /// Source text of the matcher's first argument: the `0` of `toHaveBeenCalledTimes(0)`.
+    /// `None` when the matcher takes none.
+    pub argument: Option<String>,
 }
 
 /// One call that neutralises a flake mechanism where it is in scope: fake timers, a

@@ -17,8 +17,9 @@
 //! plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`,
 //! `toHaveBeenCalledTimes(n)` with `n` not the literal `0`, ... [`SPY_MATCHERS`]: a crashed
 //! render made no call), or a throwing Testing Library query (`getBy*`, `findBy*`,
-//! `within(...).getBy*`) anywhere in the body, including inside `waitFor(…)` callbacks. An
-//! anchor in a hook of the enclosing `describe` (or of an outer one, or at file level)
+//! `within(...).getBy*`) anywhere in the body, including inside `waitFor(…)` callbacks, or a
+//! call to a helper that runs such a query or writes such an assertion ([`AnchoringHelpers`]).
+//! An anchor in a hook of the enclosing `describe` (or of an outer one, or at file level)
 //! anchors every test under it, since the hook's throw fails the test. A test is flagged
 //! when it has at least one absence read and no anchor. Only `test(…)` / `it(…)` rows are
 //! judged, and never a Playwright one (it drives a page, not a render); a hook, suite,
@@ -55,7 +56,9 @@
 
 use std::collections::{HashMap, HashSet};
 
-use spirolo_model::{Assertion, Enclosing, FlakeNames, Model, TestCase, TestKind, ThrowingQuery};
+use spirolo_model::{
+    Assertion, Enclosing, Expectation, FlakeNames, Model, TestCase, TestKind, ThrowingQuery,
+};
 
 use crate::finding::{number_collisions, sort, Evidence, Finding, Location, Outcome, TestPath};
 use crate::{tests, Config, Family, Rule, Severity};
@@ -190,7 +193,7 @@ impl Rule for AbsenceAnchor {
 
     fn run(&self, model: &Model, config: &Config) -> Vec<Finding> {
         let severity = config.severity(self.name(), self.default_severity());
-        let helpers = ThrowingHelpers::of(model);
+        let helpers = AnchoringHelpers::of(model);
         let hooks = anchoring_hooks(model, &helpers);
         let mut findings: Vec<Finding> = tests(model)
             .filter(|case| {
@@ -357,9 +360,9 @@ impl AnchoringHooks<'_> {
     }
 }
 
-/// Every anchoring hook in the model: one whose own body anchors, or that calls a helper
-/// that runs a throwing query.
-fn anchoring_hooks<'m>(model: &'m Model, helpers: &ThrowingHelpers<'_>) -> AnchoringHooks<'m> {
+/// Every anchoring hook in the model: one whose own body anchors, or that calls an anchoring
+/// helper.
+fn anchoring_hooks<'m>(model: &'m Model, helpers: &AnchoringHelpers<'_>) -> AnchoringHooks<'m> {
     AnchoringHooks {
         scopes: model
             .test_cases
@@ -370,24 +373,27 @@ fn anchoring_hooks<'m>(model: &'m Model, helpers: &ThrowingHelpers<'_>) -> Ancho
     }
 }
 
-/// The helpers whose body runs a throwing query, by the test file that can call them: a
-/// function of the file's own (`const openPlainForm = async () => { … await
-/// screen.findByTestId(…) … }`), or of a module it imports through a relative or tsconfig
-/// path (`dateButton` in `test/elements.ts`, `return screen.getByRole(…)`), that calls a
-/// `getBy*` / `findBy*` directly or through another function of the same module. A row that references one in its body calls it, and the
-/// query throws when the render came up empty, so the row is anchored. A helper that only
-/// renders (`const renderNav = () => render(…)`) runs no query and anchors nothing.
+/// The helpers whose body anchors a render, by the test file that can call them: a function
+/// of the file's own (`const openPlainForm = async () => { … await screen.findByTestId(…) …
+/// }`), or of a module it imports through a relative or tsconfig path (`dateButton` in
+/// `test/elements.ts`, `return screen.getByRole(…)`), that calls a `getBy*` / `findBy*` or
+/// writes an anchoring assertion (`expect(spy).toHaveBeenLastCalledWith(data)`, see
+/// [`expectation_anchors`]), directly or through another function of the same module. A row
+/// that references one in its body calls it, and the query throws, or the assertion fails,
+/// when the render came up empty, so the row is anchored. A helper that only renders
+/// (`const renderNav = () => render(…)`) or only asserts absence anchors nothing.
 ///
 /// Read from the model's per-file name graph ([`FlakeNames`]): names as written, never by
-/// binding, so two functions of one name are one helper.
-struct ThrowingHelpers<'m> {
+/// binding, so two functions of one name are one helper. A helper's assertion counts
+/// wherever it sits in the helper's body, a branch included.
+struct AnchoringHelpers<'m> {
     /// Per test file, its references with their byte offsets.
     uses: HashMap<&'m str, &'m [(u32, String)]>,
-    /// Per test file, the names of the throwing helpers in it and in the modules it imports.
+    /// Per test file, the names of the anchoring helpers in it and in the modules it imports.
     names: HashMap<&'m str, HashSet<&'m str>>,
 }
 
-impl<'m> ThrowingHelpers<'m> {
+impl<'m> AnchoringHelpers<'m> {
     fn of(model: &'m Model) -> Self {
         let graphs: HashMap<&str, &FlakeNames> = model
             .flake_names
@@ -413,14 +419,14 @@ impl<'m> ThrowingHelpers<'m> {
                 .filter_map(|path| graphs.get(path));
             let reach = std::iter::once(file)
                 .chain(imported.copied())
-                .flat_map(throwing_functions)
+                .flat_map(anchoring_functions)
                 .collect();
             names.insert(file.file.as_str(), reach);
         }
         Self { uses, names }
     }
 
-    /// Whether `row` references one of its file's throwing helpers inside its own span.
+    /// Whether `row` references one of its file's anchoring helpers inside its own span.
     fn called_by(&self, row: &TestCase) -> bool {
         let (Some(uses), Some(names)) = (
             self.uses.get(row.file.as_str()),
@@ -435,10 +441,15 @@ impl<'m> ThrowingHelpers<'m> {
 }
 
 /// The named functions of one file whose body runs a Testing Library throwing query
-/// (`getByRole`, not a `getByPath` utility), directly or through another of the same file's
-/// named functions.
-fn throwing_functions(file: &FlakeNames) -> HashSet<&str> {
-    let mut found: HashSet<&str> = HashSet::new();
+/// (`getByRole`, not a `getByPath` utility) or writes an anchoring assertion, directly or
+/// through another of the same file's named functions.
+fn anchoring_functions(file: &FlakeNames) -> HashSet<&str> {
+    let mut found: HashSet<&str> = file
+        .expects
+        .iter()
+        .filter(|(_, expects)| expects.iter().any(expectation_anchors))
+        .map(|(name, _)| name.as_str())
+        .collect();
     loop {
         let before = found.len();
         for (enclosing, called) in &file.calls {
@@ -456,6 +467,19 @@ fn throwing_functions(file: &FlakeNames) -> HashSet<&str> {
             return found;
         }
     }
+}
+
+/// Whether an assertion a helper writes anchors the render the way it would inline: a plain
+/// jest-dom matcher or `not.toBeEmptyDOMElement`, or a plain spy-call assertion with a count
+/// other than the literal `0`. An absence read or an inert assertion (`not.toHaveBeenCalled`,
+/// `toHaveBeenCalledTimes(0)`) does not. A negated jest-dom matcher stays an absence read
+/// here: the helper's subject is not known to be an element read off the render.
+fn expectation_anchors(expectation: &Expectation) -> bool {
+    let matcher = expectation.matcher.as_str();
+    if is_dom_matcher(matcher) {
+        return expectation.negated == EMPTINESS_MATCHERS.contains(&matcher);
+    }
+    !expectation.negated && is_spy_anchor(matcher, expectation.argument.as_deref())
 }
 
 impl AbsenceAnchor {

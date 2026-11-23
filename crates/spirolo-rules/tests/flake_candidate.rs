@@ -306,6 +306,7 @@ fn names(file: &str, calls: &[(Enclosing, &[&str])], uses: &[(u32, &str)]) -> Fl
             .iter()
             .map(|(line, name)| (lines(*line, *line).start, (*name).to_owned()))
             .collect(),
+        ..FlakeNames::default()
     }
 }
 
