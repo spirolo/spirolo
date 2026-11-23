@@ -8,6 +8,12 @@ The rule recognizes absence checks such as `queryBy*(...).toBeNull()`,
 `not.toBeInTheDocument()` and `toBeEmptyDOMElement()`. A positive DOM assertion,
 a throwing Testing Library query, or a recognized nonzero spy-call assertion can
 anchor the test. Throwing queries in enclosing hooks and supported helpers count.
+A call to a named helper, in the test file or in a module it imports, anchors the
+test when the helper's own body holds an assertion that would anchor it inline, such
+as `expect(spy).toHaveBeenLastCalledWith(data)` or a positive `toBeInTheDocument()`.
+A helper that holds only absence checks, `not.toHaveBeenCalled()` or
+`toHaveBeenCalledTimes(0)` does not. An interaction alone is no anchor:
+`userEvent.click` on a missing element does not throw.
 Playwright tests and tests with assertions the rule cannot classify are left alone.
 
 Most negated jest-dom matchers still require an element: `not.toHaveClass()` or
@@ -31,8 +37,11 @@ instead; there may be no content to assert as present.
 
 An empty render can be the intended result. The rule cannot infer that intent from
 props. It can also miss anchors expressed through unsupported helpers or property
-accesses. A finding is a reason to inspect the test, not proof that a broken component
-would pass. Assertions the rule leaves unread can hide a real gap.
+accesses. Helpers are matched by name, and an assertion anywhere in a helper's body
+counts, even in a branch the test never takes. A negated jest-dom matcher in a helper,
+such as `not.toHaveClass()`, is read as an absence check, since the rule does not know
+what the helper was passed. A finding is a reason to inspect the test, not proof that a
+broken component would pass. Assertions the rule leaves unread can hide a real gap.
 
 ## Status and evidence
 

@@ -157,7 +157,7 @@ pub fn collect(path: &str, source: &str, program: &Program<'_>) -> FlakeFacts {
         })
         .collect();
     sites.append(&mut collector.sites);
-    let holders = crate::holders::collect(path, program);
+    let holders = crate::holders::collect(path, source, program);
     for site in &mut sites {
         site.enclosing = holders.enclosing(site.span.start);
     }

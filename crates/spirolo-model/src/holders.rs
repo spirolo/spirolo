@@ -21,6 +21,10 @@
 //! declares; a renaming export (`export { a as b }`) links the exported name to the local.
 //! Export lists name nothing at module scope: exporting a function does not run it. Names
 //! are kept as written: the graph is by name, never by binding.
+//!
+//! **Expectations.** Every `expect(…)` chain a named function writes, by that name, reduced
+//! to its matcher, its negation and its first argument, so a rule can tell what a helper
+//! asserts without re-reading it.
 
 use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
@@ -39,7 +43,7 @@ use oxc_span::GetSpan;
 use oxc_syntax::scope::ScopeFlags;
 
 use crate::flake::hook_of;
-use crate::{Enclosing, FlakeNames};
+use crate::{Enclosing, Expectation, FlakeNames};
 
 /// A file's enclosing-code ranges and its names.
 pub struct Holders {
@@ -62,9 +66,10 @@ impl Holders {
     }
 }
 
-/// Walk `program` and record its enclosing-code ranges and names.
-pub fn collect(path: &str, program: &Program<'_>) -> Holders {
+/// Walk `program` and record its enclosing-code ranges, names and expectations.
+pub fn collect(path: &str, source: &str, program: &Program<'_>) -> Holders {
     let mut walker = Walker {
+        source,
         current: Enclosing::Module,
         pending: None,
         declarator: None,
@@ -83,7 +88,9 @@ pub fn collect(path: &str, program: &Program<'_>) -> Holders {
     walker.holders
 }
 
-struct Walker {
+struct Walker<'s> {
+    /// The file's source text, for an expectation's argument.
+    source: &'s str,
     /// The code being walked.
     current: Enclosing,
     /// The name the next function or class takes from what it is bound to.
@@ -123,7 +130,7 @@ fn imports(program: &Program<'_>) -> HashMap<String, Option<String>> {
     imports
 }
 
-impl Walker {
+impl Walker<'_> {
     /// Whether `call` may call anything: through a computed member whose key is not a
     /// literal (`this[k]()`), or over an import's values (`Object.values(mock)`).
     fn dynamic(&self, call: &CallExpression<'_>) -> bool {
@@ -217,6 +224,52 @@ fn literal_key(key: &Expression<'_>) -> Option<String> {
     }
 }
 
+/// The `expect` chain `call` closes, if it is one: a matcher called on a member chain whose
+/// root is an `expect(…)` call, or `expectTypeOf`, `expect.soft`, `expect.poll` or
+/// `expect.element`, with `.not` toggled on the way down. The inner `expect(subject)` call is
+/// no chain of its own (its callee is no member), so a chain counts once.
+fn expectation_of(source: &str, call: &CallExpression<'_>) -> Option<Expectation> {
+    let Expression::StaticMemberExpression(matcher) = call.callee.get_inner_expression() else {
+        return None;
+    };
+    let mut negated = false;
+    let mut node = &matcher.object;
+    loop {
+        match node.get_inner_expression() {
+            Expression::StaticMemberExpression(member) => {
+                negated ^= member.property.name == "not";
+                node = &member.object;
+            }
+            Expression::CallExpression(root) if opens_expect(&root.callee) => {
+                let argument = call.arguments.first().and_then(|argument| {
+                    let span = argument.span();
+                    source.get(span.start as usize..span.end as usize)
+                });
+                return Some(Expectation {
+                    matcher: matcher.property.name.to_string(),
+                    negated,
+                    argument: argument.map(str::to_owned),
+                });
+            }
+            _ => return None,
+        }
+    }
+}
+
+/// Whether a callee opens an assertion chain: `expect`, `expectTypeOf`, or `expect.soft`,
+/// `expect.poll` or `expect.element`.
+fn opens_expect(callee: &Expression<'_>) -> bool {
+    match callee.get_inner_expression() {
+        Expression::Identifier(id) => id.name == "expect" || id.name == "expectTypeOf",
+        Expression::StaticMemberExpression(member) => {
+            matches!(member.property.name.as_str(), "soft" | "poll" | "element")
+                && matches!(member.object.get_inner_expression(),
+                    Expression::Identifier(object) if object.name == "expect")
+        }
+        _ => false,
+    }
+}
+
 /// Whether `call`, at module scope, runs the callbacks it is passed at load: a hook, a
 /// `vi`/`jest` module mock, or an immediately invoked function.
 fn runs_at_load(call: &CallExpression<'_>) -> bool {
@@ -232,7 +285,7 @@ fn runs_at_load(call: &CallExpression<'_>) -> bool {
                     Expression::Identifier(id) if id.name == "vi" || id.name == "jest"))
 }
 
-impl<'a> Visit<'a> for Walker {
+impl<'a> Visit<'a> for Walker<'_> {
     fn visit_function(&mut self, func: &Function<'a>, flags: ScopeFlags) {
         let named = self
             .pending
@@ -370,6 +423,16 @@ impl<'a> Visit<'a> for Walker {
     fn visit_call_expression(&mut self, call: &CallExpression<'a>) {
         if self.dynamic(call) {
             self.name(call.span.start, FlakeNames::DYNAMIC);
+        }
+        if let Enclosing::Named(name) = &self.current {
+            if let Some(expectation) = expectation_of(self.source, call) {
+                self.holders
+                    .names
+                    .expects
+                    .entry(name.clone())
+                    .or_default()
+                    .insert(expectation);
+            }
         }
         if self.current == Enclosing::Module && runs_at_load(call) {
             self.at_load
