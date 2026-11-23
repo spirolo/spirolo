@@ -331,6 +331,92 @@ fn a_negated_to_be_empty_dom_element_anchors_the_render() {
     );
 }
 
+/// A jest-dom assertion on `subject`, an element read off the render (a call, a nullable child
+/// property, a local bound to one) when `element_read`, or a node that survives an empty
+/// render (`container`, `document.body`) otherwise.
+fn subject_assertion(matcher: &str, negated: bool, subject: &str, element_read: bool) -> Assertion {
+    Assertion {
+        subject: Some(subject.to_owned()),
+        subject_is_call: element_read,
+        ..dom_assertion(matcher, negated)
+    }
+}
+
+#[test]
+fn to_be_empty_dom_element_on_an_element_read_anchors_the_render() {
+    // `expect(container.querySelector('button')).toBeEmptyDOMElement()` fails when nothing
+    // rendered: jest-dom checks the subject is an element first and rejects the `null` the
+    // query returns. So it proves the button was rendered, and silences the negation beside it.
+    for subject in [
+        "container.querySelector('button')",
+        "container.firstChild",
+        "button",
+    ] {
+        let found = findings(vec![test_case(
+            "src/grid.test.tsx",
+            "renders an empty button",
+            vec![
+                dom_assertion("toBeInTheDocument", true),
+                subject_assertion("toBeEmptyDOMElement", false, subject, true),
+            ],
+            Vec::new(),
+        )]);
+        assert!(
+            found.is_empty(),
+            "expect({subject}).toBeEmptyDOMElement() anchors: {found:#?}"
+        );
+    }
+}
+
+#[test]
+fn to_be_empty_dom_element_on_a_node_that_survives_an_empty_render_stays_absence() {
+    // `expect(container).toBeEmptyDOMElement()` passes on an empty render: still a finding,
+    // alone or beside a negation, and so is `not.toBeInTheDocument` on an element read.
+    for subject in ["container", "document.body"] {
+        let found = findings(vec![test_case(
+            "src/grid.test.tsx",
+            "renders nothing",
+            vec![subject_assertion(
+                "toBeEmptyDOMElement",
+                false,
+                subject,
+                false,
+            )],
+            Vec::new(),
+        )]);
+        assert_eq!(
+            found.len(),
+            1,
+            "expect({subject}).toBeEmptyDOMElement() is absence: {found:#?}"
+        );
+        assert_eq!(found[0].evidence[0].value, "toBeEmptyDOMElement");
+    }
+
+    let found = findings(vec![test_case(
+        "src/grid.test.tsx",
+        "renders nothing",
+        vec![
+            subject_assertion(
+                "toBeInTheDocument",
+                true,
+                "container.querySelector('a')",
+                true,
+            ),
+            subject_assertion("toBeEmptyDOMElement", false, "container", false),
+        ],
+        Vec::new(),
+    )]);
+    assert_eq!(
+        found.len(),
+        1,
+        "both reads hold on an empty render: {found:#?}"
+    );
+    assert_eq!(
+        found[0].evidence[0].value,
+        "not.toBeInTheDocument, toBeEmptyDOMElement"
+    );
+}
+
 // ------------------------------------------------------------------------ spy assertions
 
 /// A call assertion on a spy: `matcher`, its negation and its first argument as written.

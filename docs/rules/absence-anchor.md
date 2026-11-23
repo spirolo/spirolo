@@ -11,10 +11,13 @@ anchor the test. Throwing queries in enclosing hooks and supported helpers count
 Playwright tests and tests with assertions the rule cannot classify are left alone.
 
 Most negated jest-dom matchers still require an element: `not.toHaveClass()` or
-`not.toHaveAttribute()` throws on a missing subject. Calls, optional call chains,
-nullable child properties such as `container.firstChild`, and locals bound to those
-reads count as anchors for these matchers. `not.toBeInTheDocument()` accepts a
-missing element and remains an absence check.
+`not.toHaveAttribute()` throws on a missing subject. So does a plain
+`toBeEmptyDOMElement()`. Calls, optional call chains, nullable child properties such
+as `container.firstChild`, and locals bound to those reads count as anchors for these
+matchers: `expect(container.querySelector('button')).toBeEmptyDOMElement()` fails when
+nothing rendered. `expect(container).toBeEmptyDOMElement()` passes on an empty render
+and remains an absence check. `not.toBeInTheDocument()` accepts a missing element and
+remains an absence check on any subject.
 
 ## What to do
 
