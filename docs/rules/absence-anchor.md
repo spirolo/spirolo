@@ -11,15 +11,19 @@ anchor the test. Throwing queries in enclosing hooks and supported helpers count
 Playwright tests and tests with assertions the rule cannot classify are left alone.
 
 Most negated jest-dom matchers still require an element: `not.toHaveClass()` or
-`not.toHaveAttribute()` throws on a missing subject. Calls, optional call chains,
-nullable child properties such as `container.firstChild`, members and indexes read off
-those (`renderGrid().row`, `items[0]`), and locals bound to those reads or destructured
-from them (`const { row } = renderGrid()`) count as anchors for these matchers. A
-`container` or `baseElement` taken from a render result survives an empty render, so a
-negated matcher on it, like one on `document.body`, remains an absence check. So does
-an index into a list query for the document's own nodes, such as
+`not.toHaveAttribute()` throws on a missing subject. So does a plain
+`toBeEmptyDOMElement()`. Calls, optional call chains, nullable child properties such
+as `container.firstChild`, members and indexes read off those (`renderGrid().row`,
+`items[0]`), and locals bound to those reads or destructured from them
+(`const { row } = renderGrid()`) count as anchors for these matchers:
+`expect(container.querySelector('button')).toBeEmptyDOMElement()` fails when nothing
+rendered. A `container` or `baseElement` taken from a render result survives an empty
+render, so `expect(container).toBeEmptyDOMElement()` or a negated matcher on it, like
+one on `document.body`, remains an absence check. So does one on an index into a list
+query for the document's own nodes, such as
 `document.getElementsByTagName('body')[0]` or `document.querySelectorAll('html')[0]`.
-`not.toBeInTheDocument()` accepts a missing element and remains an absence check.
+`not.toBeInTheDocument()` accepts a missing element and remains an absence check on
+any subject.
 
 ## What to do
 

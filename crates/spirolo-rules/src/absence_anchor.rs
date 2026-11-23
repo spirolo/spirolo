@@ -3,7 +3,8 @@
 //!
 //! An absence read is a *negated* jest-dom matcher (`not.toBeInTheDocument`,
 //! `not.toBeVisible`, `not.toHaveTextContent` and kin; all but the first only on a subject
-//! that survives an empty render, such as `container`), a plain `toBeEmptyDOMElement()`, or
+//! that survives an empty render, such as `container`), a plain `toBeEmptyDOMElement()` on
+//! such a subject, or
 //! the Testing Library absence idiom: a `queryBy*` / `queryAllBy*` subject, which yields
 //! `null` or `[]` for a missing element, under `toBeNull()`, `toBeUndefined()`, `toBeFalsy()`,
 //! `not.toBeTruthy()`, `toHaveLength(0)`, `toEqual([])` or `toStrictEqual([])`. An anchor is
@@ -11,7 +12,8 @@
 //! `toHaveAttribute`, ... the table on [`DOM_MATCHERS`]), a negated one but
 //! `not.toBeInTheDocument` on an element read off the render (`expect(container
 //! .querySelector('a')).not.toHaveAttribute('href')`: jest-dom throws on the `null` an empty
-//! render leaves before it negates), a `not.toBeEmptyDOMElement()`, a
+//! render leaves before it negates), a `not.toBeEmptyDOMElement()`, a plain
+//! `toBeEmptyDOMElement()` on an element read off the render (the same check throws), a
 //! plain call assertion on a spy (`toHaveBeenCalled`, `toHaveBeenCalledWith`,
 //! `toHaveBeenCalledTimes(n)` with `n` not the literal `0`, ... [`SPY_MATCHERS`]: a crashed
 //! render made no call), or a throwing Testing Library query (`getBy*`, `findBy*`,
@@ -69,7 +71,8 @@ use crate::{tests, Config, Family, Rule, Severity};
 /// | `not.` any of the above but `toBeInTheDocument`, on a call or a local bound to one (`container.querySelector('a')`, `gridcell(day)`) | anchor (jest-dom checks the subject is an element first, and throws on the `null` an empty render leaves) |
 /// | `not.` any of the above on anything else (`container`, `document.body`), and `not.toBeInTheDocument` on anything | absence |
 /// | `not.toBeEmptyDOMElement` | anchor (an empty body has no content to fail it otherwise) |
-/// | `toBeEmptyDOMElement` | absence (an empty container after a crash is empty too) |
+/// | `toBeEmptyDOMElement` on a call or a local bound to one (`container.querySelector('button')`) | anchor (the same element check throws on the `null` an empty render leaves) |
+/// | `toBeEmptyDOMElement` on anything else (`container`, `document.body`) | absence (an empty container after a crash is empty too) |
 /// | `toBeNull`, `toBeUndefined`, `toBeFalsy`, `not.toBeTruthy`, `toHaveLength(0)`, `toEqual([])`, `toStrictEqual([])` on `query` | absence |
 /// | `not.toHaveBeenCalled`, `not.toHaveBeenCalledWith(…)`, `toHaveBeenCalledTimes(0)` | inert (holds against an empty body) |
 /// | `not.toBeNull`, `toBeTruthy`, `toHaveLength(n)` on `query` | unread (presence, but not a jest-dom read) |
@@ -109,7 +112,9 @@ const DOM_MATCHERS: &[&str] = &[
 
 /// The jest-dom matcher that asserts emptiness: `toBeEmptyDOMElement()` passes on an empty
 /// container after a crash as readily as on the render it means to test, so written plain
-/// it is an absence read, and only its negation anchors. The inverse of [`DOM_MATCHERS`].
+/// on a subject that survives an empty render it is an absence read. Its negation anchors,
+/// and so does the plain form on an element read off the render ([`checks_element`]). The
+/// inverse of [`DOM_MATCHERS`].
 const EMPTINESS_MATCHERS: &[&str] = &["toBeEmptyDOMElement"];
 
 /// The call, return and resolution matchers on a spy that anchor a render when written
@@ -222,7 +227,8 @@ enum Bearing {
     /// on a spy.
     Anchor,
     /// Holds against an empty body and is the DOM read the rule is about: a negated jest-dom
-    /// matcher, the emptiness matcher, or the `queryBy*` absence idiom.
+    /// matcher or the emptiness matcher on a subject that survives an empty render, or the
+    /// `queryBy*` absence idiom.
     Absence,
     /// Holds against an empty body whatever rendered, without being a DOM read: a negated
     /// call assertion, a count of the literal `0`. Leaves a finding standing.
@@ -242,7 +248,8 @@ fn bearing(assertion: &Assertion) -> Bearing {
     let Some(matcher) = assertion.matcher.as_deref() else {
         return Bearing::Unread;
     };
-    // `not.toBeEmptyDOMElement` anchors; `toBeEmptyDOMElement` is absence.
+    // `not.toBeEmptyDOMElement` anchors; `toBeEmptyDOMElement` is absence unless
+    // `checks_element` says its subject throws on an empty render.
     let asserts_presence = assertion.negated == EMPTINESS_MATCHERS.contains(&matcher);
     if is_dom_matcher(matcher) {
         return if asserts_presence || checks_element(matcher, assertion) {
@@ -266,15 +273,17 @@ fn bearing(assertion: &Assertion) -> Bearing {
     Bearing::Unread
 }
 
-/// Whether a negated jest-dom matcher throws on an empty render: every one but
-/// `toBeInTheDocument` (which lets `null` through when negated) runs `checkHtmlElement` on
-/// its subject before the negation, so on an element read off the render (a call, an optional
-/// call chain, a nullable DOM child property, a member or index read off one, or a local
-/// bound or destructured from one), nullish once the render produced nothing, it fails. On
-/// a subject that survives an empty render (`container`, `baseElement`, `document.body`,
-/// `document.getElementsByTagName('body')[0]`) it holds, and stays an absence read.
+/// Whether a jest-dom matcher that would otherwise hold on an empty render throws on one
+/// instead: every one but `toBeInTheDocument` (which lets `null` through when negated) runs
+/// `checkHtmlElement` on its subject before it negates or looks inside, so on an element read
+/// off the render (a call, an optional call chain, a nullable DOM child property, a member or
+/// index read off one, or a local bound or destructured from one), nullish once the render
+/// produced nothing, it fails. That covers a negated matcher and a plain
+/// `toBeEmptyDOMElement()` alike. On a subject that survives an empty render (`container`,
+/// `baseElement`, `document.body`, `document.getElementsByTagName('body')[0]`) either holds,
+/// and stays an absence read.
 fn checks_element(matcher: &str, assertion: &Assertion) -> bool {
-    assertion.negated && assertion.subject_is_call && matcher != "toBeInTheDocument"
+    assertion.subject_is_call && matcher != "toBeInTheDocument"
 }
 
 /// Whether a matcher is a spy matcher at all, counting or not.
