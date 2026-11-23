@@ -436,6 +436,9 @@ fn a_node_that_survives_an_empty_render_is_no_element_read() {
         "const { container: root } = render(Grid); expect(root).not.toHaveClass('x')",
         "const { container, row } = renderGrid(); expect(container).not.toHaveClass('x')",
         "const { getByText, rerender, unmount, debug, asFragment, container } = render(Grid); expect(container).not.toHaveClass('x')",
+        // An Angular fixture's host element is there whatever the template renders.
+        "const fixture = TestBed.createComponent(Banner); expect(fixture.nativeElement).not.toHaveClass('x')",
+        "const { fixture } = await render(Banner); expect(fixture.nativeElement).not.toHaveClass('x')",
         "expect(render(Grid).container).not.toHaveClass('x')",
         "expect(render(Grid).baseElement).not.toHaveClass('x')",
         "expect(render(Grid)['container']).not.toHaveClass('x')",

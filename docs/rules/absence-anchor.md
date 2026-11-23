@@ -46,7 +46,9 @@ props. It can also miss anchors expressed through unsupported helpers or propert
 accesses. Helpers are matched by name, and an assertion anywhere in a helper's body
 counts, even in a branch the test never takes. A negated jest-dom matcher in a helper,
 such as `not.toHaveClass()`, is read as an absence check, since the rule does not know
-what the helper was passed. A finding is a reason to inspect the test, not proof that a
+what the helper was passed. A member of a helper's result, such as `row` in `const { row } = renderGrid()`, is
+read as missing after an empty render; only `container`, `baseElement`, an Angular
+`nativeElement` and the document's own nodes are known to survive one. A finding is a reason to inspect the test, not proof that a
 broken component would pass. Assertions the rule leaves unread can hide a real gap.
 
 ## Status and evidence

@@ -71,7 +71,7 @@ use crate::{tests, Config, Family, Rule, Severity};
 /// | assertion | bearing |
 /// |---|---|
 /// | `toBeInTheDocument`, `toBeVisible`, `toHaveTextContent`, `toHaveAttribute`, `toHaveValue`, `toHaveDisplayValue`, `toHaveClass`, `toHaveStyle`, `toHaveFocus`, `toHaveRole`, `toContainElement`, `toContainHTML`, `toBeChecked`, `toBePartiallyChecked`, `toBeDisabled`, `toBeEnabled`, `toBeRequired`, `toBeValid`, `toBeInvalid`, `toHaveFormValues`, `toHaveAccessibleName`, `toHaveAccessibleDescription`, `toHaveAccessibleErrorMessage`, `toHaveDescription`, `toHaveErrorMessage` | anchor |
-/// | `not.` any of the above but `toBeInTheDocument`, on a call or a local bound to one (`container.querySelector('a')`, `gridcell(day)`) | anchor (jest-dom checks the subject is an element first, and throws on the `null` an empty render leaves) |
+/// | `not.` any of the above but `toBeInTheDocument`, on a call, a local bound to one, or a member or index of either (`container.querySelector('a')`, `gridcell(day)`, `renderGrid().row`, `rows[0]`) | anchor (jest-dom checks the subject is an element first, and throws on the `null` an empty render leaves) |
 /// | `not.` any of the above on anything else (`container`, `document.body`), and `not.toBeInTheDocument` on anything | absence |
 /// | `not.toBeEmptyDOMElement` | anchor (an empty body has no content to fail it otherwise) |
 /// | `toBeEmptyDOMElement` on a call or a local bound to one (`container.querySelector('button')`) | anchor (the same element check throws on the `null` an empty render leaves) |

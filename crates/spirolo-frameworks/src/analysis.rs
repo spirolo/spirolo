@@ -467,12 +467,12 @@ fn is_element_read(expression: &Expression<'_>, calls: &CallBindings) -> bool {
     }
 }
 
-/// Members of a render result, or of a document, that exist whatever the component
-/// rendered, so a negated matcher on them holds against an empty render.
+/// Members of a render result, of an Angular fixture or of a document, that exist whatever
+/// the component rendered, so a negated matcher on them holds against an empty render.
 fn is_persistent(name: &str) -> bool {
     matches!(
         name,
-        "container" | "baseElement" | "body" | "documentElement" | "head"
+        "container" | "baseElement" | "nativeElement" | "body" | "documentElement" | "head"
     )
 }
 
