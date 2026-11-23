@@ -863,6 +863,11 @@ test('K5 document body', () => {
   render(<Grid />);
   expect(document.body).not.toHaveClass('x');
 });
+
+test('K6 container by a template literal key', () => {
+  const view = render(<Grid />);
+  expect(view[`container`]).not.toHaveClass('x');
+});
 ",
     );
 
@@ -876,6 +881,7 @@ test('K5 document body', () => {
             "K3 container member of a render call",
             "K4 container of a helper result",
             "K5 document body",
+            "K6 container by a template literal key",
         ]
     );
 }

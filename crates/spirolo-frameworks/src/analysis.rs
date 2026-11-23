@@ -6,6 +6,7 @@
 //! way. Everything here is a pure function of the callback and the file's source text.
 //! [`mock_of`] is also what the file walk uses for a mock written outside any case.
 
+use std::borrow::Cow;
 use std::collections::{HashMap, HashSet};
 
 use crate::kind_code;
@@ -451,10 +452,8 @@ fn is_element_read(expression: &Expression<'_>, calls: &CallBindings) -> bool {
                 || (!is_persistent(&member.property.name) && is_element_read(&member.object, calls))
         }
         Expression::ComputedMemberExpression(member) => {
-            !matches!(
-                member.expression.get_inner_expression(),
-                Expression::StringLiteral(key) if key.value.as_str().is_some_and(is_persistent)
-            ) && !is_persistent_list(&member.object, calls)
+            !literal_text(&member.expression).is_some_and(|key| is_persistent(&key))
+                && !is_persistent_list(&member.object, calls)
                 && is_element_read(&member.object, calls)
         }
         Expression::ChainExpression(chain) => match &chain.expression {
@@ -490,14 +489,11 @@ fn is_persistent_list(expression: &Expression<'_>, calls: &CallBindings) -> bool
     let Expression::StaticMemberExpression(callee) = call.callee.get_inner_expression() else {
         return false;
     };
-    let tag = match call.arguments.first().and_then(Argument::as_expression) {
-        Some(Expression::StringLiteral(literal)) => Some(StaticPropertyName::from(literal.value)),
-        Some(Expression::TemplateLiteral(literal)) => {
-            literal.single_quasi().map(StaticPropertyName::from)
-        }
-        _ => None,
-    }
-    .and_then(StaticPropertyName::into_cow_str);
+    let tag = call
+        .arguments
+        .first()
+        .and_then(Argument::as_expression)
+        .and_then(literal_text);
     matches!(
         callee.property.name.as_str(),
         "getElementsByTagName" | "querySelectorAll"
@@ -506,6 +502,19 @@ fn is_persistent_list(expression: &Expression<'_>, calls: &CallBindings) -> bool
             .iter()
             .any(|node| tag.trim().eq_ignore_ascii_case(node))
     })
+}
+
+/// The text of a string literal or of a template literal without substitutions, any
+/// parentheses or TS cast peeled off.
+fn literal_text<'a>(expression: &Expression<'a>) -> Option<Cow<'a, str>> {
+    match expression.get_inner_expression() {
+        Expression::StringLiteral(literal) => Some(StaticPropertyName::from(literal.value)),
+        Expression::TemplateLiteral(literal) => {
+            literal.single_quasi().map(StaticPropertyName::from)
+        }
+        _ => None,
+    }
+    .and_then(StaticPropertyName::into_cow_str)
 }
 
 /// Child reads that can be null even though their container survives an empty render.
