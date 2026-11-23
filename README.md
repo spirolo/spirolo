@@ -212,6 +212,16 @@ Review the evidence before opting a rule into CI.
 Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md).
 For vulnerability reports, see [SECURITY.md](SECURITY.md).
 
+<p align="center">
+  <a href="https://github.com/spirolo/spirolo/stargazers"><img src="branding/stickers/star.webp" alt="Spirolo holds out a star" width="240"></a>
+</p>
+
+<p align="center">
+  <b>Found something real in your suite?</b><br>
+  A <a href="https://github.com/spirolo/spirolo/stargazers">star</a> helps the next team find Spirolo.<br>
+  Found something wrong? <a href="https://github.com/spirolo/spirolo/issues/new?template=false-positive.yml">Report it</a>: that is how a rule gets better.
+</p>
+
 ## Licence
 
 [Apache 2.0](LICENSE).
