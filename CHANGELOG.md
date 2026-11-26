@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2026-11-26, advisory alpha)
+
+A fix release. Four reported false positives are gone, three in `absence-anchor` and one
+in `dead-skip`, and a crash on an unusual file name is fixed. No rule is proven yet.
+
+### Fixes
+
+- `absence-anchor`: `toBeEmptyDOMElement()` on an element read off the render now counts
+  as an anchor, so the test is no longer reported (#51, fixed in #54).
+- `absence-anchor`: an element read through a helper's result or by index counts as an
+  anchor, for example `const { row } = renderGrid()`, `renderGrid().row` or `items[0]`
+  from a `querySelectorAll`. `container`, `baseElement`, an index into a list query for
+  `body`, `html` or `head`, and an Angular fixture's `nativeElement` survive an empty
+  render, so they are still read as absence (#52, fixed in #55).
+- `absence-anchor`: an anchoring assertion written in a helper the test calls now counts
+  (#53, fixed in #56).
+- `dead-skip`: an issue link written on a `describe` covers the skips written directly in
+  it (#48, fixed in #50, contributed by bfs2021).
+- A churn log path whose `}` comes before its `{`, such as `src/a}b{c.ts`, no longer stops
+  the run with a panic. It is read as a plain path (#29).
+
+### Measurements
+
+The table embedded in the binary is the one from 0.1.0-alpha.2. The fixes only remove
+findings the rules reported wrongly; they were not measured again for this release.
+
+### Other changes
+
+- Every crate states the real minimum Rust version, 1.98, for builds from source (#36).
+- Dependency updates, including the oxc parser group (#19, #21, #38).
+
+### Upgrade
+
+```sh
+npm install -D spirolo@alpha
+```
+
 ## 0.1.0-alpha.2 (2026-11-20, advisory alpha)
 
 A measurement release. The analyzer's rules are unchanged; the table embedded in the

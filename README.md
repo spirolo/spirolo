@@ -196,7 +196,7 @@ measured scope.
 
 ## Status and limits
 
-**Version `0.1.0-alpha.2`: advisory alpha.** It is on npm as `spirolo@alpha`; the
+**Version `0.1.0-alpha.3`: advisory alpha.** It is on npm as `spirolo@alpha`; the
 VS Code extension is not published yet. Before 1.0, any alpha may change commands, output
 and rule behaviour; the [changelog](CHANGELOG.md) lists every change.
 
